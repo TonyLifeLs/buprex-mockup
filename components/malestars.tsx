@@ -135,13 +135,13 @@ export function Malestars() {
               className={`scroll-reveal group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-all hover:bg-white/10 ${char.glow} hover:scale-[1.02]`}
               style={{ transitionDelay: `${i * 150}ms` }}
             >
-              {/* Floating mascot */}
-              <div className={`relative mb-6 h-52 w-52 ${char.floatClass}`}>
+              {/* Floating mascot - circular */}
+              <div className={`relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-white/20 bg-white/10 ${char.floatClass}`}>
                 <Image
                   src={char.image}
                   alt={char.name}
                   fill
-                  className="object-contain drop-shadow-2xl"
+                  className="object-contain p-4 drop-shadow-2xl"
                 />
               </div>
               <h3 className="font-[var(--font-heading)] text-2xl font-bold text-white">

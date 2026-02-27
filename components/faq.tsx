@@ -60,7 +60,7 @@ export function FAQ() {
           <div className="hidden md:flex md:w-1/4 md:flex-col md:items-center">
             <div className="scroll-reveal-left animate-float-medium">
               <Image
-                src="/images/mascot-orange.png"
+                src="/images/buprex-flash.png"
                 alt="Mascota BUPREX"
                 width={180}
                 height={180}

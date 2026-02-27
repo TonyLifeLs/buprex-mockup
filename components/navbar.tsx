@@ -23,22 +23,18 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "bg-[#0c3d6e]/95 backdrop-blur-md shadow-lg"
           : "bg-[#0c3d6e]"
-      }`}
+        }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         {/* Logo */}
         <a href="#inicio" className="flex items-center gap-3">
-          <Image
-            src="/images/malestars-logo.png"
-            alt="BUPREX"
-            width={120}
-            height={40}
-            className="h-10 w-auto brightness-0 invert"
-          />
+          <span className="font-[var(--font-heading)] text-4xl font-extrabold tracking-tight text-[#f5d030]">
+            BUPREX
+            <sup className="text-sm">&#174;</sup>
+          </span>
         </a>
 
         {/* Desktop Nav - Pill shaped links */}

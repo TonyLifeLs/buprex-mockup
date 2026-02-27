@@ -6,28 +6,32 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const characters = [
   {
-    name: "Fiebrex",
-    image: "/images/mascot-red.png",
-    description: "Representa la fiebre. BUPREX lo combate con su accion antipiretica.",
-    glow: "shadow-[0_0_40px_rgba(227,30,36,0.3)]",
+    name: "Fiebrin",
+    image: "/images/malestars-estrellas.png",
+    description:
+      "Representa la fiebre. BUPREX lo combate con su acción antipirética.",
+    glow: "shadow-[0_0_40px_rgba(227,30,36,0.30)]",
     floatClass: "animate-float-slow",
   },
   {
-    name: "Dolorex",
-    image: "/images/mascot-blue.png",
-    description: "Representa el dolor. BUPREX lo vence con su accion analgesica rapida.",
-    glow: "shadow-[0_0_40px_rgba(0,153,214,0.3)]",
+    name: "Inflamón",
+    image: "/images/inflamon-estrellas.png",
+    description:
+      "Representa el dolor. BUPREX lo vence con su acción analgésica rápida.",
+    glow: "shadow-[0_0_40px_rgba(0,153,214,0.30)]",
     floatClass: "animate-float-medium",
   },
   {
-    name: "Inflamex",
-    image: "/images/mascot-orange.png",
-    description: "Representa la inflamacion. BUPREX la reduce con su accion antiinflamatoria.",
-    glow: "shadow-[0_0_40px_rgba(245,166,35,0.3)]",
+    name: "Dolores",
+    image: "/images/dolores.png",
+    description:
+      "Representa la inflamación. BUPREX la reduce con su acción antiinflamatoria.",
+    glow: "shadow-[0_0_40px_rgba(245,166,35,0.30)]",
     floatClass: "animate-float-fast",
   },
 ]
 
+// ===== Fondo de estrellas (canvas) =====
 function StarField() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -38,16 +42,19 @@ function StarField() {
     if (!ctx) return
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * 2
-      canvas.height = canvas.offsetHeight * 2
+      const { offsetWidth, offsetHeight } = canvas
+      canvas.width = offsetWidth * 2
+      canvas.height = offsetHeight * 2
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
       ctx.scale(2, 2)
     }
+
     resize()
 
-    const stars: { x: number; y: number; r: number; opacity: number; speed: number }[] = []
     const w = canvas.offsetWidth
     const h = canvas.offsetHeight
 
+    const stars: { x: number; y: number; r: number; opacity: number; speed: number }[] = []
     for (let i = 0; i < 120; i++) {
       stars.push({
         x: Math.random() * w,
@@ -58,7 +65,7 @@ function StarField() {
       })
     }
 
-    let frame: number
+    let frame = 0
     const animate = () => {
       ctx.clearRect(0, 0, w, h)
       const time = Date.now()
@@ -66,16 +73,14 @@ function StarField() {
         const twinkle = 0.5 + 0.5 * Math.sin(time * star.speed)
         ctx.beginPath()
         ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * twinkle})`
+        ctx.fillStyle = `rgba(255,255,255,${star.opacity * twinkle})`
         ctx.fill()
       }
       frame = requestAnimationFrame(animate)
     }
     animate()
 
-    const onResize = () => {
-      resize()
-    }
+    const onResize = () => resize()
     window.addEventListener("resize", onResize)
     return () => {
       cancelAnimationFrame(frame)
@@ -95,81 +100,143 @@ function StarField() {
 export function Malestars() {
   const sectionRef = useScrollReveal()
 
+  // Helpers para obtener imágenes/clases desde el arreglo
+  const getChar = (name: string) => characters.find(c => c.name === name)!
+
+  const red = getChar("Fiebrin")     // rojo
+  const blue = getChar("Inflamón")   // azul
+  const orange = getChar("Dolores")  // amarillo
+
   return (
     <section
       id="malestars"
       ref={sectionRef}
-      className="relative overflow-hidden py-20 md:py-28"
-      style={{ background: "linear-gradient(135deg, #0c3d6e 0%, #0b2a4a 50%, #0c3d6e 100%)" }}
+      className="relative overflow-hidden py-16 md:py-20"
+      style={{
+        background:
+          "linear-gradient(135deg, #0c3d6e 0%, #0b2a4a 50%, #0c3d6e 100%)",
+      }}
     >
-      {/* Animated star field */}
+      {/* Estrellas */}
       <StarField />
 
-      {/* Soft glow orbs */}
-      <div className="pointer-events-none absolute top-20 left-20 h-60 w-60 rounded-full bg-[#0099d6]/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-20 right-20 h-60 w-60 rounded-full bg-[#e31e24]/10 blur-3xl" />
+      {/* Orbes suaves */}
+      <div className="pointer-events-none absolute left-16 top-12 h-60 w-60 rounded-full bg-[#0099d6]/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-12 right-16 h-60 w-60 rounded-full bg-[#e31e24]/10 blur-3xl" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
-        {/* Header */}
-        <div className="scroll-reveal mx-auto max-w-2xl text-center">
-          <Image
-            src="/images/malestars-logo.png"
-            alt="Malestars logo"
-            width={340}
-            height={90}
-            className="mx-auto mb-4"
-          />
-          <p className="mt-4 text-lg leading-relaxed text-blue-100/80">
-            Si los MALESTARS hacen su aparicion, BUPREX los calma con su gran accion.
-          </p>
-          <p className="mt-2 text-sm text-blue-200/60">
-            Conoce a los villanos que BUPREX combate con su triple accion: analgesica, antipiretica y antiinflamatoria.
-          </p>
-        </div>
-
-        {/* Characters grid - with floating animations */}
-        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
-          {characters.map((char, i) => (
-            <div
-              key={char.name}
-              className={`scroll-reveal group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 px-6 py-10 text-center backdrop-blur-sm transition-all hover:bg-white/10 ${char.glow} hover:scale-[1.02]`}
-              style={{ transitionDelay: `${i * 150}ms` }}
-            >
-              {/* Floating mascot - circular */}
-              <div className={`relative mb-8 h-44 w-44 overflow-hidden rounded-full border-4 border-white/20 bg-white/10 ${char.floatClass}`}>
-                <Image
-                  src={char.image}
-                  alt={char.name}
-                  fill
-                  className="object-contain p-3 drop-shadow-2xl"
-                />
-              </div>
-              <h3 className="font-[var(--font-heading)] text-2xl font-bold text-white">
-                {char.name}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-blue-100/70">
-                {char.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Tagline with image */}
-        <div className="scroll-reveal mt-16 flex flex-col items-center gap-6 md:flex-row md:justify-center">
-          <div className="animate-float-medium">
+      {/* Lienzo de composición */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6">
+        <div className="relative mx-auto h-[420px] sm:h-[460px] md:h-[520px] lg:h-[560px] xl:h-[600px]">
+          {/* ===== Logo + copy CENTRADOS (recto en el medio) ===== */}
+          <div className="scroll-reveal absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
             <Image
-              src="/images/malestars-3d.png"
-              alt="MALESTARS 3D logo"
-              width={240}
-              height={80}
-              className="drop-shadow-lg"
+              src="/images/malestars-logo.png"
+              alt="Malestars logo"
+              width={360}
+              height={96}
+              className="mx-auto w-[260px] sm:w-[300px] md:w-[340px] lg:w-[360px]"
+              priority
             />
-          </div>
-          <div className="text-center md:text-left">
-            <p className="text-lg font-bold text-white">Triple accion BUPREX</p>
-            <p className="text-sm text-blue-200/70">
-              Baja la fiebre - Alivia el dolor - Desinflama
+            <p className="mt-4 text-[15px] leading-relaxed text-blue-100/90 max-w-[640px]">
+              Si los <strong>MALESTARS</strong> hacen su aparición,{" "}
+              <strong>BUPREX</strong> los calma con su gran acción.
             </p>
+            <p className="mt-1 text-[13px] text-blue-200/70">
+              Conoce a los villanos que BUPREX combate con su triple acción:
+              analgésica, antipirética y antiinflamatoria.
+            </p>
+          </div>
+
+          {/* ===== Rojo (arriba del logo, centrado) ===== */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-[-28px] hidden -translate-x-1/2 md:block"
+          >
+            <div className={`relative w-[200px] lg:w-[240px] xl:w-[260px] ${red.floatClass}`}>
+              <Image
+                src={red.image}
+                alt={red.name}
+                width={260}
+                height={200}
+                className="drop-shadow-2xl"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* ===== Azul (izquierda, centrado vertical, asomando) ===== */}
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none absolute top-1/2 hidden -translate-y-1/2 md:block
+              left-[-90px] lg:left-[-80px] xl:left-[-60px]
+            "
+          >
+            <div className={`relative w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] -rotate-6 ${blue.floatClass}`}>
+              <Image
+                src={blue.image}
+                alt={blue.name}
+                width={340}
+                height={300}
+                className="drop-shadow-2xl"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* ===== Amarillo (derecha, arriba, asomando) ===== */}
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none absolute hidden md:block
+              right-[-90px] lg:right-[-80px] xl:right-[-60px] top-[6%]
+            "
+          >
+            <div className={`relative w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px] rotate-6 ${orange.floatClass}`}>
+              <Image
+                src={orange.image}
+                alt={orange.name}
+                width={340}
+                height={300}
+                className="drop-shadow-2xl"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* En móviles mostramos personajes más pequeños y controlados */}
+          <div className="md:hidden">
+            {/* Azul a la izquierda, amarillo a la derecha, rojo arriba pero reducidos */}
+            <div className="pointer-events-none absolute left-[-40px] top-1/2 -translate-y-1/2">
+              <Image
+                src={blue.image}
+                alt={blue.name}
+                width={160}
+                height={160}
+                className="-rotate-6 opacity-90"
+                priority
+              />
+            </div>
+            <div className="pointer-events-none absolute right-[-40px] top-[12%]">
+              <Image
+                src={orange.image}
+                alt={orange.name}
+                width={150}
+                height={150}
+                className="rotate-6 opacity-90"
+                priority
+              />
+            </div>
+            <div className="pointer-events-none absolute left-1/2 top-[-24px] -translate-x-1/2">
+              <Image
+                src={red.image}
+                alt={red.name}
+                width={140}
+                height={120}
+                className="opacity-95"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>

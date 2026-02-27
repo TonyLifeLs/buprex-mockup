@@ -8,21 +8,51 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel"
-import { ChevronLeft, ChevronRight, Zap, Clock, Shield, Star, Baby, Heart, CheckCircle, Stethoscope } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  Zap,
+  Clock,
+  Shield,
+  Star,
+  Baby,
+  Heart,
+  CheckCircle,
+  Stethoscope,
+} from "lucide-react"
 
-const slides = [
+type Slide = {
+  tag: string
+  title: string
+  highlight: string
+  description?: string
+  badges: { icon: React.ComponentType<{ className?: string }>; text: string }[]
+  // Imagen del producto (primer plano)
+  image: string
+  // Fondo (imagen)
+  bgImage?: string
+  // Color de respaldo del fondo (por si no hay imagen o mientras carga)
+  bgFallback?: string // tailwind color class, p.ej. "bg-[#0099d6]"
+  // Opacidad de la imagen de fondo (0–1)
+  bgOpacity?: number
+  // Posición de la imagen de fondo (css object-position)
+  bgPosition?: string
+}
+
+const slides: Slide[] = [
   {
     tag: "BUPREX ES IBUPROFENO",
     title: "TENEMOS LA CAPSULA BLANDA MAS PEQUENA",
     highlight: "DEL PAIS",
-    description:
-      "Capsula de gelatina blanda de accion ultrarrapida. Absorcion mas rapida que el comprimido convencional.",
     badges: [
       { icon: Zap, text: "Accion Rapida" },
       { icon: Star, text: "La mas pequena" },
     ],
-    image: "/images/woman-capsule.png",
-    bg: "bg-[#0099d6]",
+    image: "/images/woman-capsule.png", // producto
+    bgImage: "/images/capsula-buprex.png", // fondo cualquiera
+    bgFallback: "bg-[#0099d6]",
+    bgOpacity: 0.18,
+    bgPosition: "center",
   },
   {
     tag: "LINEA PEDIATRICA",
@@ -34,21 +64,25 @@ const slides = [
       { icon: Baby, text: "Desde 6 meses" },
       { icon: Shield, text: "Para toda la familia" },
     ],
-    image: "/images/mascot-orange.png",
-    bg: "bg-[#0c3d6e]",
+    image: "/images/buprex-mini.png",
+    bgImage: "/images/capsula-buprex.png",
+    bgFallback: "bg-[#0c3d6e]",
+    bgOpacity: 0.16,
+    bgPosition: "50% 40%",
   },
   {
     tag: "BUPREX MIGRA",
     title: "ALIVIO EFECTIVO CONTRA LA",
-    highlight: "MIGRANA",
-    description:
-      "Ibuprofeno 400 mg + Cafeina 100 mg. Comprimidos recubiertos para el alivio rapido del dolor de cabeza intenso.",
+    highlight: "MIGRAÑA",
     badges: [
       { icon: Zap, text: "Doble accion" },
       { icon: Clock, text: "Alivio prolongado" },
     ],
     image: "/images/buprex-migra.png",
-    bg: "bg-[#0099d6]",
+    bgImage: "/images/capsula-buprex.png",
+    bgFallback: "bg-[#0099d6]",
+    bgOpacity: 0.14,
+    bgPosition: "top center",
   },
 ]
 
@@ -104,35 +138,44 @@ export function Hero() {
 
   return (
     <section id="inicio" className="relative pt-14">
-      <Carousel
-        setApi={setApi}
-        opts={{ loop: true, align: "start" }}
-        className="w-full"
-      >
+      <Carousel setApi={setApi} opts={{ loop: true, align: "start" }} className="w-full">
         <CarouselContent className="ml-0">
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="pl-0">
               <div
-                className={`relative h-[420px] md:h-[480px] ${slide.bg} overflow-hidden`}
+                className={`relative h-[420px] md:h-[480px] overflow-hidden ${slide.bgFallback ?? ""}`}
               >
-                {/* Full bleed watermark image */}
-                <div className="pointer-events-none absolute inset-0">
-                  <Image
-                    src={slide.image}
-                    alt=""
-                    fill
-                    className="object-contain opacity-[0.08] scale-150"
-                    aria-hidden="true"
-                  />
-                </div>
+                {/* Fondo con imagen a full (cualquiera) */}
+                {slide.bgImage && (
+                  <div className="pointer-events-none absolute inset-0">
+                    <Image
+                      src={slide.bgImage}
+                      alt=""
+                      fill
+                      priority={index === 0}
+                      // "object-cover" para que siempre cubra el contenedor
+                      className="object-cover"
+                      // Control de opacidad via style para permitir valores dinámicos
+                      style={{
+                        opacity: slide.bgOpacity ?? 0.15,
+                        objectPosition: slide.bgPosition || "center",
+                      }}
+                      sizes="100vw"
+                      aria-hidden="true"
+                    />
+                  </div>
+                )}
 
-                {/* Decorative elements */}
+                {/* Overlay/gradiente para mejorar contraste del texto */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/25 via-black/0 to-black/10" />
+
+                {/* Elementos decorativos */}
                 <div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-white/5" />
                 <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/5" />
 
                 <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-8 px-6 pt-16 pb-12 md:flex-row md:gap-12 md:pt-20 md:pb-16">
-                  {/* Text Content */}
-                  <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left">
+                  {/* Texto */}
+                  <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left min-h-[240px] justify-start">
                     <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm">
                       <span className="h-2 w-2 rounded-full bg-white" />
                       {slide.tag}
@@ -145,9 +188,11 @@ export function Hero() {
                       </span>
                     </h1>
 
-                    <p className="mt-6 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
-                      {slide.description}
-                    </p>
+                    {slide.description && (
+                      <p className="mt-6 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
+                        {slide.description}
+                      </p>
+                    )}
 
                     {/* Badges */}
                     <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -161,26 +206,9 @@ export function Hero() {
                         </span>
                       ))}
                     </div>
-
-                    {/* CTA */}
-                    <div className="mt-8 flex flex-wrap items-center gap-4">
-                      <a
-                        href="#productos"
-                        className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[#0099d6] shadow-lg transition-all hover:shadow-xl hover:scale-105"
-                      >
-                        Ver productos
-                        <ChevronRight className="h-4 w-4" />
-                      </a>
-                      <a
-                        href="#para-que-sirve"
-                        className="inline-flex rounded-full border-2 border-white/40 px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/10"
-                      >
-                        Prospecto
-                      </a>
-                    </div>
                   </div>
 
-                  {/* Product image - NOT watermark, visible */}
+                  {/* Imagen de producto (primer plano) */}
                   <div className="relative flex flex-1 items-center justify-center">
                     <div className="relative h-72 w-72 md:h-[380px] md:w-[380px]">
                       <Image
@@ -189,6 +217,7 @@ export function Hero() {
                         fill
                         className="object-contain drop-shadow-2xl"
                         priority={index === 0}
+                        sizes="(max-width: 768px) 18rem, 380px"
                       />
                     </div>
                   </div>
@@ -198,7 +227,7 @@ export function Hero() {
           ))}
         </CarouselContent>
 
-        {/* Navigation */}
+        {/* Controles */}
         <div className="absolute inset-y-0 left-0 z-20 flex items-center px-3">
           <button
             onClick={scrollPrev}
@@ -225,35 +254,29 @@ export function Hero() {
             <button
               key={i}
               onClick={() => api?.scrollTo(i)}
-              className={`h-3 rounded-full transition-all ${
-                i === current
-                  ? "w-9 bg-white"
-                  : "w-3 bg-white/40 hover:bg-white/60"
-              }`}
+              className={`h-3 rounded-full transition-all ${i === current ? "w-9 bg-white" : "w-3 bg-white/40 hover:bg-white/60"
+                }`}
               aria-label={`Ir a slide ${i + 1}`}
             />
           ))}
         </div>
       </Carousel>
 
-      {/* Trust Badges Bar - circles like reference */}
+      {/* Trust Badges Bar */}
       <div className="relative z-10 mx-auto mt-6 max-w-5xl px-6 pb-4">
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-white p-4 shadow-xl sm:flex-row sm:items-stretch sm:gap-0 sm:divide-x sm:divide-border sm:p-2">
           {trustBadges.map((badge) => (
-            <div
-              key={badge.title}
-              className="flex flex-1 items-center gap-4 px-5 py-3"
-            >
-              <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 ${badge.borderColor} ${badge.bgColor}`}>
+            <div key={badge.title} className="flex flex-1 items-center gap-4 px-5 py-3">
+              <div
+                className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 ${badge.borderColor} ${badge.bgColor}`}
+              >
                 <badge.icon className={`h-6 w-6 ${badge.color}`} />
               </div>
               <div className="min-w-0">
                 <h3 className="font-[var(--font-heading)] text-sm font-bold text-foreground">
                   {badge.title}
                 </h3>
-                <p className="text-xs leading-snug text-muted-foreground">
-                  {badge.description}
-                </p>
+                <p className="text-xs leading-snug text-muted-foreground">{badge.description}</p>
               </div>
             </div>
           ))}

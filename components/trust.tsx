@@ -86,7 +86,7 @@ export function Trust() {
           <div className="scroll-reveal-right relative flex items-end gap-0 md:w-2/5">
             <div className="animate-float-slow">
               <Image
-                src="/images/mascot-blue.png"
+                src="/images/inflamon-estrellas.png"
                 alt="Mascota BUPREX azul - Dolorex"
                 width={190}
                 height={190}
@@ -104,7 +104,7 @@ export function Trust() {
             </div>
             <div className="animate-float-medium -ml-6">
               <Image
-                src="/images/mascot-red.png"
+                src="/images/malestars-estrellas.png"
                 alt="Mascota BUPREX roja - Fiebrex"
                 width={170}
                 height={170}

@@ -63,7 +63,7 @@ export function Symptoms() {
           <div className="scroll-reveal-left flex flex-col items-center md:w-1/3">
             <div className="animate-float-slow">
               <Image
-                src="/images/malestar-1.png"
+                src="/images/malestars.all.png"
                 alt="Mascota BUPREX"
                 width={300}
                 height={300}

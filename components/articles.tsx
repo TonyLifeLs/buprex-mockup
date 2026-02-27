@@ -73,12 +73,12 @@ const articles = [
     },
   },
   {
-    title: "MIGRANA U OTRO TIPO DE DOLOR DE CABEZA?",
+    title: "MIGRAÑA U OTRO TIPO DE DOLOR DE CABEZA?",
     subtitle: "",
     image: "/images/article-migrana.jpg",
     category: "Neurologia",
     content: {
-      intro: "Existen diferentes tipos de dolor de cabeza. Es importante diferenciar entre una cefalea tensional y una migrana para elegir el tratamiento adecuado.",
+      intro: "Existen diferentes tipos de dolor de cabeza. Es importante diferenciar entre una cefalea tensional y una migraña para elegir el tratamiento adecuado.",
       causes: [
         "Tension muscular en cuello y cabeza por estres",
         "Cambios hormonales, especialmente en mujeres",
@@ -86,12 +86,12 @@ const articles = [
         "Alimentos desencadenantes como chocolate, queso curado o alcohol",
       ],
       solutions: [
-        "BUPREX Migra (Ibuprofeno 400mg + Cafeina 100mg) para migranas",
+        "BUPREX Migra (Ibuprofeno 400mg + Cafeina 100mg) para migrañas",
         "Descansar en un ambiente oscuro y silencioso",
         "Hidratarse adecuadamente",
         "Identificar y evitar factores desencadenantes personales",
       ],
-      tip: "BUPREX Migra combina ibuprofeno con cafeina, potenciando el efecto analgesico para un alivio mas rapido y efectivo contra la migrana.",
+      tip: "BUPREX Migra combina ibuprofeno con cafeina, potenciando el efecto analgesico para un alivio mas rapido y efectivo contra la migraña.",
     },
   },
 ]
@@ -108,10 +108,10 @@ export function Articles() {
             Blog
           </span>
           <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
-            Articulos de Salud
+            Artículos de Salud
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Informacion util para cuidar tu bienestar y el de tu familia.
+            Información útil para cuidar tu bienestar y el de tu familia.
           </p>
         </div>
 

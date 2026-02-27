@@ -161,14 +161,20 @@ export function Products() {
                   />
                 </div>
 
-                {/* Floating Mascot */}
-                <div className={`relative hidden h-32 w-32 shrink-0 md:block ${product.floatClass}`}>
-                  <Image
-                    src={product.mascot}
-                    alt="Mascota BUPREX"
-                    fill
-                    className="object-contain drop-shadow-xl"
-                  />
+                {/* Floating Mascot - circular */}
+                <div className={`relative shrink-0 ${product.floatClass}`}>
+                  <div
+                    className="flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-4 bg-white/10 backdrop-blur-sm"
+                    style={{ borderColor: `${product.accentColor}55` }}
+                  >
+                    <Image
+                      src={product.mascot}
+                      alt="Mascota BUPREX"
+                      width={100}
+                      height={100}
+                      className="object-contain drop-shadow-xl"
+                    />
+                  </div>
                 </div>
 
                 {/* Product info */}

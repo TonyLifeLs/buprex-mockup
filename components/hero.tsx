@@ -113,7 +113,7 @@ export function Hero() {
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="pl-0">
               <div
-                className={`relative h-[560px] md:h-[620px] ${slide.bg} overflow-hidden`}
+                className={`relative h-[420px] md:h-[480px] ${slide.bg} overflow-hidden`}
               >
                 {/* Full bleed watermark image */}
                 <div className="pointer-events-none absolute inset-0">

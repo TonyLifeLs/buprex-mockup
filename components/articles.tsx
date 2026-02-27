@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { X, ArrowRight } from "lucide-react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const articles = [
   {
@@ -97,11 +98,12 @@ const articles = [
 
 export function Articles() {
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null)
+  const sectionRef = useScrollReveal()
 
   return (
-    <section id="articulos" className="bg-secondary/40 py-20 md:py-28">
+    <section id="articulos" ref={sectionRef} className="bg-secondary/40 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="scroll-reveal mx-auto max-w-2xl text-center">
           <span className="mb-3 inline-block rounded-full bg-[#0099d6] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
             Blog
           </span>
@@ -115,10 +117,11 @@ export function Articles() {
 
         {/* 2x2 Grid */}
         <div className="mt-14 grid grid-cols-1 gap-1 sm:grid-cols-2">
-          {articles.map((article) => (
+          {articles.map((article, i) => (
             <article
               key={article.title}
-              className="group relative cursor-pointer overflow-hidden"
+              className="scroll-reveal-scale group relative cursor-pointer overflow-hidden"
+              style={{ transitionDelay: `${i * 120}ms` }}
               onClick={() => setSelectedArticle(article)}
             >
               {/* Full bleed image */}

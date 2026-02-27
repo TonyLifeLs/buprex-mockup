@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { useEffect, useRef } from "react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const characters = [
   {
@@ -9,18 +10,21 @@ const characters = [
     image: "/images/mascot-red.png",
     description: "Representa la fiebre. BUPREX lo combate con su accion antipiretica.",
     glow: "shadow-[0_0_40px_rgba(227,30,36,0.3)]",
+    floatClass: "animate-float-slow",
   },
   {
     name: "Dolorex",
     image: "/images/mascot-blue.png",
     description: "Representa el dolor. BUPREX lo vence con su accion analgesica rapida.",
     glow: "shadow-[0_0_40px_rgba(0,153,214,0.3)]",
+    floatClass: "animate-float-medium",
   },
   {
     name: "Inflamex",
     image: "/images/mascot-orange.png",
     description: "Representa la inflamacion. BUPREX la reduce con su accion antiinflamatoria.",
     glow: "shadow-[0_0_40px_rgba(245,166,35,0.3)]",
+    floatClass: "animate-float-fast",
   },
 ]
 
@@ -89,9 +93,12 @@ function StarField() {
 }
 
 export function Malestars() {
+  const sectionRef = useScrollReveal()
+
   return (
     <section
       id="malestars"
+      ref={sectionRef}
       className="relative overflow-hidden py-20 md:py-28"
       style={{ background: "linear-gradient(135deg, #0c3d6e 0%, #0b2a4a 50%, #0c3d6e 100%)" }}
     >
@@ -104,7 +111,7 @@ export function Malestars() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Header */}
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="scroll-reveal mx-auto max-w-2xl text-center">
           <Image
             src="/images/malestars-logo.png"
             alt="Malestars logo"
@@ -120,14 +127,16 @@ export function Malestars() {
           </p>
         </div>
 
-        {/* Characters grid */}
+        {/* Characters grid - with floating animations */}
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {characters.map((char) => (
+          {characters.map((char, i) => (
             <div
               key={char.name}
-              className={`group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-all hover:bg-white/10 ${char.glow} hover:scale-[1.02]`}
+              className={`scroll-reveal group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 text-center backdrop-blur-sm transition-all hover:bg-white/10 ${char.glow} hover:scale-[1.02]`}
+              style={{ transitionDelay: `${i * 150}ms` }}
             >
-              <div className="relative mb-6 h-52 w-52 transition-transform duration-500 group-hover:-translate-y-3 group-hover:rotate-3">
+              {/* Floating mascot */}
+              <div className={`relative mb-6 h-52 w-52 ${char.floatClass}`}>
                 <Image
                   src={char.image}
                   alt={char.name}
@@ -146,14 +155,16 @@ export function Malestars() {
         </div>
 
         {/* Tagline with image */}
-        <div className="mt-16 flex flex-col items-center gap-6 md:flex-row md:justify-center">
-          <Image
-            src="/images/malestars-3d.png"
-            alt="MALESTARS 3D logo"
-            width={240}
-            height={80}
-            className="drop-shadow-lg"
-          />
+        <div className="scroll-reveal mt-16 flex flex-col items-center gap-6 md:flex-row md:justify-center">
+          <div className="animate-float-medium">
+            <Image
+              src="/images/malestars-3d.png"
+              alt="MALESTARS 3D logo"
+              width={240}
+              height={80}
+              className="drop-shadow-lg"
+            />
+          </div>
           <div className="text-center md:text-left">
             <p className="text-lg font-bold text-white">Triple accion BUPREX</p>
             <p className="text-sm text-blue-200/70">

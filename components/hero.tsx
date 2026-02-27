@@ -234,7 +234,7 @@ export function Hero() {
       </Carousel>
 
       {/* Trust Badges Bar - circles like reference */}
-      <div className="relative z-10 -mt-10 mx-auto max-w-5xl px-6">
+      <div className="relative z-10 mx-auto mt-6 max-w-5xl px-6 pb-4">
         <div className="flex flex-col gap-4 rounded-2xl border border-border bg-white p-4 shadow-xl sm:flex-row sm:items-stretch sm:gap-0 sm:divide-x sm:divide-border sm:p-2">
           {trustBadges.map((badge) => (
             <div

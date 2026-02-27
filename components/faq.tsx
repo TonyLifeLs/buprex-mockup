@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const faqs = [
   {
@@ -47,25 +48,29 @@ const faqs = [
 ]
 
 export function FAQ() {
+  const sectionRef = useScrollReveal()
+
   return (
-    <section className="relative overflow-hidden bg-card py-20 md:py-28">
+    <section ref={sectionRef} className="relative overflow-hidden bg-card py-20 md:py-28">
       <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#0099d6]/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-4xl px-6">
         <div className="flex flex-col items-center gap-8 md:flex-row md:gap-12">
-          {/* Left mascot */}
+          {/* Left mascot - floating */}
           <div className="hidden md:flex md:w-1/4 md:flex-col md:items-center">
-            <Image
-              src="/images/mascot-orange.png"
-              alt="Mascota BUPREX"
-              width={180}
-              height={180}
-              className="drop-shadow-lg"
-            />
+            <div className="scroll-reveal-left animate-float-medium">
+              <Image
+                src="/images/mascot-orange.png"
+                alt="Mascota BUPREX"
+                width={180}
+                height={180}
+                className="drop-shadow-lg"
+              />
+            </div>
           </div>
 
           {/* Right content */}
-          <div className="flex-1">
+          <div className="scroll-reveal flex-1">
             <div className="mb-10 text-center md:text-left">
               <span className="mb-3 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-card">
                 Dudas frecuentes

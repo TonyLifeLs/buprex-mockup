@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { useEffect, useRef } from "react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const products = [
   {
@@ -11,7 +12,7 @@ const products = [
     mascot: "/images/mascot-blue.png",
     description: "Contiene 100 mg de ibuprofeno por cada 5 ml de suspension",
     accentColor: "#0099d6",
-    bgGradient: "from-[#1a4a7a]/60 to-[#0c3d6e]/80",
+    floatClass: "animate-float-slow",
   },
   {
     name: "BUPREX FORTE",
@@ -20,7 +21,7 @@ const products = [
     mascot: "/images/mascot-orange.png",
     description: "Contiene 200 mg de ibuprofeno por cada 5 ml de suspension.",
     accentColor: "#f5a623",
-    bgGradient: "from-[#0c3d6e]/80 to-[#1a4a7a]/60",
+    floatClass: "animate-float-medium",
   },
   {
     name: "BUPREX",
@@ -29,7 +30,7 @@ const products = [
     mascot: "/images/mascot-red.png",
     description: "Contiene 40 mg de ibuprofeno por 1 ml.",
     accentColor: "#e31e24",
-    bgGradient: "from-[#1a4a7a]/60 to-[#0c3d6e]/80",
+    floatClass: "animate-float-fast",
   },
 ]
 
@@ -117,11 +118,13 @@ function ProductStarField() {
 }
 
 export function Products() {
+  const sectionRef = useScrollReveal()
+
   return (
-    <section id="productos" className="py-20 md:py-28">
+    <section id="productos" ref={sectionRef} className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section header */}
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="scroll-reveal mx-auto max-w-2xl text-center">
           <span className="mb-3 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
             Nuestra linea
           </span>
@@ -135,16 +138,17 @@ export function Products() {
 
         {/* Pediatric products - vertical stacked layout */}
         <div
-          className="relative mt-14 overflow-hidden rounded-3xl"
+          className="scroll-reveal-scale relative mt-14 overflow-hidden rounded-3xl"
           style={{ background: "linear-gradient(135deg, #0c3d6e 0%, #0b2a4a 50%, #0c3d6e 100%)" }}
         >
           <ProductStarField />
 
           <div className="relative z-10 flex flex-col divide-y divide-white/10">
-            {products.map((product) => (
+            {products.map((product, i) => (
               <div
                 key={product.name + product.subtitle}
-                className="group flex flex-col items-center gap-6 p-8 transition-colors hover:bg-white/5 md:flex-row md:gap-10 md:p-10"
+                className="scroll-reveal group flex flex-col items-center gap-6 p-8 transition-colors hover:bg-white/5 md:flex-row md:gap-10 md:p-10"
+                style={{ transitionDelay: `${i * 150}ms` }}
               >
                 {/* Product image */}
                 <div className="flex shrink-0 items-center justify-center rounded-2xl bg-white/10 p-4 backdrop-blur-sm md:h-44 md:w-52">
@@ -157,8 +161,8 @@ export function Products() {
                   />
                 </div>
 
-                {/* Mascot */}
-                <div className="relative hidden h-32 w-32 shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 md:block">
+                {/* Floating Mascot */}
+                <div className={`relative hidden h-32 w-32 shrink-0 md:block ${product.floatClass}`}>
                   <Image
                     src={product.mascot}
                     alt="Mascota BUPREX"
@@ -189,10 +193,11 @@ export function Products() {
 
         {/* Adult products - card layout */}
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-          {adultProducts.map((product) => (
+          {adultProducts.map((product, i) => (
             <div
               key={product.name}
-              className={`group relative flex flex-col overflow-hidden rounded-2xl border-2 ${product.color} bg-card transition-all hover:shadow-xl`}
+              className={`scroll-reveal group relative flex flex-col overflow-hidden rounded-2xl border-2 ${product.color} bg-card transition-all hover:shadow-xl`}
+              style={{ transitionDelay: `${i * 150}ms` }}
             >
               <div className="relative flex h-56 items-center justify-center bg-secondary/30 p-4">
                 <Image

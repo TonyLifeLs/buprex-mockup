@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const symptoms = [
   {
@@ -46,8 +49,10 @@ const symptoms = [
 ]
 
 export function Symptoms() {
+  const sectionRef = useScrollReveal()
+
   return (
-    <section id="para-que-sirve" className="relative bg-white py-20 md:py-28 overflow-hidden">
+    <section id="para-que-sirve" ref={sectionRef} className="relative bg-white py-20 md:py-28 overflow-hidden">
       {/* Decorative blurs */}
       <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-[#0099d6]/5 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#e31e24]/5 blur-3xl" />
@@ -55,14 +60,16 @@ export function Symptoms() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col items-center gap-10 md:flex-row md:gap-16">
           {/* Left: Mascot */}
-          <div className="flex flex-col items-center md:w-1/3">
-            <Image
-              src="/images/malestar-1.png"
-              alt="Mascota BUPREX"
-              width={300}
-              height={300}
-              className="drop-shadow-xl"
-            />
+          <div className="scroll-reveal-left flex flex-col items-center md:w-1/3">
+            <div className="animate-float-slow">
+              <Image
+                src="/images/malestar-1.png"
+                alt="Mascota BUPREX"
+                width={300}
+                height={300}
+                className="drop-shadow-xl"
+              />
+            </div>
             <h2 className="mt-6 text-center font-[var(--font-heading)] text-3xl font-bold tracking-tight text-foreground md:text-4xl text-balance">
               {"Para que sirve?"}
             </h2>
@@ -73,10 +80,11 @@ export function Symptoms() {
 
           {/* Right: Grid with circular icons */}
           <div className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {symptoms.map((symptom) => (
+            {symptoms.map((symptom, i) => (
               <div
                 key={symptom.title}
-                className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-6 text-center transition-all hover:shadow-lg hover:border-[#0099d6]/30 hover:-translate-y-1"
+                className="scroll-reveal group flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-6 text-center transition-all hover:shadow-lg hover:border-[#0099d6]/30 hover:-translate-y-1"
+                style={{ transitionDelay: `${i * 100}ms` }}
               >
                 {/* Circular image container */}
                 <div className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 ${symptom.color} ${symptom.bgColor} p-2 transition-transform group-hover:scale-110`}>

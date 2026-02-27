@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import { Clock, Shield, Zap } from "lucide-react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 const trustItems = [
   {
@@ -32,8 +35,10 @@ const trustItems = [
 ]
 
 export function Trust() {
+  const sectionRef = useScrollReveal()
+
   return (
-    <section className="relative overflow-hidden bg-[#0c3d6e] py-20 md:py-28">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#0c3d6e] py-20 md:py-28">
       {/* Decorative circles */}
       <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#0099d6]/20" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 h-52 w-52 rounded-full bg-[#e31e24]/10" />
@@ -41,7 +46,7 @@ export function Trust() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col items-center gap-12 md:flex-row md:gap-16">
           {/* Left: Content */}
-          <div className="flex-1 text-center md:text-left">
+          <div className="scroll-reveal-left flex-1 text-center md:text-left">
             <span className="mb-4 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
               32 anos de confianza
             </span>
@@ -53,10 +58,11 @@ export function Trust() {
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
-              {trustItems.map((item) => (
+              {trustItems.map((item, i) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm"
+                  className="scroll-reveal rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm"
+                  style={{ transitionDelay: `${i * 150}ms` }}
                 >
                   {/* Circular icon */}
                   <div className={`mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full border-2 ${item.borderColor} ${item.bgColor}`}>
@@ -76,29 +82,35 @@ export function Trust() {
             </div>
           </div>
 
-          {/* Right: Mascots */}
-          <div className="relative flex items-end gap-0 md:w-2/5">
-            <Image
-              src="/images/mascot-blue.png"
-              alt="Mascota BUPREX azul - Dolorex"
-              width={190}
-              height={190}
-              className="relative z-10 drop-shadow-2xl"
-            />
-            <Image
-              src="/images/malestar-1.png"
-              alt="Mascota BUPREX naranja - Inflamex"
-              width={200}
-              height={200}
-              className="relative z-20 -ml-6 drop-shadow-2xl"
-            />
-            <Image
-              src="/images/mascot-red.png"
-              alt="Mascota BUPREX roja - Fiebrex"
-              width={170}
-              height={170}
-              className="relative z-0 -ml-6 drop-shadow-2xl"
-            />
+          {/* Right: Floating Mascots */}
+          <div className="scroll-reveal-right relative flex items-end gap-0 md:w-2/5">
+            <div className="animate-float-slow">
+              <Image
+                src="/images/mascot-blue.png"
+                alt="Mascota BUPREX azul - Dolorex"
+                width={190}
+                height={190}
+                className="relative z-10 drop-shadow-2xl"
+              />
+            </div>
+            <div className="animate-float-fast -ml-6">
+              <Image
+                src="/images/malestar-1.png"
+                alt="Mascota BUPREX naranja - Inflamex"
+                width={200}
+                height={200}
+                className="relative z-20 drop-shadow-2xl"
+              />
+            </div>
+            <div className="animate-float-medium -ml-6">
+              <Image
+                src="/images/mascot-red.png"
+                alt="Mascota BUPREX roja - Fiebrex"
+                width={170}
+                height={170}
+                className="relative z-0 drop-shadow-2xl"
+              />
+            </div>
           </div>
         </div>
       </div>

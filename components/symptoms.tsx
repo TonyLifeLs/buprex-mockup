@@ -12,7 +12,7 @@ const symptoms = [
     bgColor: "bg-[#0099d6]/10",
   },
   {
-    image: "/images/fiebre.png",
+    image: "/images/dolor-cabeza.png",
     title: "Dolor de Cabeza",
     description: "Accion rapida contra cefaleas y migranas.",
     color: "border-[#e31e24]",

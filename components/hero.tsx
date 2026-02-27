@@ -113,7 +113,7 @@ export function Hero() {
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="pl-0">
               <div
-                className={`relative min-h-[550px] md:min-h-[650px] ${slide.bg} overflow-hidden`}
+                className={`relative h-[560px] md:h-[620px] ${slide.bg} overflow-hidden`}
               >
                 {/* Full bleed watermark image */}
                 <div className="pointer-events-none absolute inset-0">
@@ -199,37 +199,40 @@ export function Hero() {
         </CarouselContent>
 
         {/* Navigation */}
-        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4">
+        <div className="absolute inset-y-0 left-0 z-20 flex items-center px-3">
           <button
             onClick={scrollPrev}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/40 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/60"
             aria-label="Anterior"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-6 w-6" />
           </button>
+        </div>
 
-          <div className="flex items-center gap-2">
-            {Array.from({ length: count }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => api?.scrollTo(i)}
-                className={`h-2.5 rounded-full transition-all ${
-                  i === current
-                    ? "w-8 bg-white"
-                    : "w-2.5 bg-white/40 hover:bg-white/60"
-                }`}
-                aria-label={`Ir a slide ${i + 1}`}
-              />
-            ))}
-          </div>
-
+        <div className="absolute inset-y-0 right-0 z-20 flex items-center px-3">
           <button
             onClick={scrollNext}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/40 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/60"
             aria-label="Siguiente"
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-6 w-6" />
           </button>
+        </div>
+
+        {/* Dots */}
+        <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
+          {Array.from({ length: count }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => api?.scrollTo(i)}
+              className={`h-3 rounded-full transition-all ${
+                i === current
+                  ? "w-9 bg-white"
+                  : "w-3 bg-white/40 hover:bg-white/60"
+              }`}
+              aria-label={`Ir a slide ${i + 1}`}
+            />
+          ))}
         </div>
       </Carousel>
 

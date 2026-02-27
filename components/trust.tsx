@@ -7,18 +7,27 @@ const trustItems = [
     stat: "32",
     label: "Anos",
     description: "Tratando el dolor, fiebre e inflamacion en Ecuador.",
+    color: "text-[#0099d6]",
+    bgColor: "bg-[#0099d6]/20",
+    borderColor: "border-[#0099d6]/40",
   },
   {
     icon: Shield,
     stat: "Confianza",
     label: "Medica",
     description: "Recomendados por medicos y profesionales de la salud en Ecuador.",
+    color: "text-[#f5a623]",
+    bgColor: "bg-[#f5a623]/20",
+    borderColor: "border-[#f5a623]/40",
   },
   {
     icon: Zap,
     stat: "Alivio",
     label: "Rapido",
     description: "Capsula blanda de accion rapida para un alivio efectivo.",
+    color: "text-[#e31e24]",
+    bgColor: "bg-[#e31e24]/20",
+    borderColor: "border-[#e31e24]/40",
   },
 ]
 
@@ -33,13 +42,13 @@ export function Trust() {
         <div className="flex flex-col items-center gap-12 md:flex-row md:gap-16">
           {/* Left: Content */}
           <div className="flex-1 text-center md:text-left">
-            <span className="mb-4 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-card">
+            <span className="mb-4 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
               32 anos de confianza
             </span>
-            <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-card md:text-4xl text-balance">
+            <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-white md:text-4xl text-balance">
               Alivio Rapido y Confiable para toda la Familia
             </h2>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-card/70">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
               Pioneros en el tratamiento del dolor con la confianza de miles de familias ecuatorianas. Desde 1993 ofreciendo soluciones de alivio.
             </p>
 
@@ -47,18 +56,19 @@ export function Trust() {
               {trustItems.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-card/10 bg-card/5 p-6 text-center backdrop-blur-sm"
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm"
                 >
-                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#e31e24]">
-                    <item.icon className="h-6 w-6 text-card" />
+                  {/* Circular icon */}
+                  <div className={`mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full border-2 ${item.borderColor} ${item.bgColor}`}>
+                    <item.icon className={`h-6 w-6 ${item.color}`} />
                   </div>
-                  <div className="font-[var(--font-heading)] text-2xl font-extrabold text-card">
+                  <div className="font-[var(--font-heading)] text-2xl font-extrabold text-white">
                     {item.stat}
                   </div>
                   <div className="mt-1 text-xs font-semibold uppercase tracking-widest text-[#0099d6]">
                     {item.label}
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed text-card/60">
+                  <p className="mt-2 text-xs leading-relaxed text-white/60">
                     {item.description}
                   </p>
                 </div>

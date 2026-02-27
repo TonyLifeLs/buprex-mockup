@@ -5,37 +5,49 @@ const symptoms = [
     image: "/images/dolor-muscular.png",
     title: "Dolor Muscular",
     description: "Alivio efectivo para dolores musculares y articulares.",
+    color: "border-[#0099d6]",
+    bgColor: "bg-[#0099d6]/10",
   },
   {
     image: "/images/fiebre.png",
     title: "Dolor de Cabeza",
     description: "Accion rapida contra cefaleas y migranas.",
+    color: "border-[#e31e24]",
+    bgColor: "bg-[#e31e24]/10",
   },
   {
     image: "/images/dolor-espalda.png",
     title: "Dolor de Espalda",
     description: "Reduce la inflamacion y alivia el dolor lumbar.",
+    color: "border-[#f5a623]",
+    bgColor: "bg-[#f5a623]/10",
   },
   {
     image: "/images/dolor-garganta.png",
     title: "Dolor de Garganta",
     description: "Eficaz contra la inflamacion y el dolor faringeo.",
+    color: "border-[#0099d6]",
+    bgColor: "bg-[#0099d6]/10",
   },
   {
     image: "/images/fiebre.png",
     title: "Fiebre",
     description: "Propiedades antipireticas para reducir la temperatura.",
+    color: "border-[#e31e24]",
+    bgColor: "bg-[#e31e24]/10",
   },
   {
     image: "/images/gripe.png",
     title: "Estados Gripales",
     description: "Alivia los sintomas asociados a resfriados y gripe.",
+    color: "border-[#0c3d6e]",
+    bgColor: "bg-[#0c3d6e]/10",
   },
 ]
 
 export function Symptoms() {
   return (
-    <section id="para-que-sirve" className="relative bg-card py-20 md:py-28 overflow-hidden">
+    <section id="para-que-sirve" className="relative bg-white py-20 md:py-28 overflow-hidden">
       {/* Decorative blurs */}
       <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-[#0099d6]/5 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#e31e24]/5 blur-3xl" />
@@ -59,19 +71,20 @@ export function Symptoms() {
             </p>
           </div>
 
-          {/* Right: Grid with real illustrations */}
+          {/* Right: Grid with circular icons */}
           <div className="grid flex-1 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {symptoms.map((symptom) => (
               <div
                 key={symptom.title}
-                className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all hover:shadow-lg hover:border-[#0099d6]/30 hover:-translate-y-1"
+                className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-6 text-center transition-all hover:shadow-lg hover:border-[#0099d6]/30 hover:-translate-y-1"
               >
-                <div className="relative h-20 w-20 shrink-0 rounded-xl bg-secondary/60 p-2 transition-transform group-hover:scale-110">
+                {/* Circular image container */}
+                <div className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 ${symptom.color} ${symptom.bgColor} p-2 transition-transform group-hover:scale-110`}>
                   <Image
                     src={symptom.image}
                     alt={symptom.title}
                     fill
-                    className="object-contain"
+                    className="object-contain p-1"
                   />
                 </div>
                 <h3 className="font-[var(--font-heading)] text-base font-bold text-foreground">

@@ -8,7 +8,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel"
-import { ChevronLeft, ChevronRight, Zap, Clock, Shield, Star, Baby } from "lucide-react"
+import { ChevronLeft, ChevronRight, Zap, Clock, Shield, Star, Baby, Heart, CheckCircle, Stethoscope } from "lucide-react"
 
 const slides = [
   {
@@ -23,8 +23,6 @@ const slides = [
     ],
     image: "/images/woman-capsule.png",
     bg: "bg-[#0099d6]",
-    imageStyle: "object-contain p-6",
-    circleBg: "bg-white/15",
   },
   {
     tag: "LINEA PEDIATRICA",
@@ -38,8 +36,6 @@ const slides = [
     ],
     image: "/images/mascot-orange.png",
     bg: "bg-[#0c3d6e]",
-    imageStyle: "object-contain p-4",
-    circleBg: "bg-white/10",
   },
   {
     tag: "BUPREX MIGRA",
@@ -53,15 +49,34 @@ const slides = [
     ],
     image: "/images/buprex-migra.png",
     bg: "bg-[#0099d6]",
-    imageStyle: "object-contain p-6",
-    circleBg: "bg-white/15",
   },
 ]
 
-const trustStats = [
-  { value: "32", label: "Anos", sub: "de trayectoria", icon: Clock },
-  { value: "", label: "Confianza", sub: "medica nacional", icon: Shield },
-  { value: "", label: "Pioneros", sub: "en Ecuador", icon: Star },
+const trustBadges = [
+  {
+    icon: Heart,
+    title: "ALIVIO RAPIDO",
+    description: "Capsula blanda de accion rapida",
+    color: "text-[#e31e24]",
+    bgColor: "bg-[#e31e24]/10",
+    borderColor: "border-[#e31e24]/30",
+  },
+  {
+    icon: CheckCircle,
+    title: "PIONEROS",
+    description: "32 Anos tratando el dolor, fiebre e inflamacion",
+    color: "text-[#0099d6]",
+    bgColor: "bg-[#0099d6]/10",
+    borderColor: "border-[#0099d6]/30",
+  },
+  {
+    icon: Stethoscope,
+    title: "CONFIANZA MEDICA",
+    description: "Recomendados por medicos y profesionales de la salud en Ecuador",
+    color: "text-[#0c3d6e]",
+    bgColor: "bg-[#0c3d6e]/10",
+    borderColor: "border-[#0c3d6e]/30",
+  },
 ]
 
 export function Hero() {
@@ -88,7 +103,7 @@ export function Hero() {
   const scrollNext = useCallback(() => api?.scrollNext(), [api])
 
   return (
-    <section id="inicio" className="relative pt-20">
+    <section id="inicio" className="relative pt-14">
       <Carousel
         setApi={setApi}
         opts={{ loop: true, align: "start" }}
@@ -98,28 +113,39 @@ export function Hero() {
           {slides.map((slide, index) => (
             <CarouselItem key={index} className="pl-0">
               <div
-                className={`relative min-h-[600px] md:min-h-[700px] ${slide.bg} overflow-hidden`}
+                className={`relative min-h-[550px] md:min-h-[650px] ${slide.bg} overflow-hidden`}
               >
+                {/* Full bleed watermark image */}
+                <div className="pointer-events-none absolute inset-0">
+                  <Image
+                    src={slide.image}
+                    alt=""
+                    fill
+                    className="object-contain opacity-[0.08] scale-150"
+                    aria-hidden="true"
+                  />
+                </div>
+
                 {/* Decorative elements */}
-                <div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-card/5" />
-                <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-card/5" />
+                <div className="pointer-events-none absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-white/5" />
+                <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/5" />
 
                 <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-8 px-6 pt-16 pb-12 md:flex-row md:gap-12 md:pt-20 md:pb-16">
                   {/* Text Content */}
                   <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left">
-                    <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-card/20 bg-card/10 px-5 py-2 text-xs font-bold uppercase tracking-widest text-card backdrop-blur-sm">
-                      <span className="h-2 w-2 rounded-full bg-card" />
+                    <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+                      <span className="h-2 w-2 rounded-full bg-white" />
                       {slide.tag}
                     </span>
 
-                    <h1 className="font-[var(--font-heading)] text-4xl font-extrabold leading-[1.05] tracking-tight text-card md:text-5xl lg:text-6xl text-balance">
+                    <h1 className="font-[var(--font-heading)] text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-5xl lg:text-6xl text-balance">
                       {slide.title}{" "}
-                      <span className="inline-block rounded-lg bg-[#e31e24] px-4 py-1 text-card">
+                      <span className="inline-block rounded-lg bg-[#e31e24] px-4 py-1 text-white">
                         {slide.highlight}
                       </span>
                     </h1>
 
-                    <p className="mt-6 max-w-md text-base leading-relaxed text-card/80 md:text-lg">
+                    <p className="mt-6 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
                       {slide.description}
                     </p>
 
@@ -128,7 +154,7 @@ export function Hero() {
                       {slide.badges.map((badge, i) => (
                         <span
                           key={i}
-                          className="inline-flex items-center gap-2 rounded-full border border-card/15 bg-card/10 px-4 py-2 text-xs font-semibold text-card backdrop-blur-sm"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm"
                         >
                           <badge.icon className="h-4 w-4" />
                           {badge.text}
@@ -140,66 +166,31 @@ export function Hero() {
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                       <a
                         href="#productos"
-                        className="inline-flex items-center gap-2 rounded-full bg-card px-7 py-3.5 text-sm font-bold text-[#0099d6] shadow-lg transition-all hover:shadow-xl hover:scale-105"
+                        className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[#0099d6] shadow-lg transition-all hover:shadow-xl hover:scale-105"
                       >
                         Ver productos
                         <ChevronRight className="h-4 w-4" />
                       </a>
                       <a
                         href="#para-que-sirve"
-                        className="inline-flex rounded-full border-2 border-card/40 px-7 py-3.5 text-sm font-bold text-card transition-all hover:bg-card/10"
+                        className="inline-flex rounded-full border-2 border-white/40 px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/10"
                       >
                         Prospecto
                       </a>
                     </div>
                   </div>
 
-                  {/* Round Image */}
+                  {/* Product image - NOT watermark, visible */}
                   <div className="relative flex flex-1 items-center justify-center">
-                    <div className="relative">
-                      {/* Outer ring */}
-                      <div className="absolute -inset-5 rounded-full border-2 border-dashed border-card/15 animate-[spin_30s_linear_infinite]" />
-                      {/* Inner decorative ring */}
-                      <div className="absolute -inset-2 rounded-full border border-card/10" />
-                      {/* Main circle container */}
-                      <div className={`relative h-72 w-72 overflow-hidden rounded-full border-4 border-card/25 ${slide.circleBg} shadow-2xl backdrop-blur-sm md:h-[380px] md:w-[380px]`}>
-                        <Image
-                          src={slide.image}
-                          alt={slide.tag}
-                          fill
-                          className={slide.imageStyle}
-                          priority={index === 0}
-                        />
-                      </div>
+                    <div className="relative h-72 w-72 md:h-[380px] md:w-[380px]">
+                      <Image
+                        src={slide.image}
+                        alt={slide.tag}
+                        fill
+                        className="object-contain drop-shadow-2xl"
+                        priority={index === 0}
+                      />
                     </div>
-                  </div>
-                </div>
-
-                {/* Trust Stats Bar */}
-                <div className="relative mx-auto max-w-7xl px-6 pb-8">
-                  <div className="flex flex-wrap items-center gap-4 md:gap-6">
-                    {trustStats.map((stat, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-3 rounded-xl border border-card/10 bg-card/5 px-5 py-3 backdrop-blur-sm"
-                      >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-card/20 bg-card/10">
-                          {stat.value ? (
-                            <span className="text-sm font-extrabold text-card">
-                              {stat.value}
-                            </span>
-                          ) : (
-                            <stat.icon className="h-5 w-5 text-card" />
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-card">
-                            {stat.label}
-                          </p>
-                          <p className="text-xs text-card/60">{stat.sub}</p>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -211,7 +202,7 @@ export function Hero() {
         <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4">
           <button
             onClick={scrollPrev}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-card/40 bg-card/10 text-card backdrop-blur-sm transition-all hover:bg-card/20"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/40 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
             aria-label="Anterior"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -224,8 +215,8 @@ export function Hero() {
                 onClick={() => api?.scrollTo(i)}
                 className={`h-2.5 rounded-full transition-all ${
                   i === current
-                    ? "w-8 bg-card"
-                    : "w-2.5 bg-card/40 hover:bg-card/60"
+                    ? "w-8 bg-white"
+                    : "w-2.5 bg-white/40 hover:bg-white/60"
                 }`}
                 aria-label={`Ir a slide ${i + 1}`}
               />
@@ -234,13 +225,37 @@ export function Hero() {
 
           <button
             onClick={scrollNext}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-card/40 bg-card/10 text-card backdrop-blur-sm transition-all hover:bg-card/20"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white/40 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
             aria-label="Siguiente"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
       </Carousel>
+
+      {/* Trust Badges Bar - circles like reference */}
+      <div className="relative z-10 -mt-10 mx-auto max-w-5xl px-6">
+        <div className="flex flex-col gap-4 rounded-2xl border border-border bg-white p-4 shadow-xl sm:flex-row sm:items-stretch sm:gap-0 sm:divide-x sm:divide-border sm:p-2">
+          {trustBadges.map((badge) => (
+            <div
+              key={badge.title}
+              className="flex flex-1 items-center gap-4 px-5 py-3"
+            >
+              <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 ${badge.borderColor} ${badge.bgColor}`}>
+                <badge.icon className={`h-6 w-6 ${badge.color}`} />
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-[var(--font-heading)] text-sm font-bold text-foreground">
+                  {badge.title}
+                </h3>
+                <p className="text-xs leading-snug text-muted-foreground">
+                  {badge.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

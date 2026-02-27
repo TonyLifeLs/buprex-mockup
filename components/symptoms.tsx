@@ -66,7 +66,7 @@ export function Symptoms() {
                 key={symptom.title}
                 className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center transition-all hover:shadow-lg hover:border-[#0099d6]/30 hover:-translate-y-1"
               >
-                <div className="relative h-20 w-20 shrink-0 transition-transform group-hover:scale-110">
+                <div className="relative h-20 w-20 shrink-0 rounded-xl bg-secondary/60 p-2 transition-transform group-hover:scale-110">
                   <Image
                     src={symptom.image}
                     alt={symptom.title}

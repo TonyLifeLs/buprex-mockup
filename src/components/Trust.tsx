@@ -1,0 +1,119 @@
+"use client"
+
+import Image from "next/image"
+import { Clock, Shield, Zap } from "lucide-react"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+
+const trustItems = [
+  {
+    icon: Clock,
+    stat: "32",
+    label: "Años",
+    description: "Tratando el dolor, fiebre e inflamación en Ecuador.",
+    color: "text-[#0099d6]",
+    bgColor: "bg-[#0099d6]/20",
+    borderColor: "border-[#0099d6]/40",
+  },
+  {
+    icon: Shield,
+    stat: "Confianza",
+    label: "Médica",
+    description: "Recomendados por médicos y profesionales de la salud en Ecuador.",
+    color: "text-[#f5a623]",
+    bgColor: "bg-[#f5a623]/20",
+    borderColor: "border-[#f5a623]/40",
+  },
+  {
+    icon: Zap,
+    stat: "Alivio",
+    label: "Rápido",
+    description: "Cápsula blanda de acción rápida para un alivio efectivo.",
+    color: "text-[#e31e24]",
+    bgColor: "bg-[#e31e24]/20",
+    borderColor: "border-[#e31e24]/40",
+  },
+]
+
+export function Trust() {
+  const sectionRef = useScrollReveal()
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#0c3d6e] py-20 md:py-28">
+      {/* Decorative circles */}
+      <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#0099d6]/20" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-52 w-52 rounded-full bg-[#e31e24]/10" />
+
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="flex flex-col items-center gap-12 md:flex-row md:gap-16">
+          {/* Left: Content */}
+          <div className="scroll-reveal-left flex-1 text-center md:text-left">
+            <span className="mb-4 inline-block rounded-full bg-[#e31e24] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
+              32 años de confianza
+            </span>
+            <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-white md:text-4xl text-balance">
+              Alivio Rápido y Confiable para toda la Familia
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/70">
+              Pioneros en el tratamiento del dolor con la confianza de miles de familias ecuatorianas. Desde 1993 ofreciendo soluciones de alivio.
+            </p>
+
+            <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+              {trustItems.map((item, i) => (
+                <div
+                  key={item.label}
+                  className="scroll-reveal rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm"
+                  style={{ transitionDelay: `${i * 150}ms` }}
+                >
+                  {/* Circular icon */}
+                  <div className={`mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full border-2 ${item.borderColor} ${item.bgColor}`}>
+                    <item.icon className={`h-6 w-6 ${item.color}`} />
+                  </div>
+                  <div className="font-[var(--font-heading)] text-2xl font-extrabold text-white">
+                    {item.stat}
+                  </div>
+                  <div className="mt-1 text-xs font-semibold uppercase tracking-widest text-[#0099d6]">
+                    {item.label}
+                  </div>
+                  <p className="mt-2 text-xs leading-relaxed text-white/60">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Floating Mascots */}
+          <div className="scroll-reveal-right relative flex items-end gap-0 md:w-2/5">
+            <div className="animate-float-slow">
+              <Image
+                src="/images/inflamon-estrellas.png"
+                alt="Mascota BUPREX azul - Dolorex"
+                width={190}
+                height={190}
+                className="relative z-10 drop-shadow-2xl"
+              />
+            </div>
+            <div className="animate-float-fast -ml-6">
+              <Image
+                src="/images/malestar-1.png"
+                alt="Mascota BUPREX naranja - Inflamex"
+                width={200}
+                height={200}
+                className="relative z-20 drop-shadow-2xl"
+              />
+            </div>
+            <div className="animate-float-medium -ml-6">
+              <Image
+                src="/images/malestars-estrellas.png"
+                alt="Mascota BUPREX roja - Fiebrex"
+                width={170}
+                height={170}
+                className="relative z-0 drop-shadow-2xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Mail } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
 
 export function LaboClub() {
@@ -88,26 +87,19 @@ export function LaboClub() {
                   Correo electrónico{" "}
                   <span style={{ color: "var(--ls-danger, #DB0045)" }} aria-hidden="true">*</span>
                 </label>
-                <div className="relative">
-                  <Mail
-                    className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 pointer-events-none"
-                    style={{ color: "var(--ls-gray-500)" }}
-                    aria-hidden="true"
-                  />
-                  <input
-                    id="ls-email"
-                    type="email"
-                    placeholder={newsletter.emailPlaceholder}
-                    value={email}
-                    onChange={(e) => { setEmail(e.target.value); setEmailError("") }}
-                    className={`ls-input pl-11${emailError ? " error" : ""}`}
-                    required
-                    aria-required="true"
-                    aria-invalid={!!emailError}
-                    aria-describedby={emailError ? "ls-email-error" : undefined}
-                    autoComplete="email"
-                  />
-                </div>
+                <input
+                  id="ls-email"
+                  type="email"
+                  placeholder={newsletter.emailPlaceholder}
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setEmailError("") }}
+                  className={`ls-input${emailError ? " error" : ""}`}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? "ls-email-error" : undefined}
+                  autoComplete="email"
+                />
                 {emailError && (
                   <span id="ls-email-error" className="ls-hint error" role="alert">
                     {emailError}

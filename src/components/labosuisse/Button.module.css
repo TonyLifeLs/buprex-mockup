@@ -1,0 +1,161 @@
+:global(:root) {
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+
+  --color-gray-900: #212121;
+  --color-gray-700: #616161;
+  --color-gray-500: #9E9E9E;
+  --color-gray-300: #E0E0E0;
+  --color-gray-100: #F5F5F5;
+
+  --color-red-700: #B52A2D;
+  --color-red-600: #A43534;
+  --color-red-800: #7A2525;
+
+  --semantic-success: #2DCB48;
+  --semantic-warning: #D0810B;
+  --semantic-danger:  #DB0045;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-black);
+  font-family: "Suisse Intl", "Suisse International", ui-sans-serif, system-ui, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 120ms ease, box-shadow 200ms ease, text-decoration-color 150ms ease, opacity 120ms ease;
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-gray-900);
+  outline-offset: 2px;
+}
+
+.btn.disabled,
+.btn[aria-disabled="true"] {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.size-sm { padding: 10px 18px; min-height: 40px; border-radius: 6px; font-size: 13px; }
+.size-md { padding: 14px 28px; border-radius: 8px; }
+.size-lg { padding: 16px 32px; border-radius: 10px; font-size: 15px; }
+
+.primary {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+  --btn-spinner: var(--color-white);
+}
+.primary:hover:not(.disabled):not([aria-disabled="true"]) {
+  background-color: #111111;
+  border-color: #111111;
+}
+.primary:active:not(.disabled):not([aria-disabled="true"]) {
+  transform: scale(0.99);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.primary.disabled,
+.primary[aria-disabled="true"] {
+  background-color: var(--color-gray-300);
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-500);
+}
+
+.secondary {
+  background-color: transparent;
+  color: var(--color-black);
+  border-color: var(--color-gray-700);
+  --btn-spinner: var(--color-gray-900);
+}
+.secondary:hover:not(.disabled):not([aria-disabled="true"]) {
+  background-color: var(--color-gray-100);
+}
+.secondary.disabled,
+.secondary[aria-disabled="true"] {
+  border-color: var(--color-gray-300);
+  color: var(--color-gray-500);
+  background-color: transparent;
+}
+
+.tertiary {
+  background: transparent;
+  color: var(--color-black);
+  border-color: transparent;
+  --btn-spinner: var(--color-gray-900);
+}
+.tertiary:hover:not(.disabled):not([aria-disabled="true"]) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tertiary.disabled,
+.tertiary[aria-disabled="true"] {
+  color: var(--color-gray-500);
+}
+
+.link {
+  background: transparent;
+  color: var(--color-black);
+  border-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  --btn-spinner: var(--color-gray-900);
+}
+.link:hover:not(.disabled):not([aria-disabled="true"]) {
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+.link.disabled,
+.link[aria-disabled="true"] {
+  color: var(--color-gray-500);
+}
+
+.loading {
+  pointer-events: none;
+  cursor: progress;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  border-top-color: var(--btn-spinner, var(--color-gray-900));
+  border-right-color: var(--btn-spinner, var(--color-gray-900));
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

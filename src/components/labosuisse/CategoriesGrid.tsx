@@ -71,8 +71,15 @@ export function CategoriesGrid() {
                 </p>
                 <a
                   href={card.href}
-                  className="inline-flex items-center gap-1 text-[13px] font-bold tracking-wide uppercase transition-all duration-200"
-                  style={{ color: "var(--ls-white, #fff)", textDecoration: "none" }}
+                  className="inline-flex items-center gap-2 text-[13px] font-bold tracking-wide uppercase transition-all duration-200"
+                  style={{
+                    backgroundColor: "var(--ls-red-700)",
+                    color: "var(--ls-white, #fff)",
+                    padding: "10px 14px",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                    boxShadow: "0 8px 18px rgba(0,0,0,0.16)",
+                  }}
                   aria-label={`Ir a ${card.label}`}
                 >
                   Ver más

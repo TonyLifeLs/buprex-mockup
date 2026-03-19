@@ -280,12 +280,9 @@ export const DEFAULT_LS_NAVBAR: LSNavbarConfig = {
 }
 
 export const DEFAULT_LS_NAV_LINKS: LSNavLink[] = [
-  { id: "ls1", label: "Cuidado Capilar", href: "#capilar" },
-  { id: "ls2", label: "Cuidado de la Piel", href: "#piel" },
-  { id: "ls3", label: "Descubre Labo", href: "#descubre" },
-  { id: "ls4", label: "Tecnología Transdérmica", href: "#tecnologia" },
-  { id: "ls5", label: "Productos", href: "#productos" },
-  { id: "ls6", label: "All Brands", href: "#marcas" },
+  { id: "ls1", label: "Cuidado Capilar", href: "/labosuisse/cuidado-capilar" },
+  { id: "ls2", label: "Cuidado de la Piel", href: "/labosuisse/cuidado-de-la-piel" },
+  { id: "ls4", label: "Tecnología Transdérmica", href: "/labosuisse/tecnologia-transdermica" },
 ]
 
 export const DEFAULT_LS_HERO_SLIDES: LSHeroSlide[] = [
@@ -297,9 +294,9 @@ export const DEFAULT_LS_HERO_SLIDES: LSHeroSlide[] = [
     description:
       "Primer y único tratamiento de relleno-densificador alternativo a las inyecciones de ácido hialurónico para uso doméstico. Volumen visible en pómulos y labios desde las primeras semanas.",
     cta: "Descubre Labo",
-    ctaHref: "#descubre",
+    ctaHref: "/labosuisse/descubre-labo",
     ctaSecondary: "Ver productos",
-    ctaSecondaryHref: "#productos",
+    ctaSecondaryHref: "/labosuisse/cuidado-de-la-piel",
     bg: "#F5F5F5",
     textDark: true,
     image: "/images/fillerina-product.webp",
@@ -314,9 +311,9 @@ export const DEFAULT_LS_HERO_SLIDES: LSHeroSlide[] = [
     description:
       "Crescina previene y trata el adelgazamiento del cabello estimulando el recrecimiento capilar. Eficacia del 100% en las personas testeadas mediante protocolos clínicos rigurosos.",
     cta: "Descubre Labo",
-    ctaHref: "#descubre",
+    ctaHref: "/labosuisse/descubre-labo",
     ctaSecondary: "Ver Crescina",
-    ctaSecondaryHref: "#capilar",
+    ctaSecondaryHref: "/labosuisse/cuidado-capilar",
     bg: "#212121",
     textDark: false,
     image: "/images/crescina-product.webp",
@@ -334,9 +331,9 @@ export const DEFAULT_LS_BANNER: LSBannerConfig = {
   description:
     "Labo lidera la vanguardia de la medicina estética, desarrollando productos innovadores y patentados capaces de alcanzar los mejores resultados naturales — sin inyecciones y sin procedimientos invasivos.",
   cta1Label: "Ver más",
-  cta1Href: "#tecnologia",
+  cta1Href: "/labosuisse/tecnologia-transdermica",
   cta2Label: "Ver productos",
-  cta2Href: "#productos",
+  cta2Href: "/labosuisse",
 }
 
 export const DEFAULT_LS_BRAND_INTRO: LSBrandIntroConfig = {
@@ -346,7 +343,7 @@ export const DEFAULT_LS_BRAND_INTRO: LSBrandIntroConfig = {
   description:
     "Labo Suisse es un laboratorio dermocosméutico de referencia mundial, especializado en el desarrollo de tratamientos sin inyecciones para el cuidado avanzado de la piel y el cabello. Nuestros productos combinan investigación científica rigurosa con tecnología transdérmica patentada, llevando activos de alta eficacia a las capas profundas donde realmente se origina el envejecimiento.",
   ctaLabel: "Descubre Labo",
-  ctaHref: "#descubre",
+  ctaHref: "/labosuisse/descubre-labo",
 }
 
 export const DEFAULT_LS_CRESCINA_FEATURED: LSCrescinaFeaturedConfig = {
@@ -359,7 +356,7 @@ export const DEFAULT_LS_CRESCINA_FEATURED: LSCrescinaFeaturedConfig = {
   mainDescription:
     "El tratamiento dermocosmético más avanzado para el recrecimiento capilar. Eficacia clínicamente comprobada en el 100% de los pacientes testados.",
   mainCta: "Productos",
-  mainCtaHref: "#capilar",
+  mainCtaHref: "/labosuisse/cuidado-capilar",
   supportingCards: [
     {
       id: "card-1",
@@ -386,7 +383,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
   categories: [
     {
       id: "piel",
-      href: "#piel",
+      href: "/labosuisse/cuidado-de-la-piel",
       label: "Cuidado de la Piel",
       description: "Tratamientos de relleno, reafirmación y luminosidad para el rostro y el cuello.",
       bg: "var(--brand-fillerina-12sp)",
@@ -394,7 +391,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
     },
     {
       id: "capilar",
-      href: "#capilar",
+      href: "/labosuisse/cuidado-capilar",
       label: "Cuidado Capilar",
       description: "Soluciones para el recrecimiento y la salud del cabello, desde la raíz hasta las puntas.",
       bg: "var(--brand-crescina)",
@@ -402,7 +399,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
     },
     {
       id: "descubre",
-      href: "#descubre",
+      href: "/labosuisse/descubre-labo",
       label: "Descubre Labo",
       description: "Conoce la historia de innovación y la filosofía de la investigación dermocosmética de Labo.",
       bg: "var(--brand-transdermic)",
@@ -410,7 +407,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
     },
     {
       id: "tecnologia",
-      href: "#tecnologia",
+      href: "/labosuisse/tecnologia-transdermica",
       label: "Tecnología Transdérmica",
       description: "Sistema de transporte patentado que lleva activos a capas profundas de la dermis.",
       bg: "var(--brand-oxytreat)",
@@ -423,21 +420,21 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
       brand: "Crescina",
       bg: "var(--brand-crescina)",
       description: "Tratamiento dermocosmético para el recrecimiento y la salud capilar.",
-      href: "#capilar",
+      href: "/labosuisse/cuidado-capilar",
     },
     {
       id: "brand-fillerina",
       brand: "Fillerina",
       bg: "var(--brand-fillerina-color)",
       description: "La alternativa sin inyecciones al tratamiento estético profesional.",
-      href: "#piel",
+      href: "/labosuisse/cuidado-de-la-piel",
     },
     {
       id: "brand-transdermic",
       brand: "Transdermic",
       bg: "var(--brand-transdermic)",
       description: "Sistema transdérmico de absorción profunda para resultados visibles.",
-      href: "#tecnologia",
+      href: "/labosuisse/tecnologia-transdermica",
     },
   ],
 }
@@ -544,20 +541,20 @@ export const DEFAULT_LS_FOOTER: LSFooterConfig = {
       id: "col-products",
       title: "PRODUCTOS",
       links: [
-        { id: "fp-1", label: "Cuidado de la Piel", href: "#piel" },
-        { id: "fp-2", label: "Cuidado Capilar", href: "#capilar" },
-        { id: "fp-3", label: "Fillerina", href: "#piel" },
-        { id: "fp-4", label: "Crescina", href: "#capilar" },
-        { id: "fp-5", label: "Transdermic", href: "#tecnologia" },
+        { id: "fp-1", label: "Cuidado de la Piel", href: "/labosuisse/cuidado-de-la-piel" },
+        { id: "fp-2", label: "Cuidado Capilar", href: "/labosuisse/cuidado-capilar" },
+        { id: "fp-3", label: "Fillerina", href: "/labosuisse/cuidado-de-la-piel" },
+        { id: "fp-4", label: "Crescina", href: "/labosuisse/cuidado-capilar" },
+        { id: "fp-5", label: "Transdermic", href: "/labosuisse/tecnologia-transdermica" },
       ],
     },
     {
       id: "col-company",
       title: "DESCUBRE LABO",
       links: [
-        { id: "fc-1", label: "Tecnología Transdérmica", href: "#tecnologia" },
-        { id: "fc-2", label: "Sobre Labo", href: "#descubre" },
-        { id: "fc-3", label: "Labo Club", href: "#club" },
+        { id: "fc-1", label: "Tecnología Transdérmica", href: "/labosuisse/tecnologia-transdermica" },
+        { id: "fc-2", label: "Sobre Labo", href: "/labosuisse/descubre-labo" },
+        { id: "fc-3", label: "Labo Club", href: "/labosuisse#club" },
         { id: "fc-4", label: "Contacto", href: "#" },
         { id: "fc-5", label: "Privacidad", href: "#" },
       ],

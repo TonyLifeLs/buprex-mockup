@@ -49,7 +49,16 @@ export function BannerAlternate() {
               {banner.description}
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <a href={banner.cta1Href} className="ls-btn ls-btn-primary group gap-2">
+              <a
+                href={banner.cta1Href}
+                className="ls-btn group gap-2"
+                style={{
+                  backgroundColor: "var(--ls-red-700)",
+                  borderColor: "var(--ls-red-700)",
+                  color: "var(--ls-white)",
+                  padding: "14px 26px",
+                }}
+              >
                 {banner.cta1Label}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>

@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Plus } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
 
 export function LaboAccordion() {
   const { faq } = useLaboSuisseStore()
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const contentRefs = useRef<Array<HTMLDivElement | null>>([])
 
   return (
     <section id="faq" style={{ backgroundColor: "var(--ls-white, #fff)" }}>
@@ -34,12 +35,27 @@ export function LaboAccordion() {
                 aria-expanded={openIndex === i}
               >
                 <span>{item.question}</span>
-                <span className="ls-accordion-icon">
+                <span
+                  className="ls-accordion-icon"
+                  style={{ transform: openIndex === i ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.18s" }}
+                  aria-hidden
+                >
                   <Plus className="h-5 w-5" />
                 </span>
               </button>
-              <div className="ls-accordion-content">
-                <div className="ls-accordion-inner">{item.answer}</div>
+              <div
+                className="ls-accordion-content"
+                style={{
+                  height: openIndex === i ? `${contentRefs.current[i]?.scrollHeight ?? 0}px` : "0px",
+                }}
+                aria-hidden={openIndex !== i}
+              >
+                <div
+                  ref={(el) => { contentRefs.current[i] = el }}
+                  className="ls-accordion-inner"
+                >
+                  {item.answer}
+                </div>
               </div>
             </div>
           ))}

@@ -3,7 +3,59 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Labo Suisse Design System ──────────────────────────────────────────────
+   Primarios · Grises · Rojos marca · Semánticos · Inspiracionales por línea
+   ─────────────────────────────────────────────────────────────────────────── */
 :root {
+  /* Primarios */
+  --ls-black: #000000;
+  --ls-white: #FFFFFF;
+
+  /* Grises / Neutros */
+  --ls-gray-900: #212121;
+  --ls-gray-700: #616161;
+  --ls-gray-500: #9E9E9E;
+  --ls-gray-300: #E0E0E0;
+  --ls-gray-100: #F5F5F5;
+
+  /* Rojos marca */
+  --ls-red-700: #B52A2D;
+  --ls-red-600: #A43534;
+  --ls-red-800: #7A2525;
+
+  /* Semánticos (solo feedback/estados) */
+  --ls-success: #2DCB48;
+  --ls-warning: #D0810B;
+  --ls-danger:  #DB0045;
+
+  /* Inspiracionales por línea (solo fondos/acentos, nunca texto) */
+  --brand-crescina:        #D6AB41;
+  --brand-white-hair:      #C8C7C7;
+  --brand-cadu-crex:       #D8B0A5;
+  --brand-rinfoltina:      #CCA18B;
+  --brand-hair-loss:       #E9E4E3;
+  --brand-fillerina-12sp:  #DFB1BE;
+  --brand-fillerina-color: #DDCCDC;
+  --brand-fillerina-sun:   #F3C49F;
+  --brand-after-mask:      #E2F1F8;
+  --brand-oxytreat:        #B2C3C4;
+  --brand-transdermic:     #F7F7DB;
+  --brand-3x-superformula: #F2D6D6;
+  --brand-lifting:         #F8C7DE;
+  --brand-x-ingredients:   #757575;
+  --brand-crexy:           #AFC5D8;
+  --brand-magnetic-eyes:   #9AD0CF;
+  --brand-labofiller-mu:   #E5BD6E;
+
+  /* Grid & layout */
+  --ls-container:   1280px;
+  --ls-margin-xl:   80px;
+  --ls-margin-md:   24px;
+  --ls-margin-sm:   16px;
+  --ls-gutter-xl:   32px;
+  --ls-gutter-md:   24px;
+  --ls-gutter-sm:   16px;
+
   --background: oklch(0.99 0 0);
   --foreground: oklch(0.18 0.02 250);
   --card: oklch(1 0 0);
@@ -42,9 +94,84 @@
 
 
 @theme inline {
-  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
-  --font-heading: var(--font-poppins), 'Poppins', system-ui, sans-serif;
+  /* ── Labo Suisse fonts ── */
+  --font-sans: 'Suisse Intl', 'Suisse International', system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  /* ── Primarios ── */
+  --color-ls-black: var(--ls-black);
+  --color-ls-white: var(--ls-white);
+
+  /* ── Grises ── */
+  --color-ls-gray-900: var(--ls-gray-900);
+  --color-ls-gray-700: var(--ls-gray-700);
+  --color-ls-gray-500: var(--ls-gray-500);
+  --color-ls-gray-300: var(--ls-gray-300);
+  --color-ls-gray-100: var(--ls-gray-100);
+
+  /* ── Rojos ── */
+  --color-ls-red-700: var(--ls-red-700);
+  --color-ls-red-600: var(--ls-red-600);
+  --color-ls-red-800: var(--ls-red-800);
+
+  /* ── Semánticos ── */
+  --color-ls-success: var(--ls-success);
+  --color-ls-warning: var(--ls-warning);
+  --color-ls-danger:  var(--ls-danger);
+
+  /* ── Inspiracionales de línea ── */
+  --color-brand-crescina:        var(--brand-crescina);
+  --color-brand-white-hair:      var(--brand-white-hair);
+  --color-brand-cadu-crex:       var(--brand-cadu-crex);
+  --color-brand-rinfoltina:      var(--brand-rinfoltina);
+  --color-brand-hair-loss:       var(--brand-hair-loss);
+  --color-brand-fillerina-12sp:  var(--brand-fillerina-12sp);
+  --color-brand-fillerina-color: var(--brand-fillerina-color);
+  --color-brand-fillerina-sun:   var(--brand-fillerina-sun);
+  --color-brand-after-mask:      var(--brand-after-mask);
+  --color-brand-oxytreat:        var(--brand-oxytreat);
+  --color-brand-transdermic:     var(--brand-transdermic);
+  --color-brand-3x-superformula: var(--brand-3x-superformula);
+  --color-brand-lifting:         var(--brand-lifting);
+  --color-brand-x-ingredients:   var(--brand-x-ingredients);
+  --color-brand-crexy:           var(--brand-crexy);
+  --color-brand-magnetic-eyes:   var(--brand-magnetic-eyes);
+  --color-brand-labofiller-mu:   var(--brand-labofiller-mu);
+
+  /* ── Font sizes (Labo scale) ── */
+  --font-size-h1: 56px;
+  --line-height-h1: 64px;
+  --letter-spacing-h1: 0em;
+
+  --font-size-h2: 38px;
+  --line-height-h2: 44px;
+  --letter-spacing-h2: 0.02em;
+
+  --font-size-h3: 30px;
+  --line-height-h3: 38px;
+  --letter-spacing-h3: 0.02em;
+
+  --font-size-h4: 26px;
+  --line-height-h4: 34px;
+  --letter-spacing-h4: 0.02em;
+
+  --font-size-h5: 20px;
+  --line-height-h5: 28px;
+  --letter-spacing-h5: 0.02em;
+
+  --font-size-h6: 16px;
+  --line-height-h6: 18px;
+  --letter-spacing-h6: 0em;
+
+  --font-size-p-lg: 18px;
+  --line-height-p-lg: 26px;
+
+  --font-size-p: 16px;
+  --line-height-p: 24px;
+
+  --font-size-p-sm: 14px;
+  --line-height-p-sm: 19px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -92,5 +219,416 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
+}
+
+/* ─── Labo Suisse Typography Utilities ───────────────────────────────────────
+   Clases .ls-h1 … .ls-h6, .ls-p-lg, .ls-p, .ls-p-sm
+   ─────────────────────────────────────────────────────────────────────────── */
+.ls-h1 {
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: 0em;
+  font-weight: 700;
+}
+@media (min-width: 640px) {
+  .ls-h1 { font-size: 38px; line-height: 46px; }
+}
+@media (min-width: 768px) {
+  .ls-h1 { font-size: 46px; line-height: 54px; }
+}
+@media (min-width: 1280px) {
+  .ls-h1 { font-size: 56px; line-height: 64px; }
+}
+
+.ls-h2 {
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+@media (min-width: 640px) {
+  .ls-h2 { font-size: 28px; line-height: 34px; }
+}
+@media (min-width: 768px) {
+  .ls-h2 { font-size: 32px; line-height: 38px; }
+}
+@media (min-width: 1280px) {
+  .ls-h2 { font-size: 38px; line-height: 44px; }
+}
+
+.ls-h3 {
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+@media (min-width: 768px) {
+  .ls-h3 { font-size: 24px; line-height: 32px; }
+}
+@media (min-width: 1280px) {
+  .ls-h3 { font-size: 30px; line-height: 38px; }
+}
+
+.ls-h4 {
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+@media (min-width: 768px) {
+  .ls-h4 { font-size: 22px; line-height: 28px; }
+}
+@media (min-width: 1280px) {
+  .ls-h4 { font-size: 26px; line-height: 34px; }
+}
+
+.ls-h5 {
+  font-size: 17px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+}
+@media (min-width: 768px) {
+  .ls-h5 { font-size: 20px; line-height: 28px; }
+}
+
+.ls-h6 {
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0em;
+  font-weight: 600;
+}
+@media (min-width: 768px) {
+  .ls-h6 { font-size: 16px; }
+}
+
+.ls-p-lg {
+  font-size: 16px;
+  line-height: 22px;
+}
+@media (min-width: 768px) {
+  .ls-p-lg { font-size: 18px; line-height: 26px; }
+}
+
+.ls-p {
+  font-size: 15px;
+  line-height: 22px;
+}
+@media (min-width: 768px) {
+  .ls-p { font-size: 16px; line-height: 24px; }
+}
+
+.ls-p-sm {
+  font-size: 13px;
+  line-height: 18px;
+}
+@media (min-width: 768px) {
+  .ls-p-sm { font-size: 14px; line-height: 19px; }
+}
+
+/* ─── Labo Suisse Grid Container ─────────────────────────────────────────────
+   .ls-container: 1280px max, with responsive horizontal margins
+   ─────────────────────────────────────────────────────────────────────────── */
+.ls-container {
+  width: 100%;
+  max-width: var(--ls-container);
+  margin-inline: auto;
+  padding-inline: var(--ls-margin-sm);       /* mobile: 16px */
+}
+@media (min-width: 768px) {
+  .ls-container { padding-inline: var(--ls-margin-md); } /* tablet: 24px */
+}
+@media (min-width: 1280px) {
+  .ls-container { padding-inline: var(--ls-margin-xl); } /* desktop: 80px */
+}
+
+.ls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--ls-gutter-sm);
+}
+@media (min-width: 768px) {
+  .ls-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--ls-gutter-md);
+  }
+}
+@media (min-width: 1280px) {
+  .ls-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--ls-gutter-xl);
+  }
+}
+
+/* ─── Labo Suisse Button System ──────────────────────────────────────────────
+   .ls-btn-primary · .ls-btn-secondary · .ls-btn-tertiary · .ls-btn-link
+   ─────────────────────────────────────────────────────────────────────────── */
+.ls-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s;
+  white-space: nowrap;
+  padding: 14px 32px;
+  text-decoration: none;
+}
+.ls-btn:disabled,
+.ls-btn[aria-disabled="true"] {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Primary: fondo negro, texto blanco */
+.ls-btn-primary {
+  background-color: var(--ls-black);
+  color: var(--ls-white);
+  border-color: var(--ls-black);
+}
+.ls-btn-primary:hover:not(:disabled) {
+  background-color: #1a1a1a;
+  border-color: #1a1a1a;
+}
+.ls-btn-primary:active:not(:disabled) {
+  background-color: #2d2d2d;
+}
+
+/* Secondary: borde gris-700, texto negro */
+.ls-btn-secondary {
+  background-color: transparent;
+  color: var(--ls-black);
+  border-color: var(--ls-gray-700);
+}
+.ls-btn-secondary:hover:not(:disabled) {
+  background-color: var(--ls-gray-100);
+}
+
+/* Tertiary: texto sin borde */
+.ls-btn-tertiary {
+  background-color: transparent;
+  color: var(--ls-gray-900);
+  border-color: transparent;
+  padding-inline: 8px;
+}
+.ls-btn-tertiary:hover:not(:disabled) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Link: subrayado continuo */
+.ls-btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--ls-red-700);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ls-btn-link:hover:not(:disabled) {
+  color: var(--ls-red-800);
+}
+
+/* ─── Labo Suisse Input System ────────────────────────────────────────────────
+   .ls-input · states: default / focus / error / success / disabled
+   ─────────────────────────────────────────────────────────────────────────── */
+.ls-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ls-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ls-gray-700);
+}
+.ls-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--ls-gray-900);
+  background-color: var(--ls-white);
+  border: 1px solid var(--ls-gray-300);
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.ls-input::placeholder {
+  color: var(--ls-gray-500);
+}
+.ls-input:focus {
+  border-color: var(--ls-gray-900);
+  box-shadow: 0 0 0 3px rgba(33,33,33,0.07);
+}
+.ls-input.error {
+  border-color: var(--ls-danger);
+}
+.ls-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(219,0,69,0.10);
+}
+.ls-input.success {
+  border-color: var(--ls-success);
+}
+.ls-input:disabled {
+  background-color: var(--ls-gray-100);
+  color: var(--ls-gray-500);
+  cursor: not-allowed;
+}
+.ls-hint {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ls-gray-500);
+}
+.ls-hint.error  { color: var(--ls-danger);  }
+.ls-hint.success { color: var(--ls-success); }
+
+/* ─── Labo Suisse Accordion ───────────────────────────────────────────────── */
+.ls-accordion-item {
+  border-bottom: 1px solid var(--ls-gray-300);
+}
+.ls-accordion-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ls-gray-900);
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-align: left;
+  gap: 16px;
+  transition: color 0.18s;
+}
+.ls-accordion-trigger:hover { color: var(--ls-red-700); }
+.ls-accordion-content {
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+.ls-accordion-panel {
+  padding: 0 0 20px;
+  color: var(--ls-gray-700);
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* ─── Labo Suisse Badge ───────────────────────────────────────────────────── */
+.ls-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background-color: var(--ls-gray-100);
+  color: var(--ls-gray-700);
+}
+
+/* ─── Labo Suisse Cards (base) ────────────────────────────────────────────── */
+.ls-card {
+  background-color: var(--ls-white);
+  border: 1px solid var(--ls-gray-300);
+  padding: 24px;
+}
+
+/* ─── Labo Suisse Shadows (quick tokens) ───────────────────────────────────── */
+.ls-shadow-soft {
+  box-shadow: 0 18px 45px rgba(0,0,0,0.08);
+}
+.ls-shadow-card {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+.ls-shadow-hero {
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+.ls-shadow-none {
+  box-shadow: none;
+}
+
+/* ─── Helpers ─────────────────────────────────────────────────────────────── */
+.ls-hero-save {
+  padding-inline: clamp(16px, 5vw, 72px);
+}
+
+.ls-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ls-gray-700);
+}
+
+.ls-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .ls-kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .ls-kpi-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+.ls-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 16px;
+  border: 1px solid var(--ls-gray-300);
+  background-color: var(--ls-white);
+}
+
+.ls-kpi-value {
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--ls-gray-900);
+}
+.ls-kpi-label {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--ls-gray-600);
+}
+
+.ls-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background-color: var(--ls-gray-100);
+  color: var(--ls-gray-700);
+  font-size: 13px;
+}
+
+/* Animaciones */
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

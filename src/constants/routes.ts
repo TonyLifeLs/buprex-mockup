@@ -26,6 +26,8 @@ export const APP_ROUTES = {
   derma: "/derma",
   /** Mockup Labo Suisse */
   labosuisse: "/labosuisse",
+  /** Mockup Vitacap G */
+  vitacap: "/vitacap",
 } as const
 
 // ─── Anclas de sección — Home / Labo Suisse ──────────────────────────────────

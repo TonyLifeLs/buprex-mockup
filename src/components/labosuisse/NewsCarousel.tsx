@@ -76,8 +76,13 @@ export function NewsCarousel() {
                 <p className="ls-p-sm mb-5 flex-1 line-clamp-3" style={{ color: "var(--ls-gray-700)" }}>{n.excerpt}</p>
                 <a
                   href={n.href}
-                  className="ls-btn ls-btn-primary self-start group/link gap-2"
-                  style={{ padding: "10px 20px" }}
+                  className="ls-btn self-start group/link gap-2"
+                  style={{
+                    padding: "12px 22px",
+                    backgroundColor: "var(--ls-red-700)",
+                    borderColor: "var(--ls-red-700)",
+                    color: "var(--ls-white)",
+                  }}
                 >
                   Leer artículo
                   <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />

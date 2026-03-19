@@ -111,12 +111,12 @@ export function Carousel({ items, interval = 7000 }: CarouselProps) {
       </div>
 
       {items.length > 1 && (
-        <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2">
+        <div className="pointer-events-none absolute inset-y-0 -left-4 -right-4 flex items-center justify-between px-2 md:-left-6 md:-right-6 md:px-4">
           <button
             type="button"
             aria-label="Anterior"
             onClick={() => setCurrent((current - 1 + items.length) % items.length)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-[var(--neutral-900)] shadow"
+            className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[var(--neutral-900)] shadow"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -124,7 +124,7 @@ export function Carousel({ items, interval = 7000 }: CarouselProps) {
             type="button"
             aria-label="Siguiente"
             onClick={() => setCurrent((current + 1) % items.length)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-[var(--neutral-900)] shadow"
+            className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[var(--neutral-900)] shadow"
           >
             <ChevronRight className="h-5 w-5" />
           </button>

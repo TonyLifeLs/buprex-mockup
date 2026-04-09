@@ -4,14 +4,37 @@ import { useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Lock, ShieldCheck } from "lucide-react"
+import { validateCredentials, saveSession } from "@/lib/auth"
+
+// ── Microsoft / MSAL login (comentado hasta tener Azure AD configurado) ───────
+// import { useMsal } from "@azure/msal-react"
+// import { loginRequest } from "@/lib/authConfig"
 
 export function LoginForm() {
   const router = useRouter()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  async function handleMicrosoftSignIn() {
+  // ── Microsoft login (comentado) ──────────────────────────────────────────
+  // const { instance } = useMsal()
+  // function handleMicrosoftSignIn() {
+  //   setLoading(true)
+  //   instance.loginRedirect(loginRequest).catch(() => setLoading(false))
+  // }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError("")
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 400))
+    const user = validateCredentials(username, password)
+    if (!user) {
+      setError("Usuario o contraseña incorrectos")
+      setLoading(false)
+      return
+    }
+    saveSession({ username: user.username, role: user.role, name: user.name })
     router.push("/dashboard")
   }
 
@@ -114,46 +137,87 @@ export function LoginForm() {
                 Iniciar sesión
               </h2>
               <p className="mt-1 text-sm text-gray-500">
-                Usa tu cuenta corporativa de Microsoft
+                Ingresa tus credenciales de acceso
               </p>
             </div>
 
-            {/* Botón de Microsoft */}
+            {/* Formulario usuario / contraseña */}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="username" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  Usuario
+                </label>
+                <input
+                  id="username"
+                  type="text"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+                  placeholder="admin"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="password" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  Contraseña
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
+                  placeholder="••••••••"
+                />
+              </div>
+
+              {error && (
+                <p className="text-xs text-red-600 font-medium text-center">{error}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-1 w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C0392B] via-[#9F2B21] to-[#7B0D0D] py-3 px-4 text-sm font-semibold text-white shadow-lg shadow-red-200/60 transition hover:brightness-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <>
+                    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    Ingresando...
+                  </>
+                ) : "Iniciar sesión"}
+              </button>
+            </form>
+
+            {/* ── Microsoft login (comentado hasta tener Azure AD) ──────────────
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex-1 h-px bg-gray-100" />
+              <span className="text-xs text-gray-400">o</span>
+              <div className="flex-1 h-px bg-gray-100" />
+            </div>
             <button
               onClick={handleMicrosoftSignIn}
               disabled={loading}
-              className="w-full relative flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#C0392B] via-[#9F2B21] to-[#7B0D0D] py-3 px-4 text-sm font-semibold text-white shadow-lg shadow-red-200/60 transition hover:brightness-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+              className="mt-4 w-full flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-2.5 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition"
             >
-              {loading ? (
-                <>
-                  <svg className="h-4 w-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                  </svg>
-                  Conectando...
-                </>
-              ) : (
-                <>
-                  {/* Microsoft logo SVG */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" className="h-5 w-5 flex-shrink-0">
-                    <rect x="1" y="1" width="9" height="9" fill="#f25022" />
-                    <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
-                    <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
-                    <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
-                  </svg>
-                  Continuar con Microsoft
-                </>
-              )}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" className="h-5 w-5">
+                <rect x="1" y="1" width="9" height="9" fill="#f25022" />
+                <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
+                <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
+                <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
+              </svg>
+              Continuar con Microsoft
             </button>
+            ─────────────────────────────────────────────────────────────── */}
 
-            {/* Divider */}
-            <div className="mt-8 flex items-center gap-3">
-              <div className="flex-1 h-px bg-gray-100" />
-              <span className="text-xs text-gray-400">Acceso restringido</span>
-              <div className="flex-1 h-px bg-gray-100" />
-            </div>
-
-            <p className="mt-4 text-center text-xs text-gray-400">
+            <p className="mt-6 text-center text-xs text-gray-400">
               Solo usuarios autorizados pueden iniciar sesión.
               <br />
               Si no tienes acceso, contacta al administrador del sistema.

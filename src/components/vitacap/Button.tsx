@@ -3,7 +3,7 @@
 import { forwardRef } from "react"
 import type { ButtonHTMLAttributes, CSSProperties } from "react"
 
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "link"
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "tertiary" | "link"
 export type ButtonSize = "md" | "lg"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -25,27 +25,37 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles: Record<ButtonVariant, { className: string; style: CSSProperties }> = {
       primary: {
-        className: "text-[var(--neutral-100)] shadow-sm",
+        className: "shadow-sm font-bold",
         style: {
-          backgroundColor: isDisabled ? "#e5e5e5" : "var(--brand-900)",
-          color: isDisabled ? "#9ca3af" : "var(--neutral-100)",
+          backgroundColor: isDisabled ? "#e5e5e5" : "var(--brand-accent)",
+          color: isDisabled ? "#9ca3af" : "var(--neutral-900)",
         },
       },
       secondary: {
-        className: "text-[var(--neutral-900)]",
+        className: "font-semibold",
         style: {
-          backgroundColor: isDisabled ? "#f5f5f5" : "transparent",
-          border: "1px solid var(--line-soft)",
+          backgroundColor: "transparent",
+          border: "1.5px solid var(--brand-900)",
+          color: "var(--brand-900)",
+        },
+      },
+      ghost: {
+        className: "font-semibold",
+        style: {
+          backgroundColor: "transparent",
+          border: "1.5px solid rgba(255,255,255,0.6)",
+          color: "#fff",
         },
       },
       tertiary: {
-        className: "text-[var(--neutral-900)]",
+        className: "",
         style: {
           backgroundColor: "transparent",
+          color: "var(--brand-900)",
         },
       },
       link: {
-        className: "text-[var(--brand-900)]",
+        className: "",
         style: {
           backgroundColor: "transparent",
         },
@@ -53,8 +63,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const hoverStyles: Partial<Record<ButtonVariant, React.CSSProperties>> = {
-      primary: { backgroundColor: "var(--brand-800)" },
-      secondary: { backgroundColor: "rgba(218,191,143,0.15)" },
+      primary: { backgroundColor: "var(--brand-800)", color: "#fff" },
+      secondary: { backgroundColor: "rgba(195,49,29,0.08)" },
+      ghost: { backgroundColor: "rgba(255,255,255,0.1)" },
       tertiary: { textDecoration: "underline" },
       link: { textDecoration: "underline" },
     }
@@ -64,9 +75,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={rest.type ?? "button"}
         disabled={isDisabled}
-        className={`${base} ${sizes[size]} ${variantStyles[variant].className} ${
-          variant === "secondary" ? "border" : ""
-        } ${isDisabled ? "cursor-not-allowed opacity-80" : "hover:no-underline"} ${className}`}
+        className={`${base} ${sizes[size]} ${variantStyles[variant].className} ${isDisabled ? "cursor-not-allowed opacity-80" : "hover:no-underline"} ${className}`}
         style={variantStyles[variant].style}
         onMouseEnter={(e) => {
           if (isDisabled) return

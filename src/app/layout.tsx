@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { AuthProvider } from '@/components/auth/AuthProvider'
+import { CookieBanner } from '@/components/CookieBanner'
 import './globals.css'
 
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -30,7 +32,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${_inter.variable} ${_poppins.variable} font-sans antialiased`}>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+        <CookieBanner />
         <Analytics />
       </body>
     </html>

@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Vitacap G — Nairi Amber: add /public/fonts/NairiAmber.woff2 to activate ─
+   Currently using Montserrat as accent fallback.
+   ─────────────────────────────────────────────────────────────────────────── */
+
 /* ─── Labo Suisse Design System ──────────────────────────────────────────────
    Primarios · Grises · Rojos marca · Semánticos · Inspiracionales por línea
    ─────────────────────────────────────────────────────────────────────────── */
@@ -98,6 +102,12 @@
   --font-sans: 'Suisse Intl', 'Suisse International', system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  /* ── Vitacap G fonts ── */
+  /* Base: Montserrat (loaded via next/font as --font-montserrat) */
+  --font-vitacap: var(--font-montserrat), 'Montserrat', system-ui, -apple-system, sans-serif;
+  /* Accent: Nairi Amber for special titles — falls back to Montserrat */
+  --font-vitacap-accent: var(--font-montserrat), 'Montserrat', sans-serif;
 
   /* ── Primarios ── */
   --color-ls-black: var(--ls-black);

@@ -383,7 +383,7 @@ export function LaboSuisseThemeEditor() {
       {/* ── 5. Navbar / Logo ──────────────────────────────────────────────────── */}
       <EditorSection
         title="Navbar — Logo y textos"
-        description="Texto del logotipo bipartito y etiquetas de botones CTA."
+        description="Texto del logotipo bipartito y etiquetas de botones."
       >
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -469,7 +469,7 @@ export function LaboSuisseThemeEditor() {
 
         <div>
           <label className="mb-1.5 block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Texto CTA del header
+            Texto del botón principal
           </label>
           <input
             value={navbar.ctaLabel}
@@ -479,7 +479,7 @@ export function LaboSuisseThemeEditor() {
         </div>
         <div>
           <label className="mb-1.5 block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Enlace CTA del header
+            Enlace del botón principal
           </label>
           <input
             value={navbar.ctaHref}
@@ -544,7 +544,7 @@ export function LaboSuisseThemeEditor() {
             ))}
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="mb-1 block text-xs text-gray-400">ctaHref</label>
+                <label className="mb-1 block text-xs text-gray-400">Enlace del botón principal</label>
                 <input
                   value={slide.ctaHref}
                   onChange={(e) => setHeroSlides(heroSlides.map((s, j) => j === i ? { ...s, ctaHref: e.target.value } : s))}
@@ -552,7 +552,7 @@ export function LaboSuisseThemeEditor() {
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-gray-400">ctaSecondaryHref</label>
+                <label className="mb-1 block text-xs text-gray-400">Enlace del botón secundario</label>
                 <input
                   value={slide.ctaSecondaryHref}
                   onChange={(e) => setHeroSlides(heroSlides.map((s, j) => j === i ? { ...s, ctaSecondaryHref: e.target.value } : s))}

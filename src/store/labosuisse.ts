@@ -215,7 +215,15 @@ export type LSFooterConfig = {
   copyright: string
   bottomLinks: LSFooterLink[]
 }
+// ─── SECTION BUILDER ─────────────────────────────────────────────────────────
 
+export type LSSectionConfig = {
+  id: string
+  label: string
+  icon: string
+  description: string
+  enabled: boolean
+}
 // ─── FULL STATE ───────────────────────────────────────────────────────────────
 
 export type LSState = {
@@ -231,6 +239,7 @@ export type LSState = {
   faq: LSFAQConfig
   newsletter: LSNewsletterConfig
   footer: LSFooterConfig
+  lsSections: LSSectionConfig[]
 }
 
 export type LSActions = {
@@ -246,6 +255,7 @@ export type LSActions = {
   updateFAQ: (patch: Partial<LSFAQConfig>) => void
   updateNewsletter: (patch: Partial<LSNewsletterConfig>) => void
   updateFooter: (patch: Partial<LSFooterConfig>) => void
+  setLSSections: (sections: LSSectionConfig[]) => void
   resetAll: () => void
 }
 
@@ -568,6 +578,19 @@ export const DEFAULT_LS_FOOTER: LSFooterConfig = {
   ],
 }
 
+export const DEFAULT_LS_SECTIONS: LSSectionConfig[] = [
+  { id: "header",    label: "Navbar",             icon: "🧭", description: "Logo, navegación y CTA",            enabled: true  },
+  { id: "hero",      label: "Hero",               icon: "📺", description: "Carrusel principal de diapositivas", enabled: true  },
+  { id: "banner",    label: "Banner Alternado",   icon: "🖼",  description: "Imagen + texto + botones de acción",  enabled: true  },
+  { id: "brandintro",label: "Intro de Marca",     icon: "🔬", description: "Historia y filosofía de Labo",       enabled: true  },
+  { id: "crescina",  label: "Crescina Destacada", icon: "💊", description: "Producto estrella con tarjetas",      enabled: true  },
+  { id: "categories",label: "Categorías",         icon: "📦", description: "Grid de líneas y marcas",            enabled: true  },
+  { id: "news",      label: "Noticias",           icon: "📰", description: "Carrusel de artículos del magazine",  enabled: true  },
+  { id: "faq",       label: "FAQ",                icon: "❓", description: "Preguntas y respuestas frecuentes",   enabled: true  },
+  { id: "newsletter",label: "Labo Club",          icon: "✉️", description: "Formulario de suscripción",          enabled: true  },
+  { id: "footer",    label: "Footer",             icon: "🦶", description: "Logo, social y columnas de enlaces",  enabled: true  },
+]
+
 // ─── DEFAULT STATE ────────────────────────────────────────────────────────────
 
 export const DEFAULT_LS_STATE: LSState = {
@@ -583,6 +606,7 @@ export const DEFAULT_LS_STATE: LSState = {
   faq: DEFAULT_LS_FAQ,
   newsletter: DEFAULT_LS_NEWSLETTER,
   footer: DEFAULT_LS_FOOTER,
+  lsSections: DEFAULT_LS_SECTIONS,
 }
 
 // ─── STORE ────────────────────────────────────────────────────────────────────
@@ -625,6 +649,8 @@ export const useLaboSuisseStore = create<LSState & LSActions>()(
 
       updateFooter: (patch) =>
         set((s) => ({ footer: { ...s.footer, ...patch } })),
+
+      setLSSections: (sections) => set({ lsSections: sections }),
 
       resetAll: () => set(DEFAULT_LS_STATE),
     }),

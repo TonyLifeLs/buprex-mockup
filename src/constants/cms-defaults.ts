@@ -351,6 +351,20 @@ export const DEFAULT_CMS_STATE: CMSState = {
         "Mantener la espalda recta y los hombros relajados al sentarse\nRealizar pausas activas cada 45 minutos\nFortalecer la musculatura core con ejercicios regulares\nBUPREX para aliviar el dolor cuando se presenta",
       tip: "BUPREX Flash Mini actúa rápidamente para aliviar el dolor de espalda gracias a su formulación en cápsula blanda de rápida absorción.",
     },
+    {
+      id: "ar4",
+      title: "DOLOR DE CABEZA:",
+      subtitle: "TIPOS Y TRATAMIENTO",
+      image: "/images/article-migrana.jpg",
+      category: "Neurología",
+      intro:
+        "El dolor de cabeza o cefalea es una de las molestias más frecuentes que afecta a personas de todas las edades. Conocer su origen es clave para tratarlo correctamente.",
+      causes:
+        "Tensión muscular en cuello y hombros\nEstrés y ansiedad acumulados\nDeshidratación o saltarse comidas\nExposición prolongada a pantallas",
+      solutions:
+        "BUPREX (ibuprofeno) 400 mg para aliviar el dolor de forma rápida y eficaz\nDescansar en un ambiente oscuro y tranquilo\nAplicar frío o calor en cuello y sienes\nMantener una buena hidratación diaria",
+      tip: "BUPREX Flash es ideal para el dolor de cabeza por tensión gracias a su fórmula de liberación rápida. Comienza a actuar en aproximadamente 15 minutos.",
+    },
   ],
 
   faqs: [

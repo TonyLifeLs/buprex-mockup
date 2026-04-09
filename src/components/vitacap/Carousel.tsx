@@ -8,6 +8,7 @@ export type CarouselItem = {
   description: string
   tag?: string
   tone?: "gold" | "sand"
+  image?: string
   Icon?: typeof Sparkles
 }
 
@@ -65,49 +66,57 @@ export function Carousel({ items, interval = 7000 }: CarouselProps) {
           <p className="text-[16px] leading-[24px] opacity-90">{slide.description}</p>
         </div>
 
-        <div className="grid gap-3 text-[15px] leading-[22px] text-[var(--neutral-900)]">
-          {items.map((item, idx) => (
-            <button
-              key={item.title}
-              type="button"
-              onClick={() => setCurrent(idx)}
-              className="group flex items-start gap-3 rounded-2xl border bg-white/70 px-4 py-3 text-left transition"
-              style={{
-                borderColor: idx === current ? "var(--brand-900)" : "rgba(3,1,0,0.08)",
-                boxShadow: idx === current ? "0 10px 20px rgba(0,0,0,0.12)" : "none",
-                transform: idx === current ? "translateY(-2px)" : "translateY(0)",
-              }}
-              onMouseEnter={(e) => {
-                if (idx === current) return
-                e.currentTarget.style.transform = "translateY(-2px)"
-                e.currentTarget.style.boxShadow = "0 10px 20px rgba(0,0,0,0.08)"
-              }}
-              onMouseLeave={(e) => {
-                if (idx === current) return
-                e.currentTarget.style.transform = "translateY(0)"
-                e.currentTarget.style.boxShadow = "none"
-              }}
-            >
-              <span
-                className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--neutral-100)] text-[var(--brand-900)] shadow-sm transition"
+        {/* Right panel: image when provided, otherwise nav list */}
+        {slide.image ? (
+          <div className="flex items-center justify-center overflow-hidden rounded-2xl" style={{ maxHeight: 260 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={slide.image} alt={slide.title} className="h-full w-full object-cover rounded-2xl" style={{ maxHeight: 260 }} />
+          </div>
+        ) : (
+          <div className="grid gap-3 text-[15px] leading-[22px] text-[var(--neutral-900)]">
+            {items.map((item, idx) => (
+              <button
+                key={item.title}
+                type="button"
+                onClick={() => setCurrent(idx)}
+                className="group flex items-start gap-3 rounded-2xl border bg-white/70 px-4 py-3 text-left transition"
                 style={{
-                  border: "1px solid rgba(3,1,0,0.08)",
-                  backgroundColor: idx === current ? "var(--brand-900)" : "var(--neutral-100)",
-                  color: idx === current ? "#fff" : "var(--brand-900)",
+                  borderColor: idx === current ? "var(--brand-900)" : "rgba(3,1,0,0.08)",
+                  boxShadow: idx === current ? "0 10px 20px rgba(0,0,0,0.12)" : "none",
+                  transform: idx === current ? "translateY(-2px)" : "translateY(0)",
+                }}
+                onMouseEnter={(e) => {
+                  if (idx === current) return
+                  e.currentTarget.style.transform = "translateY(-2px)"
+                  e.currentTarget.style.boxShadow = "0 10px 20px rgba(0,0,0,0.08)"
+                }}
+                onMouseLeave={(e) => {
+                  if (idx === current) return
+                  e.currentTarget.style.transform = "translateY(0)"
+                  e.currentTarget.style.boxShadow = "none"
                 }}
               >
-                {(() => {
-                  const ItemIcon = item.Icon || Icon
-                  return <ItemIcon className="h-4 w-4" />
-                })()}
-              </span>
-              <div className="space-y-1">
-                <p className="font-semibold">{item.title}</p>
-                <p className="opacity-80">{item.description}</p>
-              </div>
-            </button>
-          ))}
-        </div>
+                <span
+                  className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--neutral-100)] text-[var(--brand-900)] shadow-sm transition"
+                  style={{
+                    border: "1px solid rgba(3,1,0,0.08)",
+                    backgroundColor: idx === current ? "var(--brand-900)" : "var(--neutral-100)",
+                    color: idx === current ? "#fff" : "var(--brand-900)",
+                  }}
+                >
+                  {(() => {
+                    const ItemIcon = item.Icon || Icon
+                    return <ItemIcon className="h-4 w-4" />
+                  })()}
+                </span>
+                <div className="space-y-1">
+                  <p className="font-semibold">{item.title}</p>
+                  <p className="opacity-80">{item.description}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {items.length > 1 && (

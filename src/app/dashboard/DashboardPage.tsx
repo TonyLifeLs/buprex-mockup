@@ -17,8 +17,16 @@ import {
   ChevronDown,
   PanelLeftClose,
   PanelLeftOpen,
+  Plus,
+  Globe,
+  Trash2,
 } from "lucide-react"
 import { getSession, clearSession } from "@/lib/auth"
+import type { Session } from "@/types/auth"
+// ── MSAL (comentado hasta tener Azure AD configurado) ──────────────────────
+// import { useMsal } from "@azure/msal-react"
+// import { InteractionType, InteractionStatus, type AccountInfo } from "@azure/msal-browser"
+// import { loginRequest } from "@/lib/authConfig"
 import { useCMSStore } from "@/store/cms"
 import { APP_ROUTES } from "@/constants/routes"
 import {
@@ -27,7 +35,7 @@ import {
   type DashboardTab,
   type SiteSection,
 } from "@/constants/dashboard-tabs"
-import type { Session } from "@/types/auth"
+
 import { NavbarEditor } from "@/components/cms/NavbarEditor"
 import { PageBuilder } from "@/components/cms/PageBuilder"
 import { HeroEditor } from "@/components/cms/HeroEditor"
@@ -40,6 +48,27 @@ import { FooterEditor } from "@/components/cms/FooterEditor"
 import { VisualBuilder } from "@/components/cms/VisualBuilder"
 import { LaboSuisseThemeEditor } from "@/components/cms/LaboSuisseThemeEditor"
 import { DermaOverview } from "@/components/cms/DermaOverview"
+import { VitacapCMSEditor } from "@/components/cms/VitacapCMSEditor"
+// Vitacap G — individual section editors
+import { VitacapColoresEditor } from "@/components/cms/VitacapColoresEditor"
+import { VitacapNavbarEditor } from "@/components/cms/VitacapNavbarEditor"
+import { VitacapHeroEditor } from "@/components/cms/VitacapHeroEditor"
+import { VitacapBeneficiosEditor } from "@/components/cms/VitacapBeneficiosEditor"
+import { VitacapCarruselesEditor } from "@/components/cms/VitacapCarruselesEditor"
+import { VitacapSeccionesEditor } from "@/components/cms/VitacapSeccionesEditor"
+// Labo Suisse — individual section editors
+import { LSPageBuilder } from "@/components/cms/LSPageBuilder"
+import { VitacapPageBuilder } from "@/components/cms/VitacapPageBuilder"
+import { LSColoresEditor } from "@/components/cms/LSColoresEditor"
+import { LSNavEditor } from "@/components/cms/LSNavEditor"
+import { LSHeroEditor } from "@/components/cms/LSHeroEditor"
+import { LSContenidoEditor } from "@/components/cms/LSContenidoEditor"
+import { LSNoticiasFAQEditor } from "@/components/cms/LSNoticiasFAQEditor"
+import { LSFooterEditor } from "@/components/cms/LSFooterEditor"
+import { SiteBuilderEditor } from "@/components/cms/SiteBuilderEditor"
+import { CustomSiteEditor } from "@/components/cms/CustomSiteEditor"
+import { CreateSiteModal } from "@/components/cms/CreateSiteModal"
+import { useCustomSitesStore } from "@/store/customSites"
 
 // ─── Sidebar accordion section ────────────────────────────────────────────────
 
@@ -51,10 +80,10 @@ function SidebarSection({
   onSelectTab,
 }: {
   section: (typeof SITE_SECTIONS)[number]
-  activeTab: DashboardTab
+  activeTab: string
   isOpen: boolean
   onToggle: () => void
-  onSelectTab: (tab: DashboardTab) => void
+  onSelectTab: (tab: string) => void
 }) {
   const tabs = DASHBOARD_TABS.filter((t) => t.section === section.id)
   const hasActive = tabs.some((t) => t.id === activeTab)
@@ -123,7 +152,7 @@ function SidebarSection({
 export default function DashboardPage() {
   const router = useRouter()
   const [session, setSession] = useState<Session | null>(null)
-  const [activeTab, setActiveTab] = useState<DashboardTab>("builder")
+  const [activeTab, setActiveTab] = useState<string>("builder")
 
   // Mobile: slide-in overlay
   const [mobileSidebar, setMobileSidebar] = useState(false)
@@ -135,7 +164,16 @@ export default function DashboardPage() {
     buprex:     true,
     derma:      false,
     labosuisse: false,
+    vitacap:    false,
+    misitio:    false,
   })
+
+  // Custom sites state
+  const customSites = useCustomSitesStore((s) => s.sites)
+  const removeSite  = useCustomSitesStore((s) => s.removeSite)
+  const addSite     = useCustomSitesStore((s) => s.addSite)
+  const [openCustomSections, setOpenCustomSections] = useState<Record<string, boolean>>({})
+  const [createSiteModalOpen, setCreateSiteModalOpen] = useState(false)
 
   useEffect(() => {
     const s = getSession()
@@ -154,29 +192,58 @@ export default function DashboardPage() {
     }
   }
 
-  function selectTab(tab: DashboardTab) {
+  function selectTab(tab: string) {
     setActiveTab(tab)
     setMobileSidebar(false)
-    // Auto-expand the section that owns this tab
+    // Auto-expand the section that owns this static tab
     const ownerSection = DASHBOARD_TABS.find((t) => t.id === tab)?.section
     if (ownerSection) {
       setOpenSections((prev) => ({ ...prev, [ownerSection]: true }))
     }
   }
 
+  function selectCustomSite(siteId: string) {
+    setActiveTab(`custom:${siteId}`)
+    setMobileSidebar(false)
+    setOpenCustomSections((prev) => ({ ...prev, [siteId]: true }))
+  }
+
   function toggleSection(id: SiteSection) {
     setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
+  function toggleCustomSection(id: string) {
+    setOpenCustomSections((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  function handleCreateSite(title: string, accent: string) {
+    const newId = addSite(title, accent)
+    selectCustomSite(newId)
+  }
+
+  function handleDeleteSite(id: string) {
+    if (!confirm("¿Eliminar este sitio? Esta acción no se puede deshacer.")) return
+    // If currently viewing this site, go back to builder
+    if (activeTab === `custom:${id}`) setActiveTab("builder")
+    removeSite(id)
+  }
+
+  // Custom site being viewed (null if showing a static tab)
+  const activeCustomSiteId = activeTab.startsWith("custom:")
+    ? activeTab.slice(7)
+    : null
+
   // Active tab label for breadcrumb
-  const activeLabel =
-    DASHBOARD_TABS.find((t) => t.id === activeTab)?.label ?? activeTab
+  const activeLabel = activeCustomSiteId
+    ? (customSites.find((s) => s.id === activeCustomSiteId)?.title ?? "Mi Sitio")
+    : (DASHBOARD_TABS.find((t) => t.id === activeTab)?.label ?? activeTab)
 
   // Active section accent colour for top bar
-  const activeSectionAccent =
-    SITE_SECTIONS.find(
-      (s) => s.id === DASHBOARD_TABS.find((t) => t.id === activeTab)?.section
-    )?.accent ?? "#0099d6"
+  const activeSectionAccent = activeCustomSiteId
+    ? (customSites.find((s) => s.id === activeCustomSiteId)?.accent ?? "#2563eb")
+    : (SITE_SECTIONS.find(
+        (s) => s.id === DASHBOARD_TABS.find((t) => t.id === activeTab)?.section
+      )?.accent ?? "#C0392B")
 
   if (!session) return null
 
@@ -185,13 +252,15 @@ export default function DashboardPage() {
     <div className="flex h-full flex-col">
       {/* Logo + close (mobile X / desktop toggle) */}
       <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-        <Image
-          src="/images/buprex-logo.png"
-          alt="Buprex"
-          width={130}
-          height={36}
-          className="h-8 w-auto object-contain"
-        />
+        <div className="bg-white rounded-xl px-3 py-2 shadow-md inline-block">
+          <Image
+            src="/images/laboratorios-life.png"
+            alt="Laboratorios Life"
+            width={140}
+            height={40}
+            className="h-8 w-auto object-contain"
+          />
+        </div>
         {/* Mobile: X to close overlay */}
         <button
           onClick={() => setMobileSidebar(false)}
@@ -204,9 +273,9 @@ export default function DashboardPage() {
 
       {/* CMS badge */}
       <div className="px-4 pt-3 pb-1">
-        <div className="flex items-center gap-2 rounded-xl bg-[#0099d6]/20 px-3 py-2">
-          <Monitor className="h-3.5 w-3.5 text-[#0099d6]" />
-          <span className="text-[11px] font-bold text-[#0099d6] uppercase tracking-wider">CMS Visual</span>
+        <div className="flex items-center gap-2 rounded-xl bg-white/15 px-3 py-2">
+          <Monitor className="h-3.5 w-3.5 text-white/80" />
+          <span className="text-[11px] font-bold text-white/80 uppercase tracking-wider">CMS Visual</span>
         </div>
       </div>
 
@@ -222,6 +291,95 @@ export default function DashboardPage() {
             onSelectTab={selectTab}
           />
         ))}
+
+        {/* ── Custom published sites ── */}
+        {customSites.length > 0 && (
+          <>
+            <div className="my-2 border-t border-white/10" />
+            <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/35">
+              Mis sitios publicados
+            </p>
+            {customSites.map((site) => {
+              const isOpen    = !!openCustomSections[site.id]
+              const isActive  = activeTab === `custom:${site.id}`
+              return (
+                <div key={site.id} className="mb-1">
+                  {/* Section header */}
+                  <button
+                    onClick={() => toggleCustomSection(site.id)}
+                    className={`w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-left transition-all ${
+                      isActive ? "bg-white/10" : "hover:bg-white/8"
+                    }`}
+                  >
+                    <span
+                      className="h-2 w-2 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: site.accent }}
+                    />
+                    <Globe className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
+                    <span className="flex-1 text-xs font-bold uppercase tracking-widest text-white/70 truncate">
+                      {site.title}
+                    </span>
+                    <ChevronDown
+                      className="h-3.5 w-3.5 text-white/40 flex-shrink-0 transition-transform duration-200"
+                      style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                    />
+                  </button>
+                  {/* Tab list */}
+                  <div
+                    className="overflow-hidden transition-all duration-250"
+                    style={{ maxHeight: isOpen ? "120px" : "0px" }}
+                  >
+                    <div className="mt-0.5 space-y-0.5 pl-2">
+                      {/* Constructor tab */}
+                      <button
+                        onClick={() => selectCustomSite(site.id)}
+                        className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all ${
+                          isActive
+                            ? "text-white shadow-sm"
+                            : "text-white/55 hover:bg-white/10 hover:text-white"
+                        }`}
+                        style={isActive ? { backgroundColor: site.accent } : undefined}
+                      >
+                        <Globe className="h-4 w-4 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold leading-tight">Constructor</p>
+                          <p className={`text-[11px] truncate leading-tight mt-0.5 ${isActive ? "text-white/70" : "text-white/35"}`}>
+                            Diseña tu landing page
+                          </p>
+                        </div>
+                        {isActive && <ChevronRight className="h-3 w-3 flex-shrink-0 opacity-70" />}
+                      </button>
+                      {/* Delete site */}
+                      <button
+                        onClick={() => handleDeleteSite(site.id)}
+                        className="w-full flex items-center gap-3 rounded-xl px-3 py-2 text-left text-red-300/60 hover:bg-red-500/15 hover:text-red-300 transition"
+                      >
+                        <Trash2 className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span className="text-xs font-medium">Eliminar sitio</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </>
+        )}
+
+        <div className="my-2 border-t border-white/10" />
+
+        {/* ── Publish new site button ── */}
+        <button
+          onClick={() => setCreateSiteModalOpen(true)}
+          className="w-full flex items-center gap-2.5 rounded-xl px-3 py-3 text-left transition-all border border-white/20 hover:border-white/40 hover:bg-white/10 group"
+        >
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15 group-hover:bg-white/25 transition flex-shrink-0">
+            <Plus className="h-4 w-4 text-white" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-white leading-tight">Publica tu sitio web</p>
+            <p className="text-[11px] text-white/45 leading-tight mt-0.5">Nueva landing page</p>
+          </div>
+        </button>
 
         <div className="my-2 border-t border-white/10" />
 
@@ -269,7 +427,7 @@ export default function DashboardPage() {
   )
 
   return (
-    <div className="min-h-screen flex bg-[#f0f6fb]">
+    <div className="min-h-screen flex bg-[#faf5f5]">
 
       {/* ── Mobile overlay ─────────────────────────────────────────────────── */}
       {mobileSidebar && (
@@ -281,7 +439,8 @@ export default function DashboardPage() {
 
       {/* Mobile sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-72 bg-[#0c3d6e] shadow-2xl md:hidden transition-transform duration-300 ${
+        style={{ background: "linear-gradient(180deg, #7B0D0D 0%, #922B21 60%, #C0392B 100%)" }}
+        className={`fixed inset-y-0 left-0 z-40 w-72 shadow-2xl md:hidden transition-transform duration-300 ${
           mobileSidebar ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -290,10 +449,10 @@ export default function DashboardPage() {
 
       {/* ── Desktop sidebar ────────────────────────────────────────────────── */}
       <aside
-        className={`hidden md:flex flex-col w-72 bg-[#0c3d6e] shadow-xl flex-shrink-0 transition-all duration-300 ${
+        style={{ background: "linear-gradient(180deg, #7B0D0D 0%, #922B21 60%, #C0392B 100%)", minWidth: sidebarOpen ? "288px" : "0px", width: sidebarOpen ? "288px" : "0px" }}
+        className={`hidden md:flex flex-col w-72 shadow-xl flex-shrink-0 transition-all duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full w-0 overflow-hidden"
         }`}
-        style={{ minWidth: sidebarOpen ? "288px" : "0px", width: sidebarOpen ? "288px" : "0px" }}
       >
         {sidebarContent}
       </aside>
@@ -381,9 +540,37 @@ export default function DashboardPage() {
           {activeTab === "footer"         && <FooterEditor />}
           {activeTab === "visual"         && <VisualBuilder />}
           {activeTab === "derma-overview" && <DermaOverview />}
-          {activeTab === "labosuisse"     && <LaboSuisseThemeEditor />}
+          {/* Labo Suisse — individual editors */}
+          {activeTab === "ls-constructor"  && <LSPageBuilder />}
+          {activeTab === "ls-colores"     && <LSColoresEditor />}
+          {activeTab === "ls-navbar"      && <LSNavEditor />}
+          {activeTab === "ls-hero"        && <LSHeroEditor />}
+          {activeTab === "ls-contenido"   && <LSContenidoEditor />}
+          {activeTab === "ls-noticias"    && <LSNoticiasFAQEditor />}
+          {activeTab === "ls-footer"      && <LSFooterEditor />}
+          {/* Vitacap G — individual editors */}
+          {activeTab === "vitacap-constructor"  && <VitacapPageBuilder />}
+          {activeTab === "vitacap-navbar"       && <VitacapNavbarEditor />}
+          {activeTab === "vitacap-colores"    && <VitacapColoresEditor />}
+          {activeTab === "vitacap-hero"       && <VitacapHeroEditor />}
+          {activeTab === "vitacap-beneficios" && <VitacapBeneficiosEditor />}
+          {activeTab === "vitacap-carruseles" && <VitacapCarruselesEditor />}
+          {activeTab === "vitacap-secciones"  && <VitacapSeccionesEditor />}
+          {/* Mi Sitio — constructor sin código */}
+          {activeTab === "sb-builder" && <SiteBuilderEditor />}
+          {/* Sitios personalizados publicados */}
+          {activeCustomSiteId && (
+            <CustomSiteEditor siteId={activeCustomSiteId} />
+          )}
         </main>
       </div>
+
+      {/* ── Create Site Modal ─────────────────────────────────────────────── */}
+      <CreateSiteModal
+        open={createSiteModalOpen}
+        onClose={() => setCreateSiteModalOpen(false)}
+        onConfirm={handleCreateSite}
+      />
     </div>
   )
 }

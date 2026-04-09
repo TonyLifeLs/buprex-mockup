@@ -9,8 +9,8 @@ import type { ArticleItem } from "@/store/cms"
 
 export function Articles() {
   const [selectedArticle, setSelectedArticle] = useState<ArticleItem | null>(null)
-  const sectionRef = useScrollReveal()
   const articles = useCMSStore((s) => s.articles)
+  const sectionRef = useScrollReveal(0.15, [articles.length])
 
   return (
     <section id="articulos" ref={sectionRef} className="bg-secondary/40 py-20 md:py-28">
@@ -32,8 +32,8 @@ export function Articles() {
           {articles.map((article, i) => (
             <article
               key={article.id}
-              className="scroll-reveal-scale group relative cursor-pointer overflow-hidden"
-              style={{ transitionDelay: `${i * 120}ms` }}
+              className="article-card-reveal group relative cursor-pointer overflow-hidden"
+              style={{ animationDelay: `${i * 120}ms` }}
               onClick={() => setSelectedArticle(article)}
             >
               {/* Full bleed image */}

@@ -27,57 +27,57 @@ export function Newsletter() {
     <section
       id="compra"
       className="py-14"
-      style={{ backgroundColor: "var(--neutral-100)" }}
+      style={{ backgroundColor: "var(--brand-900)" }}
       aria-labelledby="newsletter-heading"
     >
       <div className="ls-container grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <div className="space-y-3">
-          <p className="text-[14px] leading-[19px] uppercase tracking-[0.18em]" style={{ color: "var(--line-soft)" }}>
+          <p className="text-[14px] leading-[19px] uppercase tracking-[0.18em] font-semibold" style={{ color: "var(--brand-accent)" }}>
             Club Vitacap G
           </p>
           <h2
             id="newsletter-heading"
-            className="text-[30px] leading-[38px] font-semibold md:text-[38px] md:leading-[44px]"
-            style={{ color: "var(--neutral-900)" }}
+            className="text-[30px] leading-[38px] font-bold md:text-[38px] md:leading-[44px]"
+            style={{ color: "#fff", fontFamily: "'Montserrat', system-ui, sans-serif" }}
           >
-            Recibe lanzamientos, guías y protocolos transdérmicos.
+            Activa tu bienestar. Recibe guías y novedades exclusivas.
           </h2>
-          <p className="text-[16px] leading-[24px]" style={{ color: "var(--neutral-900)" }}>
-            Suscríbete para obtener asesoría y ofertas exclusivas. Todo con el tono cálido de Vitacap G.
+          <p className="text-[16px] leading-[24px]" style={{ color: "rgba(255,255,255,0.8)" }}>
+            Únete a la comunidad Vitacap G y recibe contenido sobre energía, vitalidad y bienestar para tu estilo de vida activo.
           </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-2xl p-6 shadow-lg"
+          className="space-y-4 rounded-2xl p-6"
           style={{
-            backgroundColor: "var(--neutral-100)",
-            border: "1px solid var(--line-soft)",
-            boxShadow: "0 12px 32px rgba(0,0,0,0.08)",
+            backgroundColor: "#fff",
+            boxShadow: "0 16px 40px rgba(0,0,0,0.2)",
           }}
         >
           <label className="block space-y-2">
-            <span className="text-[15px] font-medium text-[var(--neutral-900)]">Correo electrónico</span>
+            <span className="text-[15px] font-semibold" style={{ color: "var(--neutral-900)" }}>Correo electrónico</span>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-full px-4 py-3 text-[15px] text-[var(--neutral-900)] outline-none"
+              className="w-full rounded-full px-4 py-3 text-[15px] outline-none"
               style={{
-                border: `1px solid ${statusColor ?? "var(--line-soft)"}`,
-                backgroundColor: "#fff",
+                border: `1.5px solid ${statusColor ?? "var(--brand-900)"}`,
+                backgroundColor: "#fafafa",
+                color: "var(--neutral-900)",
               }}
             />
           </label>
 
-          <label className="flex items-start gap-3 text-[14px] leading-[19px] text-[var(--neutral-900)]">
+          <label className="flex items-start gap-3 text-[14px] leading-[19px]" style={{ color: "var(--neutral-900)" }}>
             <input
               type="checkbox"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
               className="mt-1 h-4 w-4 rounded border"
-              style={{ borderColor: "var(--line-soft)" }}
+              style={{ borderColor: "var(--brand-900)" }}
             />
             Acepto recibir comunicaciones sobre Vitacap G y confirmo que he leído la política de privacidad.
           </label>

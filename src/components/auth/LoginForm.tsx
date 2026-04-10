@@ -20,8 +20,10 @@ export function LoginForm() {
 
   // If already authenticated via MSAL, save session and redirect
   const handleAuthRedirect = useCallback(() => {
+    console.log("[Login] handleAuthRedirect →", { isAuthenticated, accounts: accounts.length, inProgress })
     if (isAuthenticated && accounts.length > 0 && inProgress === InteractionStatus.None) {
       const account = accounts[0]
+      console.log("[Login] ✅ Autenticado. Guardando sesión y redirigiendo…", account)
       saveSession({
         username: account.username ?? account.localAccountId,
         role: "admin",
@@ -32,24 +34,32 @@ export function LoginForm() {
   }, [isAuthenticated, accounts, inProgress, router])
 
   useEffect(() => {
+    console.log("[Login] useEffect montado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress)
     // If already logged in locally, redirect
     const s = getSession()
     if (s) {
+      console.log("[Login] Sesión local encontrada, redirigiendo a /dashboard")
       router.push("/dashboard")
       return
     }
     handleAuthRedirect()
-  }, [handleAuthRedirect, router])
+  }, [handleAuthRedirect, router, msalReady, msalInitError, inProgress])
 
   function handleMicrosoftSignIn() {
-    if (!msalReady) return
+    console.log("[Login] Botón clickeado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress, "| loading:", loading)
+    if (!msalReady) {
+      console.warn("[Login] ⚠️ MSAL aún no está listo. msalInitError:", msalInitError ?? "(ninguno)")
+      setError("Microsoft aún no está listo. Revisa la consola del navegador para ver si faltan variables de entorno.")
+      return
+    }
     setError("")
     setLoading(true)
+    console.log("[Login] Llamando a instance.loginRedirect con:", loginRequest)
     instance.loginRedirect(loginRequest).catch((err: unknown) => {
       const msalErr = err as { errorCode?: string; errorMessage?: string; message?: string }
       const code = msalErr.errorCode ?? "unknown"
       const msg  = msalErr.errorMessage ?? msalErr.message ?? String(err)
-      console.error("[Login] Error de Microsoft:", { code, message: msg, raw: err })
+      console.error("[Login] ❌ Error de Microsoft:", { code, message: msg, raw: err })
       setError(`Error al iniciar sesión (${code}). Revisa la consola del navegador para más detalles.`)
       setLoading(false)
     })

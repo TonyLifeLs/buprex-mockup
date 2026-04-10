@@ -14,7 +14,7 @@ export function LoginForm() {
   const router = useRouter()
   const { instance, inProgress, accounts } = useMsal()
   const isAuthenticated = useIsAuthenticated()
-  const msalReady = useMsalReady()
+  const { ready: msalReady, error: msalInitError } = useMsalReady()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -160,6 +160,12 @@ export function LoginForm() {
 
             {/* Botón Microsoft */}
             <div className="flex flex-col gap-4">
+              {msalInitError && (
+                <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-xs text-amber-800">
+                  <p className="font-semibold mb-1">⚠️ Configuración de Microsoft incompleta</p>
+                  <p>{msalInitError}</p>
+                </div>
+              )}
               {error && (
                 <p className="text-xs text-red-600 font-medium text-center">{error}</p>
               )}

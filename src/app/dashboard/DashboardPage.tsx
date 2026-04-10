@@ -23,10 +23,7 @@ import {
 } from "lucide-react"
 import { getSession, clearSession } from "@/lib/auth"
 import type { Session } from "@/types/auth"
-// ── MSAL (comentado hasta tener Azure AD configurado) ──────────────────────
-// import { useMsal } from "@azure/msal-react"
-// import { InteractionType, InteractionStatus, type AccountInfo } from "@azure/msal-browser"
-// import { loginRequest } from "@/lib/authConfig"
+import { useMsal } from "@azure/msal-react"
 import { useCMSStore } from "@/store/cms"
 import { APP_ROUTES } from "@/constants/routes"
 import {
@@ -151,6 +148,7 @@ function SidebarSection({
 
 export default function DashboardPage() {
   const router = useRouter()
+  const { instance } = useMsal()
   const [session, setSession] = useState<Session | null>(null)
   const [activeTab, setActiveTab] = useState<string>("builder")
 
@@ -183,7 +181,10 @@ export default function DashboardPage() {
 
   function handleLogout() {
     clearSession()
-    router.push(APP_ROUTES.login)
+    instance.logoutRedirect({ postLogoutRedirectUri: APP_ROUTES.login }).catch(() => {
+      // Fallback: if MSAL logout fails, still redirect
+      router.push(APP_ROUTES.login)
+    })
   }
 
   function handleReset() {

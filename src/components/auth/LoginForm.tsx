@@ -42,8 +42,12 @@ export function LoginForm() {
   function handleMicrosoftSignIn() {
     setError("")
     setLoading(true)
-    instance.loginRedirect(loginRequest).catch(() => {
-      setError("No se pudo iniciar sesión con Microsoft. Intenta de nuevo.")
+    instance.loginRedirect(loginRequest).catch((err: unknown) => {
+      const msalErr = err as { errorCode?: string; errorMessage?: string; message?: string }
+      const code = msalErr.errorCode ?? "unknown"
+      const msg  = msalErr.errorMessage ?? msalErr.message ?? String(err)
+      console.error("[Login] Error de Microsoft:", { code, message: msg, raw: err })
+      setError(`Error al iniciar sesión (${code}). Revisa la consola del navegador para más detalles.`)
       setLoading(false)
     })
   }

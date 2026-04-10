@@ -172,7 +172,7 @@ export function LoginForm() {
 
               <button
                 onClick={handleMicrosoftSignIn}
-                disabled={!msalReady || loading || inProgress !== InteractionStatus.None}
+                disabled={loading || inProgress !== InteractionStatus.None}
                 className="w-full flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-3 px-4 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:shadow-md transition active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading || inProgress !== InteractionStatus.None ? (

@@ -7,12 +7,14 @@ import { Lock, ShieldCheck } from "lucide-react"
 import { saveSession, getSession } from "@/lib/auth"
 import { useMsal, useIsAuthenticated } from "@azure/msal-react"
 import { InteractionStatus } from "@azure/msal-browser"
+import { useMsalReady } from "@/components/auth/AuthProvider"
 import { loginRequest } from "@/lib/authConfig"
 
 export function LoginForm() {
   const router = useRouter()
   const { instance, inProgress, accounts } = useMsal()
   const isAuthenticated = useIsAuthenticated()
+  const msalReady = useMsalReady()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -40,6 +42,7 @@ export function LoginForm() {
   }, [handleAuthRedirect, router])
 
   function handleMicrosoftSignIn() {
+    if (!msalReady) return
     setError("")
     setLoading(true)
     instance.loginRedirect(loginRequest).catch((err: unknown) => {
@@ -163,7 +166,7 @@ export function LoginForm() {
 
               <button
                 onClick={handleMicrosoftSignIn}
-                disabled={loading || inProgress !== InteractionStatus.None}
+                disabled={!msalReady || loading || inProgress !== InteractionStatus.None}
                 className="w-full flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-3 px-4 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:shadow-md transition active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading || inProgress !== InteractionStatus.None ? (

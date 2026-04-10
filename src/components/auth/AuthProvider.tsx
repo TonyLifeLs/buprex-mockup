@@ -1,9 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { MsalProvider } from "@azure/msal-react"
 import { PublicClientApplication, EventType } from "@azure/msal-browser"
 import { msalConfig } from "@/lib/authConfig"
+
+// Shared context so child components can know when MSAL is fully initialized.
+// While msalReady is false, useMsal() returns a stub and loginRedirect must not be called.
+const MsalReadyContext = createContext(false)
+export const useMsalReady = () => useContext(MsalReadyContext)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [msalInstance, setMsalInstance] = useState<PublicClientApplication | null>(null)
@@ -28,6 +33,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
   }, [])
 
-  if (!msalInstance) return <>{children}</>
-  return <MsalProvider instance={msalInstance}>{children}</MsalProvider>
+  return (
+    <MsalReadyContext.Provider value={!!msalInstance}>
+      {msalInstance ? (
+        <MsalProvider instance={msalInstance}>{children}</MsalProvider>
+      ) : (
+        children
+      )}
+    </MsalReadyContext.Provider>
+  )
 }

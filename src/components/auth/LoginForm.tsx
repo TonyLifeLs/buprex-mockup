@@ -46,23 +46,26 @@ export function LoginForm() {
   }, [handleAuthRedirect, router, msalReady, msalInitError, inProgress])
 
   function handleMicrosoftSignIn() {
-    console.log("[Login] Botón clickeado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress, "| loading:", loading)
-    if (!msalReady) {
-      console.warn("[Login] ⚠️ MSAL aún no está listo. msalInitError:", msalInitError ?? "(ninguno)")
-      setError("Microsoft aún no está listo. Revisa la consola del navegador para ver si faltan variables de entorno.")
-      return
-    }
-    setError("")
-    setLoading(true)
-    console.log("[Login] Llamando a instance.loginRedirect con:", loginRequest)
-    instance.loginRedirect(loginRequest).catch((err: unknown) => {
-      const msalErr = err as { errorCode?: string; errorMessage?: string; message?: string }
-      const code = msalErr.errorCode ?? "unknown"
-      const msg  = msalErr.errorMessage ?? msalErr.message ?? String(err)
-      console.error("[Login] ❌ Error de Microsoft:", { code, message: msg, raw: err })
-      setError(`Error al iniciar sesión (${code}). Revisa la consola del navegador para más detalles.`)
-      setLoading(false)
-    })
+    // TODO: re-enable Microsoft login when Azure is configured
+    // console.log("[Login] Botón clickeado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress, "| loading:", loading)
+    // if (!msalReady) {
+    //   console.warn("[Login] ⚠️ MSAL aún no está listo. msalInitError:", msalInitError ?? "(ninguno)")
+    //   setError("Microsoft aún no está listo. Revisa la consola del navegador para ver si faltan variables de entorno.")
+    //   return
+    // }
+    // setError("")
+    // setLoading(true)
+    // console.log("[Login] Llamando a instance.loginRedirect con:", loginRequest)
+    // instance.loginRedirect(loginRequest).catch((err: unknown) => {
+    //   const msalErr = err as { errorCode?: string; errorMessage?: string; message?: string }
+    //   const code = msalErr.errorCode ?? "unknown"
+    //   const msg  = msalErr.errorMessage ?? msalErr.message ?? String(err)
+    //   console.error("[Login] ❌ Error de Microsoft:", { code, message: msg, raw: err })
+    //   setError(`Error al iniciar sesión (${code}). Revisa la consola del navegador para más detalles.`)
+    //   setLoading(false)
+    // })
+    saveSession({ username: "dev@localhost", role: "admin", name: "Dev Local" })
+    router.push("/dashboard")
   }
 
   return (

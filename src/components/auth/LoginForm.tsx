@@ -1,40 +1,70 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Lock, ShieldCheck } from "lucide-react"
-import { validateCredentials, saveSession } from "@/lib/auth"
-
-// ── Microsoft / MSAL login (comentado hasta tener Azure AD configurado) ───────
-// import { useMsal } from "@azure/msal-react"
-// import { loginRequest } from "@/lib/authConfig"
+import { saveSession, getSession } from "@/lib/auth"
+import { useMsal, useIsAuthenticated } from "@azure/msal-react"
+import { InteractionStatus } from "@azure/msal-browser"
+import { useMsalReady } from "@/components/auth/AuthProvider"
+import { loginRequest } from "@/lib/authConfig"
 
 export function LoginForm() {
   const router = useRouter()
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const { instance, inProgress, accounts } = useMsal()
+  const isAuthenticated = useIsAuthenticated()
+  const { ready: msalReady, error: msalInitError } = useMsalReady()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
 
-  // ── Microsoft login (comentado) ──────────────────────────────────────────
-  // const { instance } = useMsal()
-  // function handleMicrosoftSignIn() {
-  //   setLoading(true)
-  //   instance.loginRedirect(loginRequest).catch(() => setLoading(false))
-  // }
+  // If already authenticated via MSAL, save session and redirect
+  const handleAuthRedirect = useCallback(() => {
+    console.log("[Login] handleAuthRedirect →", { isAuthenticated, accounts: accounts.length, inProgress })
+    if (isAuthenticated && accounts.length > 0 && inProgress === InteractionStatus.None) {
+      const account = accounts[0]
+      console.log("[Login] ✅ Autenticado. Guardando sesión y redirigiendo…", account)
+      saveSession({
+        username: account.username ?? account.localAccountId,
+        role: "admin",
+        name: account.name ?? "Usuario Microsoft",
+      })
+      router.push("/dashboard")
+    }
+  }, [isAuthenticated, accounts, inProgress, router])
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
-    const user = validateCredentials(username, password)
-    if (!user) {
-      setError("Usuario o contraseña incorrectos")
-      setLoading(false)
+  useEffect(() => {
+    console.log("[Login] useEffect montado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress)
+    // If already logged in locally, redirect
+    const s = getSession()
+    if (s) {
+      console.log("[Login] Sesión local encontrada, redirigiendo a /dashboard")
+      router.push("/dashboard")
       return
     }
-    saveSession({ username: user.username, role: user.role, name: user.name })
+    handleAuthRedirect()
+  }, [handleAuthRedirect, router, msalReady, msalInitError, inProgress])
+
+  function handleMicrosoftSignIn() {
+    // TODO: re-enable Microsoft login when Azure is configured
+    // console.log("[Login] Botón clickeado → msalReady:", msalReady, "| msalInitError:", msalInitError, "| inProgress:", inProgress, "| loading:", loading)
+    // if (!msalReady) {
+    //   console.warn("[Login] ⚠️ MSAL aún no está listo. msalInitError:", msalInitError ?? "(ninguno)")
+    //   setError("Microsoft aún no está listo. Revisa la consola del navegador para ver si faltan variables de entorno.")
+    //   return
+    // }
+    // setError("")
+    // setLoading(true)
+    // console.log("[Login] Llamando a instance.loginRedirect con:", loginRequest)
+    // instance.loginRedirect(loginRequest).catch((err: unknown) => {
+    //   const msalErr = err as { errorCode?: string; errorMessage?: string; message?: string }
+    //   const code = msalErr.errorCode ?? "unknown"
+    //   const msg  = msalErr.errorMessage ?? msalErr.message ?? String(err)
+    //   console.error("[Login] ❌ Error de Microsoft:", { code, message: msg, raw: err })
+    //   setError(`Error al iniciar sesión (${code}). Revisa la consola del navegador para más detalles.`)
+    //   setLoading(false)
+    // })
+    saveSession({ username: "dev@localhost", role: "admin", name: "Dev Local" })
     router.push("/dashboard")
   }
 
@@ -137,85 +167,48 @@ export function LoginForm() {
                 Iniciar sesión
               </h2>
               <p className="mt-1 text-sm text-gray-500">
-                Ingresa tus credenciales de acceso
+                Usa tu cuenta de Microsoft para acceder
               </p>
             </div>
 
-            {/* Formulario usuario / contraseña */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="username" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                  Usuario
-                </label>
-                <input
-                  id="username"
-                  type="text"
-                  autoComplete="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-                  placeholder="admin"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="password" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                  Contraseña
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none transition"
-                  placeholder="••••••••"
-                />
-              </div>
-
+            {/* Botón Microsoft */}
+            <div className="flex flex-col gap-4">
+              {msalInitError && (
+                <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-xs text-amber-800">
+                  <p className="font-semibold mb-1">⚠️ Configuración de Microsoft incompleta</p>
+                  <p>{msalInitError}</p>
+                </div>
+              )}
               {error && (
                 <p className="text-xs text-red-600 font-medium text-center">{error}</p>
               )}
 
               <button
-                type="submit"
-                disabled={loading}
-                className="mt-1 w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C0392B] via-[#9F2B21] to-[#7B0D0D] py-3 px-4 text-sm font-semibold text-white shadow-lg shadow-red-200/60 transition hover:brightness-105 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+                onClick={handleMicrosoftSignIn}
+                disabled={loading || inProgress !== InteractionStatus.None}
+                className="w-full flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-3 px-4 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:shadow-md transition active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {loading ? (
+                {loading || inProgress !== InteractionStatus.None ? (
                   <>
                     <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                     </svg>
-                    Ingresando...
+                    Conectando...
                   </>
-                ) : "Iniciar sesión"}
+                ) : (
+                  <>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" className="h-5 w-5">
+                      <rect x="1" y="1" width="9" height="9" fill="#f25022" />
+                      <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
+                      <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
+                      <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
+                    </svg>
+                    Continuar con Microsoft
+                  </>
+                )}
               </button>
-            </form>
-
-            {/* ── Microsoft login (comentado hasta tener Azure AD) ──────────────
-            <div className="mt-6 flex items-center gap-3">
-              <div className="flex-1 h-px bg-gray-100" />
-              <span className="text-xs text-gray-400">o</span>
-              <div className="flex-1 h-px bg-gray-100" />
             </div>
-            <button
-              onClick={handleMicrosoftSignIn}
-              disabled={loading}
-              className="mt-4 w-full flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white py-2.5 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" className="h-5 w-5">
-                <rect x="1" y="1" width="9" height="9" fill="#f25022" />
-                <rect x="11" y="1" width="9" height="9" fill="#7fba00" />
-                <rect x="1" y="11" width="9" height="9" fill="#00a4ef" />
-                <rect x="11" y="11" width="9" height="9" fill="#ffb900" />
-              </svg>
-              Continuar con Microsoft
-            </button>
-            ─────────────────────────────────────────────────────────────── */}
 
             <p className="mt-6 text-center text-xs text-gray-400">
               Solo usuarios autorizados pueden iniciar sesión.

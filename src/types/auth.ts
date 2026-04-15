@@ -9,7 +9,6 @@ export type UserRole = "admin" | "editor" | "viewer"
 
 export type User = {
   username: string
-  password: string
   role: UserRole
   name: string
 }

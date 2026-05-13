@@ -9,6 +9,7 @@ import { useMsal, useIsAuthenticated } from "@azure/msal-react"
 import { InteractionStatus } from "@azure/msal-browser"
 import { useMsalReady } from "@/components/auth/AuthProvider"
 import { loginRequest } from "@/lib/authConfig"
+import { APP_ROUTES } from "@/constants/routes"
 
 export function LoginForm() {
   const router = useRouter()
@@ -29,7 +30,7 @@ export function LoginForm() {
         role: "admin",
         name: account.name ?? "Usuario Microsoft",
       })
-      router.push("/dashboard")
+      router.push(APP_ROUTES.dashboard)
     }
   }, [isAuthenticated, accounts, inProgress, router])
 
@@ -39,7 +40,7 @@ export function LoginForm() {
     const s = getSession()
     if (s) {
       console.log("[Login] Sesión local encontrada, redirigiendo a /dashboard")
-      router.push("/dashboard")
+      router.push(APP_ROUTES.dashboard)
       return
     }
     handleAuthRedirect()
@@ -65,7 +66,7 @@ export function LoginForm() {
     //   setLoading(false)
     // })
     saveSession({ username: "dev@localhost", role: "admin", name: "Dev Local" })
-    router.push("/dashboard")
+    router.push(APP_ROUTES.dashboard)
   }
 
   return (
@@ -220,7 +221,7 @@ export function LoginForm() {
           {/* Back to site */}
           <div className="mt-6 text-center">
             <a
-              href="/"
+              href={APP_ROUTES.home}
               className="text-sm text-red-700 font-semibold underline-offset-4 hover:underline hover:text-red-500 transition"
             >
               ← Volver al sitio web

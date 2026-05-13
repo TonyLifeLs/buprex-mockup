@@ -1,31 +1,22 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  *  AUTH
- *  Validación de credenciales y gestión de sesión en localStorage.
+ *  Gestión de sesión en localStorage.
+ *  La autenticación se realiza exclusivamente vía Microsoft (MSAL).
  *  Tipos → @/types/auth
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import type { User, Session } from "@/types/auth"
+import type { Session } from "@/types/auth"
 
 // Re-export types for convenience
 export type { User, Session } from "@/types/auth"
-
-// ─── Usuarios registrados (mockup, solo cliente) ──────────────────────────────
-
-const USERS: User[] = [
-  { username: "admin", password: "123456", role: "admin", name: "Administrador" },
-]
 
 // ─── Clave del localStorage ───────────────────────────────────────────────────
 
 const SESSION_KEY = "buprex_session"
 
 // ─── Funciones ────────────────────────────────────────────────────────────────
-
-export function validateCredentials(username: string, password: string): User | null {
-  return USERS.find((u) => u.username === username && u.password === password) ?? null
-}
 
 export function saveSession(user: Session): void {
   if (typeof window !== "undefined") {

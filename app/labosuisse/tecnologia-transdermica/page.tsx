@@ -115,10 +115,10 @@ export default function TecnologiaTransdermicaPage() {
               />
               <div className="relative flex justify-center rounded-[32px] bg-white/80 p-8 shadow-lg backdrop-blur">
                 <Image
-                  src="/images/mejillas.webp"
+                  src="/images/derma/CRESCINA2 - FOTO.png"
                   alt="Tecnología transdérmica"
-                  width={520}
-                  height={520}
+                  width={1000}
+                  height={1000}
                   className="h-auto w-full max-w-[380px] object-contain"
                   priority
                 />

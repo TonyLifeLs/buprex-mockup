@@ -112,10 +112,10 @@ export default function DescubreLaboPage() {
               />
               <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-xl">
                 <Image
-                  src="/images/crescina-product.webp"
+                  src="/images/derma/CRESCINA1 - FOTO.png"
                   alt="Laboratorio Labo"
-                  width={520}
-                  height={520}
+                  width={1000}
+                  height={1000}
                   className="h-auto w-full max-w-[380px] object-contain"
                   priority
                 />

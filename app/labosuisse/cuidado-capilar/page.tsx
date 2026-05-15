@@ -115,10 +115,10 @@ export default function CuidadoCapilarPage() {
               />
               <div className="relative flex justify-center rounded-[32px] bg-white/70 p-10 shadow-lg backdrop-blur">
                 <Image
-                  src="/images/crescina-product.webp"
+                  src="/images/derma/CRESCINA1 - FOTO.png"
                   alt="Tratamiento Crescina"
-                  width={480}
-                  height={520}
+                  width={1000}
+                  height={1000}
                   className="h-auto w-full max-w-[360px] object-contain"
                   priority
                 />

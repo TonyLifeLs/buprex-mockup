@@ -169,7 +169,7 @@ export default function CuidadoDeLaPielPage() {
               />
               <div className="relative flex justify-center rounded-[32px] bg-white/60 p-8 shadow-lg backdrop-blur">
                 <Image
-                  src="/images/fillerina-product.webp"
+                  src="/images/derma/crescina.png"
                   alt="Tratamiento Fillerina"
                   width={480}
                   height={520}

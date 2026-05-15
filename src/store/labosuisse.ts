@@ -309,7 +309,7 @@ export const DEFAULT_LS_HERO_SLIDES: LSHeroSlide[] = [
     ctaSecondaryHref: "/labosuisse/cuidado-de-la-piel",
     bg: "#F5F5F5",
     textDark: true,
-    image: "/images/fillerina-product.webp",
+    image: "/images/derma/crescina.png",
     badge: "Cuidado de la Piel",
     badgeBg: "var(--brand-fillerina-12sp)",
   },
@@ -421,7 +421,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
       label: "Tecnología Transdérmica",
       description: "Sistema de transporte patentado que lleva activos a capas profundas de la dermis.",
       bg: "var(--brand-oxytreat)",
-      image: "/images/fillerina-product.webp",
+      image: "/images/derma/crescina.png",
     },
   ],
   brands: [
@@ -460,7 +460,7 @@ export const DEFAULT_LS_NEWS: LSNewsConfig = {
       title: "Fillerina 12HA: Nueva fórmula con doce tipos de ácido hialurónico",
       excerpt:
         "La nueva generación de ácido hialurónico penetra en todas las capas de la dermis para un efecto de relleno sin precedentes.",
-      image: "/images/fillerina-product.webp",
+      image: "/images/derma/crescina.png",
       href: "#",
     },
     {

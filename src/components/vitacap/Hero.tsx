@@ -83,7 +83,7 @@ export function Hero({ eyebrow, title, subtitle, ctaLabel, ctaHref, support }: H
             </div>
             <div className="relative h-[220px] w-[180px] md:h-[280px] md:w-[220px] drop-shadow-2xl">
               <Image
-                src="/images/fillerina-product.webp"
+                src="/images/derma/crescina.png"
                 alt="Suplemento Vitacap"
                 fill
                 sizes="(max-width: 768px) 220px, 260px"

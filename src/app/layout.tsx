@@ -3,7 +3,7 @@ import { Inter, Poppins } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { CookieBanner } from '@/components/CookieBanner'
-import './globals.css'
+// import './globals.css'
 
 const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const _poppins = Poppins({

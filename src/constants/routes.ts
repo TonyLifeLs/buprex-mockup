@@ -6,6 +6,7 @@
  *    /                  → src/app/page.tsx          (HomePage)
  *    /login             → src/app/login/page.tsx    (LoginPage)
  *    /dashboard         → src/app/dashboard/page.tsx(DashboardPage)
+ *    /maintenance       → src/app/maintenance/page.tsx (MaintenancePage)
  *    /derma             → src/app/derma/page.tsx    (DermaPage)
  *    /labosuisse        → src/app/labosuisse/page.tsx(LaboSuissePage)
  *
@@ -28,6 +29,8 @@ export const APP_ROUTES = {
   labosuisse: "/labosuisse",
   /** Mockup Vitacap G */
   vitacap: "/vitacap",
+  /** Página de mantenimiento */
+  maintenance: "/maintenance",
 } as const
 
 // ─── Anclas de sección — Home / Labo Suisse ──────────────────────────────────

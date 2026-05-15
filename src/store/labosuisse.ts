@@ -326,14 +326,14 @@ export const DEFAULT_LS_HERO_SLIDES: LSHeroSlide[] = [
     ctaSecondaryHref: "/labosuisse/cuidado-capilar",
     bg: "#212121",
     textDark: false,
-    image: "/images/derma/CRESCINA1 - FOTO.png",
+    image: "/images/derma/crescina1-foto.png",
     badge: "Cuidado Capilar",
     badgeBg: "var(--brand-crescina)",
   },
 ]
 
 export const DEFAULT_LS_BANNER: LSBannerConfig = {
-  image: "/images/derma/CRESCINA2 - FOTO.png",
+  image: "/images/derma/crescina2-foto.png",
   imageAlt: "Tecnología Transdérmica Labo Suisse",
   superlabel: "NO INJECTIONS · YES TRANSDERMIC TECHNOLOGY",
   title: "Belleza sin agujas,",
@@ -359,7 +359,7 @@ export const DEFAULT_LS_BRAND_INTRO: LSBrandIntroConfig = {
 export const DEFAULT_LS_CRESCINA_FEATURED: LSCrescinaFeaturedConfig = {
   superlabel: "CUIDADO CAPILAR",
   sectionTitle: "Destacado: Crescina",
-  mainImage: "/images/derma/CRESCINA1 - FOTO.png",
+  mainImage: "/images/derma/crescina1-foto.png",
   mainImageAlt: "Crescina tratamiento capilar",
   mainTitle: "Crescina HFSC 100%",
   mainSubtitle: "Cuidado Capilar",
@@ -397,7 +397,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
       label: "Cuidado de la Piel",
       description: "Tratamientos de relleno, reafirmación y luminosidad para el rostro y el cuello.",
       bg: "var(--brand-fillerina-12sp)",
-      image: "/images/derma/CRESCINA2 - FOTO.png",
+      image: "/images/derma/crescina2-foto.png",
     },
     {
       id: "capilar",
@@ -405,7 +405,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
       label: "Cuidado Capilar",
       description: "Soluciones para el recrecimiento y la salud del cabello, desde la raíz hasta las puntas.",
       bg: "var(--brand-crescina)",
-      image: "/images/derma/CRESCINA1 - FOTO.png",
+      image: "/images/derma/crescina1-foto.png",
     },
     {
       id: "descubre",
@@ -413,7 +413,7 @@ export const DEFAULT_LS_CATEGORIES: LSCategoriesConfig = {
       label: "Descubre Labo",
       description: "Conoce la historia de innovación y la filosofía de la investigación dermocosmética de Labo.",
       bg: "var(--brand-transdermic)",
-      image: "/images/derma/CRESCINA2 - FOTO.png",
+      image: "/images/derma/crescina2-foto.png",
     },
     {
       id: "tecnologia",
@@ -470,7 +470,7 @@ export const DEFAULT_LS_NEWS: LSNewsConfig = {
       title: "Crescina HFSC 100% actualiza su protocolo de aplicación",
       excerpt:
         "El tratamiento más avanzado contra la alopecia difusa incorpora nuevas instrucciones de uso para maximizar los resultados.",
-      image: "/images/derma/CRESCINA1 - FOTO.png",
+      image: "/images/derma/crescina1-foto.png",
       href: "#",
     },
     {
@@ -480,7 +480,7 @@ export const DEFAULT_LS_NEWS: LSNewsConfig = {
       title: "Tecnología Transdérmica: cómo penetra donde otras cremas no llegan",
       excerpt:
         "Un recorrido por la ciencia detrás del sistema de transporte transdérmico patentado por Labo Suisse.",
-      image: "/images/derma/CRESCINA2 - FOTO.png",
+      image: "/images/derma/crescina2-foto.png",
       href: "#",
     },
   ],

@@ -73,7 +73,7 @@ export function Hero({ eyebrow, title, subtitle, ctaLabel, ctaHref, support }: H
           <div className="flex items-center justify-center gap-4 md:gap-8">
             <div className="relative h-[220px] w-[180px] md:h-[280px] md:w-[220px] drop-shadow-2xl">
               <Image
-                src="/images/derma/CRESCINA1 - FOTO.png"
+                src="/images/derma/crescina1-foto.png"
                 alt="Botella Vitacap G"
                 fill
                 sizes="(max-width: 768px) 220px, 260px"

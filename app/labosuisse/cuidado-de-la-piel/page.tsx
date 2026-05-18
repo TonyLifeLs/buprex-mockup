@@ -241,7 +241,7 @@ function GradeCarousel() {
   )
 }
 
-
+function StepCard({ step, title, body, Icon }: typeof HOW_IT_WORKS[number]) {
   return (
     <div className="relative flex flex-col gap-4">
       <div className="flex items-center gap-4">

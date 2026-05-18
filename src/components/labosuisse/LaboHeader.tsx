@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 import { Menu, X, Search, Instagram, Facebook, Linkedin } from "lucide-react"
@@ -60,18 +61,21 @@ export function LaboHeader() {
           style={{ height: scrolled ? "56px" : "72px" }}
         >
           {/* Logo */}
-          <a href="#inicio" className="flex items-center gap-1 shrink-0" aria-label="Labo Suisse inicio">
+          <a href="/labosuisse" className="flex items-center gap-3 shrink-0" aria-label="Labo Suisse inicio">
+            <Image
+              src="/images/laboratorios-life.png"
+              alt="Laboratorios Life"
+              width={120}
+              height={34}
+              className="h-8 w-auto object-contain transition-all"
+              style={{ opacity: scrolled ? 0.85 : 1 }}
+              priority
+            />
             <span
-              className="font-bold tracking-[0.15em] uppercase transition-all"
-              style={{ fontSize: scrolled ? "15px" : "18px", color: navbar.logoWord1Color }}
+              className="hidden sm:block text-[10px] font-light tracking-[0.18em] uppercase"
+              style={{ color: "var(--ls-gray-400, #9ca3af)", lineHeight: 1 }}
             >
-              {navbar.logoWord1}
-            </span>
-            <span
-              className="font-light tracking-[0.1em] uppercase transition-all"
-              style={{ fontSize: scrolled ? "13px" : "16px", color: navbar.logoWord2Color }}
-            >
-              {navbar.logoWord2}
+              {navbar.logoWord1} {navbar.logoWord2}
             </span>
           </a>
 

@@ -224,8 +224,8 @@ export default function CuidadoCapilarPage() {
           className="relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, #fff8e1 0%, #fffbf0 50%, #ffffff 80%)",
-            paddingTop: "140px",
-            paddingBottom: "90px",
+            paddingTop: "clamp(100px, 14vw, 140px)",
+            paddingBottom: "clamp(48px, 8vw, 90px)",
           }}
         >
           <div
@@ -233,15 +233,15 @@ export default function CuidadoCapilarPage() {
             style={{ background: "radial-gradient(circle, #f9e7bf, transparent 70%)" }}
           />
 
-          <div className="ls-container grid gap-20 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+          <div className="ls-container grid gap-10 md:gap-20 md:grid-cols-[0.85fr_1.15fr] md:items-center">
             {/* ── IMAGE (left) ── */}
-            <div className="relative">
+            <div className="relative mx-auto w-full max-w-sm md:max-w-none">
               <div
                 className="absolute inset-0 -z-10 rounded-[40px] blur-3xl"
                 style={{ background: "radial-gradient(circle at 40% 30%, #f9e7bf, transparent 60%)" }}
               />
               <div
-                className="relative flex justify-center rounded-[40px] p-10"
+                className="relative flex justify-center rounded-[28px] md:rounded-[40px] p-4 sm:p-6 md:p-10"
                 style={{ background: "rgba(255,255,255,0.8)", border: "1px solid #f0dca0", boxShadow: "0 16px 48px rgba(212,160,23,0.15)" }}
               >
                 <Image
@@ -249,12 +249,13 @@ export default function CuidadoCapilarPage() {
                   alt="Crescina HFSC 100%"
                   width={1000}
                   height={1000}
-                  className="h-auto w-full max-w-[300px] object-contain"
+                  className="h-auto w-full object-contain"
+                  style={{ maxHeight: "420px" }}
                   priority
                 />
               </div>
               <div
-                className="absolute -bottom-4 right-6 rounded-xl px-4 py-3 shadow-lg"
+                className="absolute -bottom-4 right-4 md:right-6 rounded-xl px-3 py-2 md:px-4 md:py-3 shadow-lg"
                 style={{ background: "var(--brand-crescina, #d4a017)", color: "#fff" }}
               >
                 <p className="ls-p-sm font-semibold">Disponible en</p>
@@ -383,12 +384,13 @@ export default function CuidadoCapilarPage() {
         {/* ── PHOTO + INTRO ── */}
         <section className="py-16" style={{ background: "var(--ls-gray-100)" }}>
           <div className="ls-container grid gap-10 md:grid-cols-2 md:items-center">
-            <div className="relative overflow-hidden rounded-[28px] shadow-lg" style={{ minHeight: "380px" }}>
+            <div className="relative overflow-hidden rounded-[28px] shadow-lg" style={{ minHeight: "clamp(240px, 40vw, 420px)" }}>
               <Image
-                src="/images/derma/crescina2-foto.png"
+                src="/images/derma/crescina1-foto.png"
                 alt="Tratamiento Crescina en uso"
                 fill
                 className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
             <div className="space-y-5">

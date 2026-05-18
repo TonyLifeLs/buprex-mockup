@@ -1,8 +1,19 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { usePathname } from "next/navigation"
 import { Menu, X, Search, Instagram, Facebook, Linkedin } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+
+// Social links per route — customize URLs per product
+const ROUTE_SOCIAL_LINKS: Record<string, { instagram: string; facebook: string; linkedin: string }> = {
+  "/labosuisse/cuidado-capilar":        { instagram: "https://www.instagram.com/crescina_official/", facebook: "https://www.facebook.com/crescina", linkedin: "#" },
+  "/labosuisse/cuidado-de-la-piel":     { instagram: "https://www.instagram.com/fillerina_official/", facebook: "https://www.facebook.com/fillerina", linkedin: "#" },
+  "/labosuisse/tecnologia-transdermica": { instagram: "https://www.instagram.com/labosuisse/", facebook: "https://www.facebook.com/labosuisse", linkedin: "#" },
+  "/labosuisse/cejas-y-pestanas":       { instagram: "https://www.instagram.com/labosuisse/", facebook: "https://www.facebook.com/labosuisse", linkedin: "#" },
+}
+
+const DEFAULT_SOCIAL = { instagram: "#", facebook: "#", linkedin: "#" }
 
 export function LaboHeader() {
   const { navbar, navLinks } = useLaboSuisseStore()
@@ -11,6 +22,9 @@ export function LaboHeader() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const pathname = usePathname()
+
+  const social = ROUTE_SOCIAL_LINKS[pathname] ?? DEFAULT_SOCIAL
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
@@ -21,6 +35,12 @@ export function LaboHeader() {
   useEffect(() => {
     if (searchOpen) searchInputRef.current?.focus()
   }, [searchOpen])
+
+  const socialItems = [
+    { Icon: Instagram, label: "Instagram", href: social.instagram },
+    { Icon: Facebook,  label: "Facebook",  href: social.facebook  },
+    { Icon: Linkedin,  label: "LinkedIn",  href: social.linkedin  },
+  ]
 
   return (
     <header
@@ -113,15 +133,13 @@ export function LaboHeader() {
 
             {/* Social — desktop only */}
             <div className="hidden items-center gap-1 md:flex">
-              {[
-                { Icon: Instagram, label: "Instagram" },
-                { Icon: Facebook, label: "Facebook" },
-                { Icon: Linkedin, label: "LinkedIn" },
-              ].map(({ Icon, label }) => (
+              {socialItems.map(({ Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
                   aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex h-8 w-8 items-center justify-center border border-transparent transition-all"
                   style={{ color: "var(--ls-gray-500)" }}
                   onMouseEnter={(e) => {
@@ -200,15 +218,13 @@ export function LaboHeader() {
           ))}
 
           <div className="flex items-center gap-2 pt-2">
-            {[
-              { Icon: Instagram, label: "Instagram" },
-              { Icon: Facebook, label: "Facebook" },
-              { Icon: Linkedin, label: "LinkedIn" },
-            ].map(({ Icon, label }) => (
+            {socialItems.map(({ Icon, label, href }) => (
               <a
                 key={label}
-                href="#"
+                href={href}
                 aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-8 w-8 items-center justify-center"
                 style={{ color: "var(--ls-gray-500)" }}
               >

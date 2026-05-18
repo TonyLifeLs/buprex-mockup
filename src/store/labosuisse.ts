@@ -292,6 +292,7 @@ export const DEFAULT_LS_NAVBAR: LSNavbarConfig = {
 export const DEFAULT_LS_NAV_LINKS: LSNavLink[] = [
   { id: "ls1", label: "Cuidado Capilar", href: "/labosuisse/cuidado-capilar" },
   { id: "ls2", label: "Cuidado de la Piel", href: "/labosuisse/cuidado-de-la-piel" },
+  { id: "ls5", label: "Cejas y Pestañas", href: "/labosuisse/cejas-y-pestanas" },
   { id: "ls4", label: "Tecnología Transdérmica", href: "/labosuisse/tecnologia-transdermica" },
 ]
 
@@ -553,6 +554,7 @@ export const DEFAULT_LS_FOOTER: LSFooterConfig = {
       links: [
         { id: "fp-1", label: "Cuidado de la Piel", href: "/labosuisse/cuidado-de-la-piel" },
         { id: "fp-2", label: "Cuidado Capilar", href: "/labosuisse/cuidado-capilar" },
+        { id: "fp-6", label: "Cejas y Pestañas", href: "/labosuisse/cejas-y-pestanas" },
         { id: "fp-3", label: "Fillerina", href: "/labosuisse/cuidado-de-la-piel" },
         { id: "fp-4", label: "Crescina", href: "/labosuisse/cuidado-capilar" },
         { id: "fp-5", label: "Transdermic", href: "/labosuisse/tecnologia-transdermica" },

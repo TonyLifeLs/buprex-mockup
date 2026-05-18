@@ -233,7 +233,36 @@ export default function CuidadoCapilarPage() {
             style={{ background: "radial-gradient(circle, #f9e7bf, transparent 70%)" }}
           />
 
-          <div className="ls-container grid gap-12 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+          <div className="ls-container grid gap-20 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+            {/* ── IMAGE (left) ── */}
+            <div className="relative">
+              <div
+                className="absolute inset-0 -z-10 rounded-[40px] blur-3xl"
+                style={{ background: "radial-gradient(circle at 40% 30%, #f9e7bf, transparent 60%)" }}
+              />
+              <div
+                className="relative flex justify-center rounded-[40px] p-10"
+                style={{ background: "rgba(255,255,255,0.8)", border: "1px solid #f0dca0", boxShadow: "0 16px 48px rgba(212,160,23,0.15)" }}
+              >
+                <Image
+                  src="/images/derma/crescina2-foto.png"
+                  alt="Crescina HFSC 100%"
+                  width={1000}
+                  height={1000}
+                  className="h-auto w-full max-w-[300px] object-contain"
+                  priority
+                />
+              </div>
+              <div
+                className="absolute -bottom-4 right-6 rounded-xl px-4 py-3 shadow-lg"
+                style={{ background: "var(--brand-crescina, #d4a017)", color: "#fff" }}
+              >
+                <p className="ls-p-sm font-semibold">Disponible en</p>
+                <p className="ls-p-sm opacity-90">500 y 1300 HFSC</p>
+              </div>
+            </div>
+
+            {/* ── TEXT (right) ── */}
             <div className="space-y-6">
               <div className="space-y-2">
                 <span
@@ -277,7 +306,7 @@ export default function CuidadoCapilarPage() {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 pt-2">
+              <div className="grid grid-cols-3 gap-6 pt-2">
                 {STATS.slice(0, 3).map((s) => (
                   <div
                     key={s.label}
@@ -309,33 +338,6 @@ export default function CuidadoCapilarPage() {
                     {c}
                   </span>
                 ))}
-              </div>
-            </div>
-
-            <div className="relative">
-              <div
-                className="absolute inset-0 -z-10 rounded-[40px] blur-3xl"
-                style={{ background: "radial-gradient(circle at 60% 30%, #f9e7bf, transparent 60%)" }}
-              />
-              <div
-                className="relative flex justify-center rounded-[40px] p-10"
-                style={{ background: "rgba(255,255,255,0.8)", border: "1px solid #f0dca0", boxShadow: "0 16px 48px rgba(212,160,23,0.15)" }}
-              >
-                <Image
-                  src="/images/derma/crescina1-foto.png"
-                  alt="Crescina HFSC 100%"
-                  width={1000}
-                  height={1000}
-                  className="h-auto w-full max-w-[300px] object-contain"
-                  priority
-                />
-              </div>
-              <div
-                className="absolute -bottom-4 right-6 rounded-xl px-4 py-3 shadow-lg"
-                style={{ background: "var(--brand-crescina, #d4a017)", color: "#fff" }}
-              >
-                <p className="ls-p-sm font-semibold">Disponible en</p>
-                <p className="ls-p-sm opacity-90">500 y 1300 HFSC</p>
               </div>
             </div>
           </div>
@@ -504,9 +506,19 @@ export default function CuidadoCapilarPage() {
         <section className="py-20" style={{ background: "#0f0f0f" }}>
           <div className="ls-container grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
             <div className="space-y-5">
-              <p className="ls-p-sm uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Diagnóstico capilar
-              </p>
+              {/* Reconocimiento capilar — logo Crescina texto + imagen */}
+              <div className="flex items-center gap-3 mb-1">
+                <Image
+                  src="/images/derma/crescina.png"
+                  alt="Crescina"
+                  width={120}
+                  height={32}
+                  className="h-8 w-auto object-contain"
+                />
+                <span className="ls-p-sm uppercase tracking-[0.2em]" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  · Reconocimiento capilar
+                </span>
+              </div>
               <h2 className="ls-h2" style={{ color: "#fff" }}>
                 Un experto Labo determina el protocolo Crescina ideal para tu tipo y grado de caída.
               </h2>
@@ -565,6 +577,22 @@ export default function CuidadoCapilarPage() {
             </div>
           </div>
         </section>
+
+        {/* ── LIFE LOGO STRIP ── */}
+        <div className="py-8" style={{ background: "var(--ls-gray-100)", borderTop: "1px solid var(--ls-gray-200)" }}>
+          <div className="ls-container flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+            <p className="ls-p-sm uppercase tracking-[0.2em]" style={{ color: "var(--ls-gray-500)" }}>
+              Distribuido por
+            </p>
+            <Image
+              src="/images/laboratorios-life.png"
+              alt="Laboratorios Life"
+              width={180}
+              height={50}
+              className="h-10 w-auto object-contain"
+            />
+          </div>
+        </div>
 
         <LaboFooter />
       </main>

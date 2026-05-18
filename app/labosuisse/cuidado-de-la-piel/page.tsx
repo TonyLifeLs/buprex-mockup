@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { ArrowRight, Sparkles, Droplets, ShieldCheck, Star, ChevronRight, FlaskConical } from "lucide-react"
+import { useRef, useState, useCallback } from "react"
+import { ArrowRight, Sparkles, Droplets, ShieldCheck, Star, ChevronRight, ChevronLeft, FlaskConical } from "lucide-react"
 import { LaboHeader, LaboFooter } from "@/components/labosuisse"
 import { lsColorsToCSSVars, useLaboSuisseStore } from "@/store/labosuisse"
 
@@ -145,7 +146,102 @@ function GradeCard({ grade, name, desc, tags, accent, pill }: typeof FILLERINA_G
   )
 }
 
-function StepCard({ step, title, body, Icon }: typeof HOW_IT_WORKS[number]) {
+function GradeCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+  const VISIBLE = 3 // cards visible on desktop
+  const total = FILLERINA_GRADES.length
+  const maxIndex = total - 1
+
+  const scrollTo = useCallback((index: number) => {
+    const clamped = Math.max(0, Math.min(index, maxIndex))
+    setActive(clamped)
+    const track = trackRef.current
+    if (!track) return
+    const card = track.children[clamped] as HTMLElement
+    if (card) {
+      track.scrollTo({ left: card.offsetLeft - track.offsetLeft - 16, behavior: "smooth" })
+    }
+  }, [maxIndex])
+
+  return (
+    <div className="relative">
+      {/* Track */}
+      <div
+        ref={trackRef}
+        className="flex gap-5 overflow-x-auto pb-4"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        onScroll={() => {
+          const track = trackRef.current
+          if (!track) return
+          let closestIdx = 0
+          let closestDist = Infinity
+          Array.from(track.children).forEach((child, i) => {
+            const el = child as HTMLElement
+            const dist = Math.abs(el.offsetLeft - track.scrollLeft - track.offsetLeft)
+            if (dist < closestDist) { closestDist = dist; closestIdx = i }
+          })
+          setActive(closestIdx)
+        }}
+      >
+        {FILLERINA_GRADES.map((g, i) => (
+          <div
+            key={g.grade}
+            className="shrink-0"
+            style={{ width: `calc(${100 / VISIBLE}% - ${((VISIBLE - 1) * 20) / VISIBLE}px)`, minWidth: "260px" }}
+          >
+            <GradeCard {...g} />
+          </div>
+        ))}
+      </div>
+
+      {/* Prev / Next buttons */}
+      <button
+        onClick={() => scrollTo(active - 1)}
+        disabled={active === 0}
+        aria-label="Anterior"
+        className="absolute -left-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-md transition-all disabled:opacity-30"
+        style={{ background: "#fff", border: "1px solid #e8c6e0" }}
+      >
+        <ChevronLeft className="h-5 w-5" style={{ color: "#ad3f84" }} />
+      </button>
+      <button
+        onClick={() => scrollTo(active + 1)}
+        disabled={active >= maxIndex}
+        aria-label="Siguiente"
+        className="absolute -right-5 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full shadow-md transition-all disabled:opacity-30"
+        style={{ background: "#fff", border: "1px solid #e8c6e0" }}
+      >
+        <ChevronRight className="h-5 w-5" style={{ color: "#ad3f84" }} />
+      </button>
+
+      {/* Dots */}
+      <div className="mt-4 flex justify-center gap-2" role="tablist" aria-label="Selector de grado">
+        {FILLERINA_GRADES.map((g, i) => (
+          <button
+            key={g.grade}
+            role="tab"
+            aria-selected={active === i}
+            aria-label={g.grade}
+            onClick={() => scrollTo(i)}
+            className="transition-all duration-200"
+            style={{
+              height: "8px",
+              width: active === i ? "24px" : "8px",
+              borderRadius: "99px",
+              background: active === i ? "#ad3f84" : "#e8c6e0",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+
   return (
     <div className="relative flex flex-col gap-4">
       <div className="flex items-center gap-4">
@@ -370,10 +466,8 @@ export default function CuidadoDeLaPielPage() {
               </p>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {FILLERINA_GRADES.map((g) => (
-                <GradeCard key={g.grade} {...g} />
-              ))}
+            <div className="relative px-6">
+              <GradeCarousel />
             </div>
           </div>
         </section>

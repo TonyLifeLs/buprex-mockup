@@ -57,11 +57,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       instance.addEventCallback((event) => {
         if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
           const payload = event.payload as { account?: { homeAccountId: string } }
-          if (payload.account) {
+/*           if (payload.account) {
             instance.setActiveAccount(
               instance.getAccountByHomeId(payload.account.homeAccountId)
             )
-          }
+          } */
         }
       })
       console.log("[MSAL] ✅ Inicialización completada. El botón de Microsoft está listo.")

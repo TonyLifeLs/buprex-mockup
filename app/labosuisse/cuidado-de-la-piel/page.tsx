@@ -87,6 +87,14 @@ const CLINICAL_STATS = [
   { value: "100%", label: "Tolerancia cutánea", note: "sin irritación" },
 ]
 
+const RESULTS_STATS = [
+  { stat: "95%", label: "De efectividad", desc: "en estudios clínicos independientes con uso diario" },
+  { stat: "+21%", label: "Más volumen en pómulos", desc: "medido con ecografía cutánea tras 14 días" },
+  { stat: "+14%", label: "Más volumen en labios", desc: "aplicación nocturna durante un ciclo completo" },
+  { stat: "100%", label: "Tolerancia cutánea", desc: "sin irritación ni efectos secundarios registrados" },
+  { stat: "12", label: "Moléculas de HA", desc: "distintos pesos moleculares para cobertura total" },
+]
+
 const TESTIMONIALS = [
   {
     name: "Carolina R.",
@@ -267,6 +275,111 @@ function StepCard({ step, title, body, Icon }: typeof HOW_IT_WORKS[number]) {
         </p>
       </div>
     </div>
+  )
+}
+
+function ResultsCarousel({
+  items,
+  accentColor,
+  image,
+  imageAlt,
+}: {
+  items: { stat: string; label: string; desc: string }[]
+  accentColor: string
+  image: string
+  imageAlt: string
+}) {
+  const [idx, setIdx] = useState(0)
+  const prev = () => setIdx((i) => Math.max(0, i - 1))
+  const next = () => setIdx((i) => Math.min(items.length - 1, i + 1))
+
+  return (
+    <section className="overflow-hidden" style={{ background: "#fff", borderTop: "1px solid var(--ls-gray-100)", borderBottom: "1px solid var(--ls-gray-100)" }}>
+      <div className="grid md:grid-cols-2" style={{ minHeight: "420px" }}>
+        {/* ── LEFT: stat carousel ── */}
+        <div className="flex flex-col items-center justify-center gap-8 px-8 py-16 md:px-16">
+          <p
+            className="ls-p-sm uppercase tracking-[0.22em] font-semibold self-start"
+            style={{ color: "var(--ls-gray-500)" }}
+          >
+            Resultados
+          </p>
+
+          <div className="flex w-full items-center justify-between gap-4">
+            <button
+              onClick={prev}
+              disabled={idx === 0}
+              aria-label="Anterior resultado"
+              className="shrink-0 transition-opacity disabled:opacity-20"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
+              <ChevronLeft className="h-7 w-7" style={{ color: "var(--ls-gray-400)" }} />
+            </button>
+
+            <div className="flex-1 text-center space-y-2">
+              <p
+                className="font-bold leading-none"
+                style={{ fontSize: "clamp(3.5rem,8vw,5.5rem)", color: accentColor }}
+              >
+                {items[idx].stat}
+              </p>
+              <p className="ls-p-lg font-medium" style={{ color: "var(--ls-gray-800)" }}>
+                {items[idx].label}
+              </p>
+              <p className="ls-p-sm" style={{ color: "var(--ls-gray-500)" }}>
+                {items[idx].desc}
+              </p>
+            </div>
+
+            <button
+              onClick={next}
+              disabled={idx >= items.length - 1}
+              aria-label="Siguiente resultado"
+              className="shrink-0 transition-opacity disabled:opacity-20"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
+              <ChevronRight className="h-7 w-7" style={{ color: "var(--ls-gray-400)" }} />
+            </button>
+          </div>
+
+          {/* dots */}
+          <div className="flex gap-2">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIdx(i)}
+                aria-label={`Resultado ${i + 1}`}
+                style={{
+                  height: "7px",
+                  width: idx === i ? "22px" : "7px",
+                  borderRadius: "99px",
+                  background: idx === i ? accentColor : "var(--ls-gray-300)",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT: product image ── */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{ background: "#f8f7f5", minHeight: "320px" }}
+        >
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={500}
+            height={500}
+            className="h-auto w-full object-contain"
+            style={{ maxHeight: "380px", padding: "2rem" }}
+          />
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -522,6 +635,14 @@ export default function CuidadoDeLaPielPage() {
             </div>
           </div>
         </section>
+
+        {/* ── RESULTS CAROUSEL ── */}
+        <ResultsCarousel
+          items={RESULTS_STATS}
+          accentColor="#ad3f84"
+          image="/images/derma/crescina.png"
+          imageAlt="Fillerina 12HA — resultados clínicos"
+        />
 
         {/* ── CLINICAL STATS ── */}
         <section id="resultados" className="py-20" style={{ background: "#0f0f0f" }}>

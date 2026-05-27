@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { ArrowRight, Users, Droplets, Home, Check, Microscope, Leaf, Shield, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight, Users, Droplets, Home, Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { LaboHeader, LaboFooter } from "@/components/labosuisse"
 import { lsColorsToCSSVars, useLaboSuisseStore } from "@/store/labosuisse"
 
@@ -53,40 +53,25 @@ const CRESCINA_VARIANTS = [
 
 const PILLARS = [
   {
-    title: "Formulación diferenciada por género",
-    body: "Las necesidades del cabello masculino y femenino son distintas. Crescina tiene líneas separadas con activos adaptados a cada estructura capilar.",
+    title: "Estimula el recrecimiento",
+    subtitle: "Fórmulas específicas para hombre y mujer",
+    body: "Desarrollados según las necesidades de hombres y de mujeres, con presentaciones adaptadas al grado de adelgazamiento del cabello.",
     Icon: Users,
     accent: "var(--brand-crescina, #d4a017)",
   },
   {
-    title: "No inyectable, 100% tópico",
-    body: "Una alternativa dermocosmética que actúa directamente en el cuero cabelludo sin procedimientos médicos ni tiempo de recuperación.",
+    title: "Refuerza la fibra",
+    subtitle: "No inyectable, no invasivo",
+    body: "Una alternativa dermocosmética de uso tópico, pensada para actuar de forma progresiva y respetuosa con el cuero cabelludo.",
     Icon: Droplets,
     accent: "var(--brand-cadu-crex, #6b8fa3)",
   },
   {
-    title: "Integrable en la rutina diaria",
-    body: "El tratamiento se aplica en minutos y se integra naturalmente en la ducha matutina. Sin cambios en el estilo de vida.",
+    title: "Higiene inteligente",
+    subtitle: "Uso en casa",
+    body: "Un tratamiento práctico y fácil de integrar en la rutina diaria, que se aplica desde casa.",
     Icon: Home,
     accent: "var(--brand-rinfoltina, #7ab87a)",
-  },
-  {
-    title: "Respaldado por 8 patentes",
-    body: "El sistema HFSC (Human Follicle Stem Cell Technology) está protegido por 8 patentes suizas y europeas activas.",
-    Icon: Shield,
-    accent: "#c29a4a",
-  },
-  {
-    title: "Base científica en células madre",
-    body: "La tecnología HFSC actúa sobre las células madre del folículo capilar para reactivar el ciclo de crecimiento.",
-    Icon: Microscope,
-    accent: "#5b8a6b",
-  },
-  {
-    title: "Ingredientes naturales activos",
-    body: "Combinación de extractos botánicos con aminoácidos queratínicos para nutrir y fortalecer el cabello existente.",
-    Icon: Leaf,
-    accent: "#7ab87a",
   },
 ]
 
@@ -177,13 +162,13 @@ function VariantCard({ for: forWho, grade, name, desc, tags, indicBg, indicPill 
   )
 }
 
-function PillarCard({ title, body, Icon, accent }: typeof PILLARS[number]) {
+function PillarCard({ title, subtitle, body, Icon, accent }: typeof PILLARS[number]) {
   return (
     <div
-      className="rounded-2xl p-5 shadow-sm"
+      className="rounded-2xl p-6 shadow-sm"
       style={{ background: "#fff", border: "1px solid var(--ls-gray-200, #e5e5e5)" }}
     >
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center gap-3 mb-2">
         <span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ background: accent + "22" }}>
           <Icon className="h-5 w-5" style={{ color: accent }} />
         </span>
@@ -191,6 +176,11 @@ function PillarCard({ title, body, Icon, accent }: typeof PILLARS[number]) {
           {title}
         </h3>
       </div>
+      {subtitle && (
+        <p className="ls-p-sm font-semibold mb-3" style={{ color: accent }}>
+          {subtitle}
+        </p>
+      )}
       <p className="ls-p" style={{ color: "var(--ls-gray-700)" }}>
         {body}
       </p>
@@ -235,8 +225,23 @@ function ResultsCarousel({
   return (
     <section className="overflow-hidden" style={{ background: "#fff", borderTop: "1px solid var(--ls-gray-100)", borderBottom: "1px solid var(--ls-gray-100)" }}>
       <div className="grid md:grid-cols-2" style={{ minHeight: "420px" }}>
-        {/* ── LEFT: stat carousel ── */}
-        <div className="flex flex-col items-center justify-center gap-8 px-8 py-16 md:px-16">
+        {/* ── LEFT: product image ── */}
+        <div
+          className="relative flex items-center justify-center"
+          style={{ background: "#f8f7f5", minHeight: "320px" }}
+        >
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={500}
+            height={500}
+            className="h-auto w-full object-contain"
+            style={{ maxHeight: "380px", padding: "2rem" }}
+          />
+        </div>
+
+        {/* ── RIGHT: stat carousel ── */}
+        <div className="flex flex-col items-center justify-center gap-8 px-10 py-16 md:px-20">
           <p
             className="ls-p-sm uppercase tracking-[0.22em] font-semibold self-start"
             style={{ color: "var(--ls-gray-500)" }}
@@ -301,21 +306,14 @@ function ResultsCarousel({
               />
             ))}
           </div>
-        </div>
 
-        {/* ── RIGHT: product image ── */}
-        <div
-          className="relative flex items-center justify-center"
-          style={{ background: "#f8f7f5", minHeight: "320px" }}
-        >
-          <Image
-            src={image}
-            alt={imageAlt}
-            width={500}
-            height={500}
-            className="h-auto w-full object-contain"
-            style={{ maxHeight: "380px", padding: "2rem" }}
-          />
+          <a
+            href="/labosuisse/tecnologia-transdermica"
+            className="ls-btn ls-btn-link self-end"
+            style={{ color: "var(--ls-red-700)" }}
+          >
+            Ver tecnología transdérmica →
+          </a>
         </div>
       </div>
     </section>
@@ -346,8 +344,72 @@ export default function CuidadoCapilarPage() {
             style={{ background: "radial-gradient(circle, #f9e7bf, transparent 70%)" }}
           />
 
-          <div className="ls-container grid gap-10 md:gap-20 md:grid-cols-[0.85fr_1.15fr] md:items-center">
-            {/* ── IMAGE (left) ── */}
+          <div className="ls-container grid gap-10 md:gap-20 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+            {/* ── TEXT (left) ── */}
+            <div className="space-y-6">
+              {/* Crescina logo */}
+              <Image
+                src="/images/derma/crescina.png"
+                alt="Crescina"
+                width={160}
+                height={44}
+                className="h-10 w-auto object-contain"
+              />
+
+              <div className="space-y-2">
+                <span
+                  className="ls-p-sm inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold uppercase tracking-[0.18em]"
+                  style={{ background: "var(--ls-red-700)", color: "#fff" }}
+                >
+                  Cuidado Capilar
+                </span>
+                <p className="ls-p-sm uppercase tracking-[0.18em]" style={{ color: "var(--ls-gray-500)" }}>
+                  Tratamiento de Recrecimiento y Anticaída capilar
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h1 className="ls-h1" style={{ color: "var(--ls-gray-900)", lineHeight: 1.1 }}>
+                  Recrecimiento capilar clínicamente demostrado con{" "}
+                  <em style={{ color: "var(--brand-crescina, #d4a017)", fontStyle: "normal" }}>
+                    Crescina HFSC
+                  </em>
+                </h1>
+                <p className="ls-p-lg" style={{ color: "var(--ls-gray-700)" }}>
+                  Protocolos domiciliarios que reactivan el folículo, frenan la caída y densifican el cabello sin dejar residuo graso.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <a href="#protocolo" className="ls-btn ls-btn-primary gap-2">
+                  Ver protocolo completo
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href="/labosuisse/tecnologia-transdermica"
+                  className="ls-btn ls-btn-tertiary"
+                  style={{ color: "var(--ls-gray-900)" }}
+                >
+                  Ver tecnología transdérmica
+                </a>
+              </div>
+
+              {/* chips */}
+              <div className="flex flex-wrap gap-2">
+                {["100% de eficacia testada", "Para hombre y mujer", "Uso diario sin grasa"].map((c) => (
+                  <span
+                    key={c}
+                    className="ls-p-sm inline-flex items-center gap-2 rounded-full px-3 py-1.5"
+                    style={{ background: "#fff", color: "var(--ls-gray-700)", border: "1px solid #f0dca0" }}
+                  >
+                    <Check className="h-3 w-3" style={{ color: "var(--brand-crescina, #d4a017)" }} />
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* ── IMAGE (right) ── */}
             <div className="relative mx-auto w-full max-w-sm md:max-w-none">
               <div
                 className="absolute inset-0 -z-10 rounded-[40px] blur-3xl"
@@ -358,7 +420,7 @@ export default function CuidadoCapilarPage() {
                 style={{ background: "rgba(255,255,255,0.8)", border: "1px solid #f0dca0", boxShadow: "0 16px 48px rgba(212,160,23,0.15)" }}
               >
                 <Image
-                  src="/images/derma/crescina2-foto.png"
+                  src="/images/derma/crescina1-foto.png"
                   alt="Crescina HFSC 100%"
                   width={1000}
                   height={1000}
@@ -373,85 +435,6 @@ export default function CuidadoCapilarPage() {
               >
                 <p className="ls-p-sm font-semibold">Disponible en</p>
                 <p className="ls-p-sm opacity-90">500 y 1300 HFSC</p>
-              </div>
-            </div>
-
-            {/* ── TEXT (right) ── */}
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <span
-                  className="ls-p-sm inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold uppercase tracking-[0.18em]"
-                  style={{ background: "var(--ls-gray-900)", color: "var(--ls-white)" }}
-                >
-                  Cuidado capilar · Crescina
-                </span>
-                <p className="ls-p-sm uppercase tracking-[0.18em]" style={{ color: "var(--ls-gray-500)" }}>
-                  Recrecimiento · Anticaída · HFSC Technology
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <h1 className="ls-h1" style={{ color: "var(--ls-gray-900)", lineHeight: 1.1 }}>
-                  Crescina: recrecimiento{" "}
-                  <em style={{ color: "var(--brand-crescina, #d4a017)", fontStyle: "normal" }}>
-                    sin inyecciones
-                  </em>{" "}
-                  para hombre y mujer
-                </h1>
-                <p className="ls-p-lg" style={{ color: "var(--ls-gray-700)" }}>
-                  Formulado con la tecnología HFSC (Human Follicle Stem Cell), activa las células madre del folículo
-                  capilar para estimular el recrecimiento desde la raíz. Tratamiento tópico de uso en casa, avalado
-                  por 8 patentes suizas y europeas.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <a href="#productos" className="ls-btn ls-btn-primary gap-2">
-                  Ver productos Crescina
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="/labosuisse/tecnologia-transdermica"
-                  className="ls-btn ls-btn-tertiary"
-                  style={{ color: "var(--ls-gray-900)" }}
-                >
-                  Ver tecnología transdérmica
-                </a>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-2">
-                {STATS.slice(0, 3).map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-2xl p-4 text-center"
-                    style={{ background: "var(--ls-gray-100)", border: "1px solid var(--ls-gray-200)" }}
-                  >
-                    <p
-                      className="font-bold"
-                      style={{ fontSize: "1.75rem", color: "var(--brand-crescina, #d4a017)", lineHeight: 1 }}
-                    >
-                      {s.value}
-                    </p>
-                    <p className="ls-p-sm mt-1" style={{ color: "var(--ls-gray-700)" }}>
-                      {s.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              {/* chips */}
-              <div className="flex flex-wrap gap-2">
-                {["HFSC Technology", "No inyectable", "Para hombre y mujer", "8 patentes activas"].map((c) => (
-                  <span
-                    key={c}
-                    className="ls-p-sm inline-flex items-center gap-2 rounded-full px-3 py-1.5"
-                    style={{ background: "#fff", color: "var(--ls-gray-700)", border: "1px solid #f0dca0" }}
-                  >
-                    <Check className="h-3 w-3" style={{ color: "var(--brand-crescina, #d4a017)" }} />
-                    {c}
-                  </span>
-                ))}
               </div>
             </div>
           </div>
@@ -548,8 +531,14 @@ export default function CuidadoCapilarPage() {
           <div className="ls-container space-y-10">
             <div className="space-y-3">
               <p className="ls-p-sm uppercase tracking-[0.2em]" style={{ color: "var(--ls-gray-500)" }}>
-                Protocolo de tratamiento
+                Protocolo Crescina
               </p>
+              <span
+                className="ls-p-sm inline-flex items-center rounded-full px-3 py-1 font-semibold uppercase tracking-[0.14em]"
+                style={{ background: "var(--ls-gray-900)", color: "#fff" }}
+              >
+                Tratamiento capilar no inyectable de uso en casa
+              </span>
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <h2 className="ls-h2" style={{ color: "var(--ls-gray-900)", maxWidth: "500px" }}>
                   5 días de aplicación, 2 de descanso. Resultados mes a mes.
@@ -611,17 +600,46 @@ export default function CuidadoCapilarPage() {
           <div className="ls-container space-y-10">
             <div className="space-y-3">
               <p className="ls-p-sm uppercase tracking-[0.2em]" style={{ color: "var(--ls-gray-500)" }}>
-                Por qué Crescina
+                Ciencia capilar
               </p>
-              <h2 className="ls-h2" style={{ color: "var(--ls-gray-900)" }}>
-                Seis razones para elegir Crescina HFSC.
-              </h2>
+              <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div className="space-y-1">
+                  <h2 className="ls-h2" style={{ color: "var(--ls-gray-900)" }}>
+                    Tres pilares que trabajan juntos en cada ciclo.
+                  </h2>
+                  <p className="ls-p" style={{ color: "var(--ls-gray-600)" }}>
+                    Una solución capilar pensada para acompañarte día a día
+                  </p>
+                </div>
+                <a
+                  href="/labosuisse/tecnologia-transdermica"
+                  className="ls-btn ls-btn-link shrink-0"
+                  style={{ color: "var(--ls-red-700)" }}
+                >
+                  Ver tecnología transdérmica →
+                </a>
+              </div>
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
               {PILLARS.map((p) => (
                 <PillarCard key={p.title} {...p} />
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── ECOMMERCE PLACEHOLDER ── */}
+        <section
+          className="py-16 text-center"
+          style={{ background: "#fff", borderTop: "2px dashed var(--ls-gray-300)", borderBottom: "2px dashed var(--ls-gray-300)" }}
+        >
+          <div className="ls-container">
+            <p
+              className="ls-p-sm uppercase tracking-[0.25em] font-semibold"
+              style={{ color: "var(--ls-gray-400)" }}
+            >
+              Colocar el ecommerce aquí
+            </p>
           </div>
         </section>
 

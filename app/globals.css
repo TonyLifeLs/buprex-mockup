@@ -642,3 +642,56 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ─── Scroll Reveal ───────────────────────────────────────────────────────── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.scroll-reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger transition delays */
+.reveal-delay-100 { transition-delay: 0.1s; }
+.reveal-delay-150 { transition-delay: 0.15s; }
+.reveal-delay-200 { transition-delay: 0.2s; }
+.reveal-delay-250 { transition-delay: 0.25s; }
+.reveal-delay-300 { transition-delay: 0.3s; }
+.reveal-delay-350 { transition-delay: 0.35s; }
+.reveal-delay-400 { transition-delay: 0.4s; }
+.reveal-delay-450 { transition-delay: 0.45s; }
+.reveal-delay-500 { transition-delay: 0.5s; }
+.reveal-delay-600 { transition-delay: 0.6s; }

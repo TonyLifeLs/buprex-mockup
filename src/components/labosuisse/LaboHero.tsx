@@ -4,12 +4,21 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function LaboHero() {
   const { heroSlides } = useLaboSuisseStore()
   const [current, setCurrent] = useState(0)
   const [animating, setAnimating] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [scrollY, setScrollY] = useState(0)
+  const sectionRef = useScrollReveal<HTMLElement>(0.1)
+
+  useEffect(() => {
+    const handler = () => setScrollY(window.scrollY)
+    window.addEventListener("scroll", handler, { passive: true })
+    return () => window.removeEventListener("scroll", handler)
+  }, [])
 
   const slides = heroSlides.length > 0 ? heroSlides : []
 
@@ -38,6 +47,7 @@ export function LaboHero() {
 
   return (
     <section
+      ref={sectionRef}
       id="inicio"
       aria-label="Presentación principal"
       className="relative overflow-hidden"
@@ -52,7 +62,7 @@ export function LaboHero() {
         style={{ opacity: animating ? 0 : 1, transition: "opacity 0.28s ease" }}
       >
         {/* Left infobox */}
-        <div className="flex flex-1 flex-col items-center text-center md:items-start md:text-left">
+        <div className="scroll-reveal-left flex flex-1 flex-col items-center text-center md:items-start md:text-left">
           <span
             className="mb-5 inline-block px-3 py-1 text-[11px] font-bold tracking-[0.2em] uppercase"
             style={{ backgroundColor: slide.badgeBg, color: "var(--ls-gray-900)" }}
@@ -140,7 +150,10 @@ export function LaboHero() {
         </div>
 
         {/* Right: product image */}
-        <div className="relative flex flex-1 items-center justify-center">
+        <div
+          className="scroll-reveal-scale relative flex flex-1 items-center justify-center reveal-delay-200"
+          style={{ transform: `translateY(${-scrollY * 0.08}px)` }}
+        >
           <div className="relative h-72 w-72 sm:h-96 sm:w-96 md:h-[500px] md:w-[500px]">
             <Image
               src={slide.image}

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function LaboClub() {
   const { newsletter } = useLaboSuisseStore()
@@ -10,6 +11,7 @@ export function LaboClub() {
   const [consent, setConsent] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [emailError, setEmailError] = useState("")
+  const sectionRef = useScrollReveal()
 
   const validateEmail = (val: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)
 
@@ -26,12 +28,13 @@ export function LaboClub() {
 
   return (
     <section
+      ref={sectionRef}
       id="club"
       style={{ backgroundColor: "var(--brand-transdermic)" }}
       aria-label="Newsletter Labo Club"
     >
       <div className="ls-container py-20">
-        <div className="mx-auto max-w-xl">
+        <div className="scroll-reveal-scale mx-auto max-w-xl">
           <div className="text-center mb-10">
             <span
               className="ls-p-sm mb-3 inline-block font-bold tracking-[0.3em] uppercase"

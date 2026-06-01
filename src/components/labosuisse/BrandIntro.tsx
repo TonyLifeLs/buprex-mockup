@@ -2,17 +2,20 @@
 
 import { ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function BrandIntro() {
   const { brandIntro } = useLaboSuisseStore()
+  const sectionRef = useScrollReveal()
 
   return (
     <section
+      ref={sectionRef}
       id="tecnologia"
       style={{ backgroundColor: "var(--ls-white, #fff)", borderBottom: "1px solid var(--ls-gray-100)" }}
     >
       <div className="ls-container py-20">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="scroll-reveal mx-auto max-w-3xl text-center">
           <span
             className="ls-p-sm mb-4 inline-block font-bold tracking-[0.3em] uppercase"
             style={{ color: "var(--ls-red-700)" }}

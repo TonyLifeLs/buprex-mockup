@@ -3,15 +3,19 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+
+const STAGGER_DELAYS = ["reveal-delay-100", "reveal-delay-250", "reveal-delay-400"]
 
 export function CrescinaFeatured() {
   const { crescinaFeatured } = useLaboSuisseStore()
+  const sectionRef = useScrollReveal()
 
   return (
-    <section id="capilar" style={{ backgroundColor: "var(--ls-gray-100)" }}>
+    <section ref={sectionRef} id="capilar" style={{ backgroundColor: "var(--ls-gray-100)" }}>
       <div className="ls-container py-20">
         {/* Section header */}
-        <div className="mb-12 text-center">
+        <div className="scroll-reveal mb-12 text-center">
           <span
             className="ls-p-sm mb-2 inline-block font-bold tracking-[0.3em] uppercase"
             style={{ color: "var(--ls-red-700)" }}
@@ -27,7 +31,7 @@ export function CrescinaFeatured() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* Main featured card */}
           <article
-            className="group relative overflow-hidden flex flex-col justify-end min-h-[380px] transition-all duration-300 hover:shadow-lg"
+            className="scroll-reveal-scale group relative overflow-hidden flex flex-col justify-end min-h-[380px] transition-all duration-300 hover:shadow-lg reveal-delay-100"
             style={{ backgroundColor: "var(--brand-crescina)" }}
             aria-label={crescinaFeatured.mainTitle}
           >
@@ -67,10 +71,10 @@ export function CrescinaFeatured() {
 
           {/* Supporting cards */}
           <div className="flex flex-col gap-6">
-            {crescinaFeatured.supportingCards.map((card) => (
+            {crescinaFeatured.supportingCards.map((card, i) => (
               <article
                 key={card.id}
-                className="group flex overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-[2px]"
+                className={`scroll-reveal-right group flex overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-[2px] ${STAGGER_DELAYS[i] ?? ""}`}
                 style={{ backgroundColor: "var(--ls-white, #fff)" }}
               >
                 <div

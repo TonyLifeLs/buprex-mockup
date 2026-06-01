@@ -4,19 +4,21 @@ import { useState } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function NewsCarousel() {
   const { news } = useLaboSuisseStore()
   const [page, setPage] = useState(0)
+  const sectionRef = useScrollReveal(0.1, [page])
   const perPage = 2
   const totalPages = Math.ceil(news.items.length / perPage)
   const visible = news.items.slice(page * perPage, page * perPage + perPage)
 
   return (
-    <section id="noticias" style={{ backgroundColor: "var(--ls-gray-100)" }}>
+    <section ref={sectionRef} id="noticias" style={{ backgroundColor: "var(--ls-gray-100)" }}>
       <div className="ls-container py-20">
         {/* Header + controls */}
-        <div className="flex items-end justify-between mb-10">
+        <div className="scroll-reveal flex items-end justify-between mb-10">
           <div>
             <span
               className="ls-p-sm mb-2 block font-bold tracking-[0.3em] uppercase"
@@ -48,10 +50,10 @@ export function NewsCarousel() {
 
         {/* 2 cards per slide */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {visible.map((n) => (
+          {visible.map((n, i) => (
             <article
               key={n.id}
-              className="group flex flex-col overflow-hidden"
+              className={`scroll-reveal group flex flex-col overflow-hidden ${i === 1 ? "reveal-delay-200" : ""}`}
               style={{ backgroundColor: "var(--ls-white, #fff)", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}
             >
               <div className="relative h-52 w-full overflow-hidden">

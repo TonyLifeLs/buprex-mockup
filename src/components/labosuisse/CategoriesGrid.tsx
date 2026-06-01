@@ -3,16 +3,21 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
+
+const CAT_STAGGER = ["reveal-delay-100", "reveal-delay-200", "reveal-delay-300", "reveal-delay-400"]
+const BRAND_STAGGER = ["reveal-delay-100", "reveal-delay-250", "reveal-delay-400"]
 
 export function CategoriesGrid() {
   const { categories } = useLaboSuisseStore()
+  const sectionRef = useScrollReveal()
 
   return (
-    <section id="productos" style={{ backgroundColor: "var(--ls-white, #fff)" }}>
+    <section ref={sectionRef} id="productos" style={{ backgroundColor: "var(--ls-white, #fff)" }}>
       <span id="piel" aria-hidden="true" style={{ position: "absolute", visibility: "hidden" }} />
       <div className="ls-container py-20">
         {/* Section header */}
-        <div className="mb-12 text-center">
+        <div className="scroll-reveal mb-12 text-center">
           <span
             className="ls-p-sm mb-2 inline-block font-bold tracking-[0.3em] uppercase"
             style={{ color: "var(--ls-red-700)" }}
@@ -34,11 +39,11 @@ export function CategoriesGrid() {
           role="list"
           aria-label="Categorías de productos"
         >
-          {categories.categories.map((card) => (
+          {categories.categories.map((card, i) => (
             <article
               key={card.id}
               role="listitem"
-              className="group relative overflow-hidden flex flex-col justify-end min-h-[320px] cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-[3px]"
+              className={`scroll-reveal group relative overflow-hidden flex flex-col justify-end min-h-[320px] cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-[3px] ${CAT_STAGGER[i] ?? ""}`}
               style={{ backgroundColor: card.bg }}
             >
               <div className="absolute inset-0">
@@ -92,7 +97,7 @@ export function CategoriesGrid() {
 
         {/* Brands subsection */}
         <div className="mt-16 pt-12" style={{ borderTop: "1px solid var(--ls-gray-100)" }}>
-          <div className="mb-10 text-center">
+          <div className="scroll-reveal mb-10 text-center">
             <span
               className="ls-p-sm mb-2 inline-block font-bold tracking-[0.3em] uppercase"
               style={{ color: "var(--ls-red-700)" }}
@@ -104,10 +109,10 @@ export function CategoriesGrid() {
             </h3>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {categories.brands.map((c) => (
+            {categories.brands.map((c, i) => (
               <article
                 key={c.id}
-                className="group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-[2px]"
+                className={`scroll-reveal-scale group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-[2px] ${BRAND_STAGGER[i] ?? ""}`}
               >
                 <div
                   className="h-44 w-full flex items-center justify-center transition-transform duration-300 group-hover:scale-[1.02]"

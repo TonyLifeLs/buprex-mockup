@@ -3,16 +3,18 @@
 import { useRef, useState } from "react"
 import { Plus } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function LaboAccordion() {
   const { faq } = useLaboSuisseStore()
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const contentRefs = useRef<Array<HTMLDivElement | null>>([])
+  const sectionRef = useScrollReveal()
 
   return (
-    <section id="faq" style={{ backgroundColor: "var(--ls-white, #fff)" }}>
+    <section ref={sectionRef} id="faq" style={{ backgroundColor: "var(--ls-white, #fff)" }}>
       <div className="ls-container py-20">
-        <div className="mx-auto max-w-2xl text-center mb-14">
+        <div className="scroll-reveal mx-auto max-w-2xl text-center mb-14">
           <span
             className="ls-p-sm mb-3 inline-block font-bold tracking-[0.3em] uppercase"
             style={{ color: "var(--ls-red-700)" }}
@@ -22,7 +24,7 @@ export function LaboAccordion() {
           <h2 className="ls-h2" style={{ color: "var(--ls-black, #000)" }}>{faq.sectionTitle}</h2>
         </div>
 
-        <div className="mx-auto max-w-2xl">
+        <div className="scroll-reveal mx-auto max-w-2xl reveal-delay-200">
           {faq.items.map((item, i) => (
             <div
               key={item.id}

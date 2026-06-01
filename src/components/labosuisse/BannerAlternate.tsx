@@ -3,16 +3,18 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { useLaboSuisseStore } from "@/store/labosuisse"
+import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 
 export function BannerAlternate() {
   const { banner } = useLaboSuisseStore()
+  const sectionRef = useScrollReveal()
 
   return (
-    <section id="descubre" className="overflow-hidden" style={{ backgroundColor: "var(--ls-gray-100)" }}>
+    <section ref={sectionRef} id="descubre" className="overflow-hidden" style={{ backgroundColor: "var(--ls-gray-100)" }}>
       <div className="ls-container">
         <div className="flex flex-col md:flex-row min-h-[400px]">
           {/* Image panel */}
-          <div className="group relative w-full md:w-[570px] md:shrink-0 min-h-[300px] md:min-h-[400px] overflow-hidden">
+          <div className="scroll-reveal-left group relative w-full md:w-[570px] md:shrink-0 min-h-[300px] md:min-h-[400px] overflow-hidden">
             <Image
               src={banner.image}
               alt={banner.imageAlt}
@@ -29,7 +31,7 @@ export function BannerAlternate() {
 
           {/* Infobox */}
           <div
-            className="flex flex-1 flex-col justify-center px-8 py-14 md:px-16"
+            className="scroll-reveal-right flex flex-1 flex-col justify-center px-8 py-14 md:px-16 reveal-delay-150"
             style={{ backgroundColor: "var(--ls-white, #fff)" }}
           >
             <span

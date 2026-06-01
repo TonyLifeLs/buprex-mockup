@@ -11,11 +11,16 @@ export function LaboHero() {
   const [current, setCurrent] = useState(0)
   const [animating, setAnimating] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const [scrollY, setScrollY] = useState(0)
+  const parallaxRef = useRef<HTMLDivElement>(null)
   const sectionRef = useScrollReveal<HTMLElement>(0.1)
 
+  // Direct DOM parallax — avoids React state updates on every scroll tick
   useEffect(() => {
-    const handler = () => setScrollY(window.scrollY)
+    const handler = () => {
+      if (parallaxRef.current) {
+        parallaxRef.current.style.transform = `translateY(${-window.scrollY * 0.08}px)`
+      }
+    }
     window.addEventListener("scroll", handler, { passive: true })
     return () => window.removeEventListener("scroll", handler)
   }, [])
@@ -149,10 +154,10 @@ export function LaboHero() {
           </div>
         </div>
 
-        {/* Right: product image */}
+        {/* Right: product image — parallax applied via ref to avoid re-renders */}
         <div
+          ref={parallaxRef}
           className="scroll-reveal-scale relative flex flex-1 items-center justify-center reveal-delay-200"
-          style={{ transform: `translateY(${-scrollY * 0.08}px)` }}
         >
           <div className="relative h-72 w-72 sm:h-96 sm:w-96 md:h-[500px] md:w-[500px]">
             <Image

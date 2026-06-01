@@ -9,6 +9,7 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 export function NewsCarousel() {
   const { news } = useLaboSuisseStore()
   const [page, setPage] = useState(0)
+  // Pass `page` as a dep so new cards are re-observed after pagination changes
   const sectionRef = useScrollReveal(0.1, [page])
   const perPage = 2
   const totalPages = Math.ceil(news.items.length / perPage)

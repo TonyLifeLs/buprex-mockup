@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { ArrowRight, ShieldPlus } from "lucide-react"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { useCMSStore } from "@/store/cms"
 
@@ -11,32 +12,32 @@ export function Products() {
   const pediatricProducts = allProducts.filter((p) => !p.isAdult)
 
   return (
-    <section id="productos" ref={sectionRef} className="bg-slate-100 py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="productos" ref={sectionRef} className="relative overflow-hidden py-20 md:py-28">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-[#4DA6FF]/14 blur-3xl" />
+      <div className="buprex-container relative">
         <div className="scroll-reveal mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-slate-300 bg-white px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600">
-            Nuestra línea
+          <span className="buprex-section-label">
+            <ShieldPlus className="h-4 w-4" />
+            Portafolio farmacéutico
           </span>
-          <h2 className="mt-5 font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-            Portafolio BUPREX
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Presentaciones para adultos y pediatría con formulaciones orientadas al alivio rápido y confiable.
+          <h2 className="mt-5 buprex-section-title">Presentaciones pensadas para cada necesidad</h2>
+          <p className="mt-4 buprex-section-copy">
+            Catálogo con lectura rápida, imágenes destacadas y una organización sobria para adultos y pediatría.
           </p>
         </div>
 
         <div className="mt-12">
-          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
+          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-[#4b6686]">
             Línea adultos
           </h3>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {adultProducts.map((product, i) => (
               <article
                 key={product.id}
-                className="scroll-reveal grid items-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg md:grid-cols-[220px_1fr]"
+                className="scroll-reveal grid items-center gap-6 rounded-[1.9rem] border border-[#dbe5f0] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-6 shadow-[0_22px_55px_rgba(10,47,115,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(10,47,115,0.12)] md:grid-cols-[240px_1fr]"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex h-48 items-center justify-center rounded-xl bg-slate-50 p-4">
+                <div className="flex h-52 items-center justify-center rounded-[1.5rem] bg-[#eef5ff] p-5">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -54,28 +55,35 @@ export function Products() {
                       {product.variant || product.subtitle}
                     </span>
                   )}
-                  <h4 className="mt-3 font-[var(--font-heading)] text-2xl font-semibold text-slate-900">
+                  <h4 className="mt-4 font-[var(--font-heading)] text-2xl font-semibold text-[#133161]">
                     {product.name}
                   </h4>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{product.description}</p>
+                  <p className="mt-3 text-sm leading-7 text-[#5f6f85]">{product.description}</p>
+                  <a
+                    href="#informacion"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#0057B8] transition-all hover:gap-3"
+                  >
+                    Ver más
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </article>
             ))}
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-300 pt-10">
-          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
+        <div className="mt-14 border-t border-[#dbe5f0] pt-10">
+          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-[#4b6686]">
             Línea pediátrica
           </h3>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {pediatricProducts.map((product, i) => (
               <article
                 key={product.id}
-                className="scroll-reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                className="scroll-reveal rounded-[1.8rem] border border-[#dbe5f0] bg-white p-6 shadow-[0_22px_55px_rgba(10,47,115,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(10,47,115,0.12)]"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="flex h-40 items-center justify-center rounded-xl bg-slate-50 p-3">
+                <div className="flex h-44 items-center justify-center rounded-[1.5rem] bg-[#eef5ff] p-3">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -85,17 +93,23 @@ export function Products() {
                   />
                 </div>
                 <h4
-                  className="mt-4 font-[var(--font-heading)] text-xl font-semibold"
-                  style={{ color: product.accentColor }}
+                  className="mt-5 font-[var(--font-heading)] text-xl font-semibold text-[#133161]"
                 >
                   {product.name}
                 </h4>
                 {product.subtitle && (
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#5f6f85]">
                     {product.subtitle}
                   </p>
                 )}
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{product.description}</p>
+                <p className="mt-3 text-sm leading-7 text-[#5f6f85]">{product.description}</p>
+                <a
+                  href="#informacion"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#0057B8] transition-all hover:gap-3"
+                >
+                  Ver más
+                  <ArrowRight className="h-4 w-4" />
+                </a>
               </article>
             ))}
           </div>

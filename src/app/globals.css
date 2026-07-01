@@ -7,6 +7,19 @@
    Primarios · Grises · Rojos marca · Semánticos · Inspiracionales por línea
    ─────────────────────────────────────────────────────────────────────────── */
 :root {
+  --font-inter: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-poppins: 'Poppins', 'Inter', 'Segoe UI', sans-serif;
+  --font-montserrat: 'Montserrat', 'Poppins', 'Inter', sans-serif;
+  --buprex-blue-900: #0a2f73;
+  --buprex-blue-800: #0057b8;
+  --buprex-blue-700: #1f6fd1;
+  --buprex-blue-500: #4da6ff;
+  --buprex-ice: #f5f7fa;
+  --buprex-text: #2b2b2b;
+  --buprex-muted: #5f6f85;
+  --buprex-border: #dbe5f0;
+  --buprex-danger: #d33f49;
+
   /* Primarios */
   --ls-black: #000000;
   --ls-white: #FFFFFF;
@@ -95,8 +108,8 @@
 
 @theme inline {
   /* ── Typography fonts ── */
-  --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-montserrat), var(--font-poppins), var(--font-inter), system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
 
   /* ── Primarios ── */
@@ -221,7 +234,97 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
+    background:
+      radial-gradient(circle at top, rgba(77, 166, 255, 0.14), transparent 28%),
+      linear-gradient(180deg, #fbfdff 0%, #f5f7fa 52%, #ffffff 100%);
   }
+}
+
+.buprex-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (min-width: 1024px) {
+  .buprex-container {
+    padding-inline: 40px;
+  }
+}
+
+.buprex-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 87, 184, 0.14);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 8px 16px;
+  color: var(--buprex-blue-800);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(10, 47, 115, 0.06);
+}
+
+.buprex-section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--buprex-text);
+}
+
+.buprex-section-copy {
+  color: var(--buprex-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.buprex-card {
+  border: 1px solid rgba(219, 229, 240, 0.9);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 70px rgba(10, 47, 115, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.buprex-button-primary,
+.buprex-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.buprex-button-primary {
+  background: linear-gradient(135deg, var(--buprex-blue-900), var(--buprex-blue-700));
+  color: white;
+  box-shadow: 0 20px 45px rgba(0, 87, 184, 0.28);
+}
+
+.buprex-button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 24px 48px rgba(0, 87, 184, 0.34);
+}
+
+.buprex-button-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(12px);
+}
+
+.buprex-button-secondary:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 /* ─── Labo Suisse Typography Utilities ───────────────────────────────────────

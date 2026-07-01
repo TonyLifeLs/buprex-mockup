@@ -11,7 +11,11 @@ import {
 import { ChevronLeft, ChevronRight, ShieldCheck, Stethoscope, TimerReset } from "lucide-react"
 import { useCMSStore } from "@/store/cms"
 
-const trustIcons = [TimerReset, Stethoscope, ShieldCheck]
+function getTrustIcon(title: string) {
+  if (/rápid|acción|efect/i.test(title)) return TimerReset
+  if (/médic|confianza|profesional/i.test(title)) return Stethoscope
+  return ShieldCheck
+}
 
 export function Hero() {
   const slides = useCMSStore((s) => s.heroSlides)
@@ -170,8 +174,8 @@ export function Hero() {
       {/* Trust Badges Bar */}
       <div className="buprex-container relative z-10 -mt-24 pb-4">
         <div className="grid gap-4 rounded-[2rem] border border-white/70 bg-white/92 p-4 shadow-[0_30px_70px_rgba(10,47,115,0.14)] backdrop-blur-md sm:grid-cols-3">
-          {trustBadges.map((badge, index) => {
-            const Icon = trustIcons[index] || ShieldCheck
+          {trustBadges.map((badge) => {
+            const Icon = getTrustIcon(badge.title)
 
             return (
               <div

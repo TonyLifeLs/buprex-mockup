@@ -87,24 +87,24 @@ export function PharmaInfo() {
       className="relative overflow-hidden bg-white py-20 md:py-28"
     >
       {/* Decorative blurs */}
-      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-[#00b2ff]/6 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-[#e31e24]/6 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-slate-100 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-blue-50 blur-3xl" />
 
       <div className="relative mx-auto max-w-5xl px-6">
 
         {/* Header */}
         <div className="scroll-reveal mb-14 text-center">
-          <span className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0c3d6e] px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
+          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-slate-300 bg-slate-100 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-700">
             <Stethoscope size={13} />
             Información Técnica
           </span>
-          <h2 className="mt-3 font-[var(--font-heading)] text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+          <h2 className="mt-3 font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
             Ficha Técnica del Producto
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-slate-600">
             Información clínica sobre propiedades, dosificación, contraindicaciones y precauciones de uso.
           </p>
-          <div className="mx-auto mt-5 h-px w-20 rounded-full bg-gradient-to-r from-transparent via-[#0c3d6e]/30 to-transparent" />
+          <div className="mx-auto mt-5 h-px w-20 rounded-full bg-gradient-to-r from-transparent via-slate-400/60 to-transparent" />
         </div>
 
         {/* Cards grid */}
@@ -114,20 +114,19 @@ export function PharmaInfo() {
             return (
               <div
                 key={sec.title}
-                className={`scroll-reveal rounded-2xl border ${sec.border} ${sec.bg} p-6 shadow-sm transition-shadow hover:shadow-md`}
+                className="scroll-reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
                 {/* Card header */}
                 <div className="mb-4 flex items-center gap-3">
                   <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-sm"
-                    style={{ backgroundColor: sec.color }}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                    style={{ backgroundColor: sec.color + "1F" }}
                   >
-                    <Icon size={20} color="#fff" strokeWidth={2.2} />
+                    <Icon size={20} color={sec.color} strokeWidth={2.2} />
                   </div>
                   <h3
-                    className="font-[var(--font-heading)] text-base font-bold"
-                    style={{ color: sec.color }}
+                    className="font-[var(--font-heading)] text-base font-semibold text-slate-900"
                   >
                     {sec.title}
                   </h3>
@@ -135,7 +134,7 @@ export function PharmaInfo() {
 
                 {/* Simple text */}
                 {sec.content && (
-                  <p className="text-sm leading-relaxed text-foreground/80">{sec.content}</p>
+                  <p className="text-sm leading-relaxed text-slate-600">{sec.content}</p>
                 )}
 
                 {/* Dosis table */}
@@ -145,18 +144,18 @@ export function PharmaInfo() {
                       const DIcon = d.icon
                       return (
                         <div key={d.label} className="flex items-start gap-3">
-                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f5a623]/20">
+                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100">
                             <DIcon size={14} color="#f5a623" strokeWidth={2.5} />
                           </div>
                           <div>
-                            <span className="block text-xs font-bold text-[#f5a623]">{d.label}</span>
-                            <span className="text-sm text-foreground/80">{d.text}</span>
+                            <span className="block text-xs font-semibold text-slate-700">{d.label}</span>
+                            <span className="text-sm text-slate-600">{d.text}</span>
                           </div>
                         </div>
                       )
                     })}
                     {sec.note && (
-                      <p className="mt-1 rounded-lg bg-[#f5a623]/10 px-3 py-2 text-xs leading-relaxed text-foreground/70 border border-[#f5a623]/20">
+                      <p className="mt-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs leading-relaxed text-slate-600">
                         {sec.note}
                       </p>
                     )}
@@ -167,10 +166,10 @@ export function PharmaInfo() {
                 {"warnings" in sec && sec.warnings && (
                   <ul className="flex flex-col gap-2">
                     {sec.warnings.map((w, wi) => (
-                      <li key={wi} className="flex items-start gap-2 text-sm text-foreground/80">
+                      <li key={wi} className="flex items-start gap-2 text-sm text-slate-600">
                         <Heart
                           size={13}
-                          className="mt-0.5 shrink-0 fill-[#0c3d6e]/30 text-[#0c3d6e]"
+                          className="mt-0.5 shrink-0 fill-slate-300 text-slate-700"
                         />
                         {w}
                       </li>
@@ -183,8 +182,8 @@ export function PharmaInfo() {
         </div>
 
         {/* Bottom disclaimer */}
-        <div className="scroll-reveal mt-10 rounded-2xl border border-[#0c3d6e]/15 bg-[#0c3d6e]/5 px-6 py-4 text-center text-xs leading-relaxed text-muted-foreground">
-          <strong className="text-foreground">Nota:</strong> Esta información es de carácter referencial.
+        <div className="scroll-reveal mt-10 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-4 text-center text-xs leading-relaxed text-slate-600">
+          <strong className="text-slate-900">Nota:</strong> Esta información es de carácter referencial.
           Consulte siempre a su médico o farmacéutico antes de iniciar cualquier tratamiento.
           Mantenga fuera del alcance de los niños.
         </div>

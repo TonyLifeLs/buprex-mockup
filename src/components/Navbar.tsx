@@ -17,14 +17,16 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const bgHex = navbar.bgColor
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "backdrop-blur-md shadow-lg" : ""}`}
-      style={{ backgroundColor: scrolled ? `${bgHex}F2` : bgHex }}
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
+        scrolled ? "border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md" : "border-transparent bg-white/88 backdrop-blur-sm"
+      }`}
+      style={{
+        boxShadow: scrolled ? "0 12px 40px rgba(15, 23, 42, 0.08)" : undefined,
+      }}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2.5">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
         {/* Logo */}
         <a href="#inicio" className="flex items-center">
           <Image
@@ -32,20 +34,20 @@ export function Navbar() {
             alt="Logo"
             width={450}
             height={80}
-            className="h-10 w-auto object-contain sm:h-12 md:h-14 lg:h-16"
+            className="h-8 w-auto object-contain sm:h-10 md:h-11"
             priority
             unoptimized
           />
         </a>
 
-        {/* Desktop Nav - Pill shaped links */}
+        {/* Desktop Nav */}
         <div className="hidden items-center md:flex">
-          <div className="flex items-center rounded-full bg-white/10 p-1">
+          <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-1 shadow-sm">
             {navbar.links.map((link) => (
               <a
                 key={link.id}
                 href={link.href}
-                className="rounded-full px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-white hover:text-[#0c3d6e]"
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition-all hover:bg-slate-900 hover:text-white"
               >
                 {link.label}
               </a>
@@ -59,7 +61,7 @@ export function Navbar() {
             href={footer.youtube || "https://youtube.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-[#0c3d6e]"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:border-slate-900 hover:bg-slate-900 hover:text-white"
             aria-label="YouTube"
           >
             <Youtube className="h-4 w-4" />
@@ -68,7 +70,7 @@ export function Navbar() {
             href={footer.facebook || "https://facebook.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-[#0c3d6e]"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:border-slate-900 hover:bg-slate-900 hover:text-white"
             aria-label="Facebook"
           >
             <Facebook className="h-4 w-4" />
@@ -77,7 +79,7 @@ export function Navbar() {
             href={footer.instagram || "https://instagram.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-[#0c3d6e]"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:border-slate-900 hover:bg-slate-900 hover:text-white"
             aria-label="Instagram"
           >
             <Instagram className="h-4 w-4" />
@@ -87,7 +89,7 @@ export function Navbar() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="inline-flex items-center justify-center rounded-lg p-2 text-white md:hidden"
+          className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-2 text-slate-700 md:hidden"
           aria-label="Toggle menu"
         >
           {mobileOpen ? (
@@ -103,17 +105,20 @@ export function Navbar() {
         className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
           mobileOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
         }`}
-        style={{ backgroundColor: bgHex }}
+        style={{
+          backgroundColor: "#ffffff",
+          borderTop: "1px solid rgba(226, 232, 240, 1)",
+        }}
         aria-hidden={!mobileOpen}
       >
-        <div className="border-t border-white/10 px-6 pb-6">
+        <div className="px-6 pb-6">
           <ul className="flex flex-col gap-2 pt-4">
             {navbar.links.map((link) => (
               <li key={link.id}>
                 <a
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-base font-semibold text-white transition-colors hover:bg-white/10"
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-slate-700 transition-colors hover:bg-slate-100"
                 >
                   {link.label}
                 </a>
@@ -125,7 +130,7 @@ export function Navbar() {
               href={footer.youtube || "https://youtube.com"}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600"
               aria-label="YouTube"
             >
               <Youtube className="h-5 w-5" />
@@ -134,7 +139,7 @@ export function Navbar() {
               href={footer.facebook || "https://facebook.com"}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600"
               aria-label="Facebook"
             >
               <Facebook className="h-5 w-5" />
@@ -143,7 +148,7 @@ export function Navbar() {
               href={footer.instagram || "https://instagram.com"}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600"
               aria-label="Instagram"
             >
               <Instagram className="h-5 w-5" />

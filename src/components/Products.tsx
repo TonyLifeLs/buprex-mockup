@@ -1,224 +1,106 @@
-﻿"use client"
+"use client"
 
 import Image from "next/image"
-import { useEffect, useRef } from "react"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { useCMSStore } from "@/store/cms"
 
-/** Fondo estrellado opcional (decorativo) */
-function ProductStarField() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const resize = () => {
-      const dpr = Math.min(2, window.devicePixelRatio || 1)
-      canvas.width = canvas.offsetWidth * dpr
-      canvas.height = canvas.offsetHeight * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
-    resize()
-
-    const stars: { x: number; y: number; r: number; opacity: number; speed: number }[] = []
-    const w = canvas.offsetWidth
-    const h = canvas.offsetHeight
-
-    for (let i = 0; i < 80; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.6 + 0.2,
-        speed: Math.random() * 0.004 + 0.001,
-      })
-    }
-
-    let frame = 0
-    const animate = () => {
-      ctx.clearRect(0, 0, w, h)
-      const time = Date.now()
-      for (const star of stars) {
-        const twinkle = 0.5 + 0.5 * Math.sin(time * star.speed)
-        ctx.beginPath()
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${star.opacity * twinkle})`
-        ctx.fill()
-      }
-      frame = requestAnimationFrame(animate)
-    }
-    animate()
-
-    const onResize = () => resize()
-    window.addEventListener("resize", onResize)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("resize", onResize)
-    }
-  }, [])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 h-full w-full"
-      aria-hidden="true"
-    />
-  )
-}
-
-/** Componente principal */
 export function Products() {
   const sectionRef = useScrollReveal()
   const allProducts = useCMSStore((s) => s.products)
   const adultProducts = allProducts.filter((p) => p.isAdult)
-  const products = allProducts.filter((p) => !p.isAdult)
+  const pediatricProducts = allProducts.filter((p) => !p.isAdult)
 
   return (
-    <section id="productos" ref={sectionRef} className="overflow-hidden">
-      {/* ======== BLOQUE AZUL ÚNICO ======== */}
-      <div className="relative w-full py-20 md:py-28">
-        {/* Fondo: blanco en la parte de adultos → azul oscuro en la pediátrica */}
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(to bottom, #ffffff 0%, #daeef9 10%, #8ec8e8 22%, #3a7fb5 34%, #0c3d6e 46%, #0b2a4a 70%, #0c3d6e 100%)",
-          }}
-        />
-        <div className="absolute inset-0 -z-10 opacity-40">
-          <ProductStarField />
+    <section id="productos" ref={sectionRef} className="bg-slate-100 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="scroll-reveal mx-auto max-w-3xl text-center">
+          <span className="inline-flex rounded-full border border-slate-300 bg-white px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600">
+            Nuestra línea
+          </span>
+          <h2 className="mt-5 font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+            Portafolio BUPREX
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-600">
+            Presentaciones para adultos y pediatría con formulaciones orientadas al alivio rápido y confiable.
+          </p>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6">
-
-          {/* ── Encabezado ── */}
-          <div className="scroll-reveal mx-auto mb-12 max-w-2xl text-center">
-            <span className="mb-4 inline-block rounded-full bg-gradient-to-r from-[#e31e24] via-[#c0306a] to-[#00b2ff] px-6 py-1.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg">
-              Nuestra línea
-            </span>
-            <div className="mt-1">
-              <Image
-                src="/images/buprex-ibuprofeno.png"
-                alt="Productos BUPREX"
-                width={400}
-                height={80}
-                className="mx-auto h-16 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,178,255,0.35)] md:h-20"
-              />
-            </div>
-            <div className="mx-auto mt-5 h-px w-24 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-          </div>
-
-          {/* ── Cards adultos ── */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mt-12">
+          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
+            Línea adultos
+          </h3>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {adultProducts.map((product, i) => (
-              <div
+              <article
                 key={product.id}
-                className="scroll-reveal relative grid grid-cols-1 md:grid-cols-[210px_1fr] items-center gap-4 rounded-[28px] border border-white/15 p-6 shadow-[0_10px_28px_rgba(0,0,0,0.28)]"
-                style={{
-                  transitionDelay: `${i * 150}ms`,
-                  background:
-                    "linear-gradient(180deg, rgba(22,74,124,0.85) 0%, rgba(12,61,110,0.95) 60%, rgba(6,42,80,0.98) 100%)",
-                  boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 28px rgba(0,0,0,0.28)",
-                }}
+                className="scroll-reveal grid items-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg md:grid-cols-[220px_1fr]"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <div className="relative flex h-48 items-center justify-center">
+                <div className="flex h-48 items-center justify-center rounded-xl bg-slate-50 p-4">
                   <Image
                     src={product.image}
                     alt={product.name}
-                    width={220}
-                    height={220}
-                    className="object-contain"
+                    width={200}
+                    height={200}
+                    className="max-h-44 w-auto object-contain"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <span
-                    className="mb-2 inline-block w-fit rounded-full px-3 py-1 text-xs font-bold text-white"
-                    style={{ backgroundColor: product.accentColor || "#0c3d6e" }}
-                  >
-                    {product.variant || product.subtitle}
-                  </span>
-                  <h3 className="font-[var(--font-heading)] text-lg font-bold text-white">
+                <div>
+                  {(product.variant || product.subtitle) && (
+                    <span
+                      className="inline-flex rounded-full px-3 py-1 text-xs font-semibold text-white"
+                      style={{ backgroundColor: product.accentColor || "#0f172a" }}
+                    >
+                      {product.variant || product.subtitle}
+                    </span>
+                  )}
+                  <h4 className="mt-3 font-[var(--font-heading)] text-2xl font-semibold text-slate-900">
                     {product.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/80">
-                    {product.description}
-                  </p>
+                  </h4>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{product.description}</p>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
+        </div>
 
-          {/* divisor */}
-          <div className="mx-auto my-10 h-px w-full max-w-2xl rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-          {/* ── Cards pediátricos ── */}
-          <div className="flex flex-col gap-6">
-            {products.map((product, i) => (
-              <div
+        <div className="mt-12 border-t border-slate-300 pt-10">
+          <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
+            Línea pediátrica
+          </h3>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {pediatricProducts.map((product, i) => (
+              <article
                 key={product.id}
-                className="scroll-reveal relative grid items-center gap-4 rounded-[28px] border border-white/15 p-5 shadow-[0_10px_28px_rgba(0,0,0,0.28)] md:grid-cols-[240px_1fr] md:gap-6 md:p-7"
-                style={{
-                  transitionDelay: `${i * 150}ms`,
-                  background:
-                    "linear-gradient(180deg, rgba(22,74,124,0.85) 0%, rgba(12,61,110,0.95) 60%, rgba(6,42,80,0.98) 100%)",
-                  boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 28px rgba(0,0,0,0.28)",
-                }}
+                className="scroll-reveal rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
-                {/* Columna Producto */}
-                <div className="relative flex h-36 w-full items-center justify-center md:h-40 md:w-[240px]">
+                <div className="flex h-40 items-center justify-center rounded-xl bg-slate-50 p-3">
                   <Image
                     src={product.image}
                     alt={product.name}
-                    width={220}
-                    height={220}
-                    className="object-contain drop-shadow-lg"
-                    priority={i === 0}
+                    width={170}
+                    height={170}
+                    className="max-h-36 w-auto object-contain"
                   />
                 </div>
-
-                {/* Información (texto claro sobre azul) */}
-                <div className="min-w-0">
-                  <h3
-                    className="font-[var(--font-heading)] text-2xl font-extrabold leading-tight md:text-3xl"
-                    style={{ color: product.accentColor }}
-                  >
-                    {product.name}
-                  </h3>
-                  <span
-                    className="mt-0.5 block text-base font-extrabold tracking-wide md:text-lg"
-                    style={{ color: product.accentColor }}
-                  >
+                <h4
+                  className="mt-4 font-[var(--font-heading)] text-xl font-semibold"
+                  style={{ color: product.accentColor }}
+                >
+                  {product.name}
+                </h4>
+                {product.subtitle && (
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">
                     {product.subtitle}
-                  </span>
-                  <p className="mt-2 text-base leading-relaxed text-white/85">
-                    {product.description}
                   </p>
-                </div>
-              </div>
+                )}
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">{product.description}</p>
+              </article>
             ))}
           </div>
-
-          <div className="py-4" />
         </div>
       </div>
-
-      {/* Animaciones locales */}
-      <style jsx global>{`
-        @keyframes float {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
-          100% { transform: translateY(0); }
-        }
-        .animate-float-slow { animation: float 5s ease-in-out infinite; }
-        .animate-float-medium { animation: float 4s ease-in-out infinite; }
-        .animate-float-fast { animation: float 3s ease-in-out infinite; }
-      `}</style>
     </section>
   )
 }
-``

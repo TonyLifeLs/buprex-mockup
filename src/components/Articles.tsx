@@ -166,7 +166,7 @@ export function Articles() {
                 onClick={() => setSelectedArticle(null)}
                 className="mt-8 w-full rounded-full bg-slate-900 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
               >
-                Cerrar articulo
+                Cerrar artículo
               </button>
             </div>
           </div>

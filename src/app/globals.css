@@ -560,28 +560,36 @@
 }
 
 
-/* Floating animations for malestars */
+/* Subtle, professional floating (very gentle) — used sparingly for supporting imagery */
 @keyframes float-slow {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-14px); }
+  50% { transform: translateY(-6px); }
 }
 @keyframes float-medium {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-5px); }
 }
 @keyframes float-fast {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-18px) rotate(3deg); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
 }
 
 .animate-float-slow {
-  animation: float-slow 4s ease-in-out infinite;
+  animation: float-slow 7s ease-in-out infinite;
 }
 .animate-float-medium {
-  animation: float-medium 3s ease-in-out infinite;
+  animation: float-medium 6.5s ease-in-out infinite;
 }
 .animate-float-fast {
-  animation: float-fast 3.5s ease-in-out infinite;
+  animation: float-fast 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-fast {
+    animation: none;
+  }
 }
 
 /* Scroll reveal animations */

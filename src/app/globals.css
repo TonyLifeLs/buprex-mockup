@@ -94,7 +94,7 @@
 
 
 @theme inline {
-  /* ── Labo Suisse fonts ── */
+  /* ── Typography fonts ── */
   --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';

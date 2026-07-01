@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 
  *  CMS ZUSTAND STORE
  *  Solo contiene lógica de estado (acciones).
